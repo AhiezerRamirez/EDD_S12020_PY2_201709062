@@ -1,6 +1,9 @@
 
 package Estructuras;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class ArbolB {
     NodoB root;
     public int t;
@@ -23,21 +26,47 @@ public class ArbolB {
                 if(n.libros[0].getISBN()<isbn)
                     i++;
                 n.C[i].insertNotFull(book);
+                //n.C[i].n=n.C[i].n-1;
                 root=n;
             }else{
                 root.insertNotFull(book);
             }
         }
     }
+    public void remover(int k){
+        if(root==null){
+            System.out.println("El árbol está vacío");
+            return;
+        }
+        root.remover(k);
+        if(root.n==0){
+            NodoB temp=root;
+            if(root.hoja){
+                root=null;
+            }else{
+                root=root.C[0];
+            }
+        }
+    }
     public void imprimir(){
-        this.root.recorrer();
+        StringBuilder cod=new StringBuilder();
+        List<Integer> recorridos=new LinkedList<>();
+        if(this.root!=null){
+            cod.append("digraph{\n\tnode[shape=record, height= .1, fillcolor=lightblue3 ,color=lightblue4, style=filled];\n\tedge[color= lightblue4];\n\t");
+            this.root.recorrer(cod,recorridos);
+            this.root.recorrerhojas(cod,recorridos);
+            cod.append("\n}");
+            System.out.println(cod.toString());
+        }
+        else
+            System.out.print("El árbol está vacío");
     }
 }
 
 class NodoB{
     int t,n;
-    Libro[] libros;
-    NodoB[] C;
+    Libro[] libros=null;
+    NodoB[] C=null;
     boolean hoja;
     public NodoB(int orden, boolean leaf){
         this.t=2;
@@ -46,16 +75,61 @@ class NodoB{
         this.C=new NodoB[orden];
         this.n=0;
     }
-    void recorrer(){
+    void recorrer(StringBuilder cod,List<Integer> recorridos){
         int i;
-        for (i = 0; i < n; i++) {
-            if(this.hoja==false)
-                C[i].recorrer();
-            System.out.println(this.libros[i].getISBN()+" "+this.libros[i].getTitulo());
-            
+        for ( i = 0; i < n; i++) {
+            if(!hoja){
+                int j;
+                if(!recorridos.contains(libros[0].getISBN())){
+                    cod.append("node").append(libros[0].getISBN()).append("[label = \"");
+                    for (j = 0; j < n; j++) {
+                        cod.append("<f").append(j).append("> | ");
+                        cod.append(libros[j].getISBN()).append(" | ");
+                    }
+                    cod.append("<f").append(j).append(">\"];\n\t");
+                    recorridos.add(libros[0].getISBN());
+                }
+                C[i].recorrer(cod,recorridos);
+            }else{
+                //cod.append(libros[i].getISBN()).append(", ");
+            }
         }
-        if(this.hoja==false)
-            C[i].recorrer();
+        if(!hoja){
+            int j;
+            
+            if(!recorridos.contains(libros[0].getISBN())){
+                cod.append("node").append(libros[0].getISBN()).append("[label = \"");
+                cod.append("node").append(libros[0].getISBN()).append("[label = \"");
+                for (j = 0; j < n; j++) {
+                    cod.append("<f").append(j).append("> | ");
+                    cod.append(libros[j].getISBN()).append(" | ");
+                }
+                cod.append("<f").append(j).append(">\"];\n\t");
+                recorridos.add(libros[0].getISBN());
+            }
+                
+        }
+    }
+    void recorrerhojas(StringBuilder cod,List<Integer>recorridos){
+        int i;
+        for ( i = 0; i < n; i++) {
+            if(!hoja)
+                C[i].recorrerhojas(cod,recorridos);
+            else{
+                if(!recorridos.contains(libros[0].getISBN())){
+                    int j;
+                    cod.append("node").append(libros[0].getISBN()).append("[label = \"");
+                    for (j = 0; j < n; j++) {
+                        cod.append("<f").append(j).append("> | ");
+                        cod.append(libros[j].getISBN()).append(" | ");
+                    }
+                    cod.append("<f").append(j).append(">\"];\n\t");
+                    recorridos.add(libros[0].getISBN());
+                }
+            }
+        }
+        if(!hoja)
+            C[i].recorrerhojas(cod,recorridos);
     }
     NodoB buscar(int k){
         int i=0;
@@ -72,7 +146,7 @@ class NodoB{
     }
     void insertNotFull(Libro book){
         int i=this.n-1;
-        if(this.hoja==true){
+        if(hoja==true){
             while(i>=0 && libros[i].getISBN()>book.getISBN()){
                 libros[i+1]=libros[i];
                 i--;
@@ -82,31 +156,32 @@ class NodoB{
         }else{
             while(i>=0 && libros[i].getISBN()>book.getISBN())
                 i--;
-            if(this.C[i+1].n == 4){
+            if(C[i+1].n == 4){
                 dividirNodo(i+1,C[i+1]);
                 if(libros[i+1].getISBN() < book.getISBN())
                     i++;
+                //C[i+1].n=C[i+1].n-1;
             }
             C[i+1].insertNotFull(book);
         }
     }
     void dividirNodo(int i, NodoB y){
         NodoB z=new NodoB(5,y.hoja);
-        z.n=this.t-1;
-        for (int j = 0; j < t-1; j++) {
+        z.n=t;
+        for (int j = 0; j < t; j++) {
             z.libros[j]=y.libros[j+t];
         }
         if(y.hoja==false){
-            for (int j = 0; j < t; j++) {
+            for (int j = 0; j <=t; j++) {
                 z.C[j]=y.C[j+t];
             }
         }
         y.n=t-1;
-        for (int j = 0; j < i+1; j++) {
+        for (int j = n; j >= i+1; j--) {
             C[j+1]=C[j];
         }
         C[i+1]=z;
-        for (int j = n-1; j >=i; j++) {
+        for (int j = n-1; j >=i; j--) {
             libros[j+1]=libros[j];
         }
         libros[i]=y.libros[t-1];
@@ -176,6 +251,87 @@ class NodoB{
         libros[idx-1]=hermano.libros[hermano.n-1];
         hijo.n+=1;
         hermano.n-=1;
+    }
+    void completar(int idx){
+        if(idx!=0 && C[idx-1].n>=t){
+            prestarIzquierda(idx);
+        }else if(idx!=n && C[idx+1].n>=t){
+            prestarDerecha(idx);
+        }else{
+            if(idx!=n){
+                juntar(idx);
+            }else{
+                juntar(idx-1);
+            }
+        }
+    }
+    Libro getSuccesor(int idx){
+        NodoB cur=C[idx+1];
+        while(!cur.hoja)
+            cur=cur.C[0];
+        return cur.libros[0];
+    }
+    Libro getPredecesor(int idx){
+        NodoB cur=C[idx];
+        while(!cur.hoja)
+            cur=cur.C[cur.n];
+        return cur.libros[cur.n-1];
+    }
+    int encontrarIndex(int k){
+        int idx=0;
+        while (idx<n && libros[idx].getISBN()<k) {            
+            ++idx;
+        }
+        return idx;
+    }
+    public void remover(int k){
+        int idx=encontrarIndex(k);
+        if(idx <n && libros[idx].getISBN()==k){
+            if(hoja)
+                removerHoja(idx);
+            else
+                removerNoHoja(idx);
+        }else{
+            if(hoja){
+                System.out.println("El nodo: "+k+" no existe en el árbol");
+                return;
+            }
+            boolean bandera;
+            if(idx==n){
+               bandera=true;
+            }else{
+               bandera=false;
+            }
+            if(C[idx].n<t){
+                completar(idx);
+            }
+            if(bandera && idx >n){
+                C[idx-1].remover(k);
+            }else{
+                C[idx].remover(k);
+            }
+        }
+    }
+    void removerHoja(int idx){
+        for (int i = idx+1; i < n; i++) {
+            libros[i-1]=libros[i];
+        }
+        n--;
+    }
+    void removerNoHoja(int idx){
+        Libro k=libros[idx];
+        if(C[idx].n >=t){
+            Libro pre=getPredecesor(idx);
+            libros[idx]=pre;
+            C[idx].remover(pre.getISBN());
+        }else if(C[idx+1].n >=t){
+            Libro succ=getSuccesor(idx);
+            libros[idx]=succ;
+            C[idx+1].remover(succ.getISBN());
+        }else{
+            juntar(idx);
+            C[idx].remover(k.getISBN());
+        }
     }
 }
 /*
