@@ -52,7 +52,7 @@ public class ArbolB {
         StringBuilder cod=new StringBuilder();
         List<Integer> recorridos=new LinkedList<>();
         if(this.root!=null){
-            cod.append("digraph{\n\tnode[shape=record, height= .1, fillcolor=lightblue3 ,color=lightblue4, style=filled];\n\tedge[color= lightblue4];\n\t");
+            cod.append("digraph g{\n\tnode[shape=record, height= .1, fillcolor=lightblue3 ,color=lightblue4, style=filled];\n\tedge[color= lightblue4];\n\t");
             this.root.recorrer(cod,recorridos);
             this.root.recorrerhojas(cod,recorridos);
             cod.append("\n}");
@@ -90,8 +90,6 @@ class NodoB{
                     recorridos.add(libros[0].getISBN());
                 }
                 C[i].recorrer(cod,recorridos);
-            }else{
-                //cod.append(libros[i].getISBN()).append(", ");
             }
         }
         if(!hoja){
@@ -107,15 +105,17 @@ class NodoB{
                 cod.append("<f").append(j).append(">\"];\n\t");
                 recorridos.add(libros[0].getISBN());
             }
-                
+            C[i].recorrer(cod,recorridos);
         }
     }
     void recorrerhojas(StringBuilder cod,List<Integer>recorridos){
         int i;
         for ( i = 0; i < n; i++) {
-            if(!hoja)
+            if(!hoja){
+                cod.append("\"node").append(libros[0].getISBN()).append("\":f").append(i).append(" -> \"node").append(C[i].libros[0].getISBN()).append("\"\n\t");
                 C[i].recorrerhojas(cod,recorridos);
-            else{
+                
+            }else{
                 if(!recorridos.contains(libros[0].getISBN())){
                     int j;
                     cod.append("node").append(libros[0].getISBN()).append("[label = \"");
@@ -128,8 +128,10 @@ class NodoB{
                 }
             }
         }
-        if(!hoja)
+        if(!hoja){
+            cod.append("\"node").append(libros[0].getISBN()).append("\":f").append(i).append(" -> \"node").append(C[i].libros[0].getISBN()).append("\"\n\t");
             C[i].recorrerhojas(cod,recorridos);
+        }   
     }
     NodoB buscar(int k){
         int i=0;
