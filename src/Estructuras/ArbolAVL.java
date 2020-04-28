@@ -141,7 +141,8 @@ public class ArbolAVL {
             }else{
                 NodoAVL temp=getMinVal(raiz.getDer());
                 raiz.setCategoria(temp.getCategoria());
-                raiz.setDer(borrar(raiz.getDer(),categoria));
+                NodoAVL aux=borrar(raiz.getDer(),temp.getCategoria());
+                raiz.setDer(aux);
             }
         }
         if(raiz==null)
@@ -154,9 +155,9 @@ public class ArbolAVL {
             raiz.setDer(rotarDer(raiz.getDer()));
             return rotarIzq(raiz);
         }
-        if(balance < -1 && obtenerBalance(raiz.getIzq()) < 0)
+        if(balance < -1 && obtenerBalance(raiz.getIzq()) <= 0)
             return rotarDer(raiz);
-        if(balance < -1 && obtenerBalance(raiz.getIzq()) >=0){
+        if(balance < -1 && obtenerBalance(raiz.getIzq()) > 0){
             raiz.setIzq(rotarIzq(raiz.getIzq()));
             return rotarDer(raiz);
         }

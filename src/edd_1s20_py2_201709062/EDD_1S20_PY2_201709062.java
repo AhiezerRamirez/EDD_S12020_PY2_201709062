@@ -79,9 +79,10 @@ public class EDD_1S20_PY2_201709062 {
         avl.root=avl.insertar(avl.root, "teologia");
         avl.root=avl.insertar(avl.root, "meme");
         System.out.println(avl.obtenerCodigoDot(avl.root));
-        avl.root=avl.borrar(avl.root,"interiores");
+        //avl.root=avl.borrar(avl.root,"interiores");
         avl.root=avl.borrar(avl.root,"estadistica");
-        //avl.root=avl.borrar(avl.root,"ciencia Ficcion");
+        avl.root=avl.borrar(avl.root,"ciencia Ficcion");
+        avl.root=avl.borrar(avl.root,"diseno");
         System.out.println(avl.obtenerCodigoDot(avl.root));
     }
     
