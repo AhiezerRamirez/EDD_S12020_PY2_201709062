@@ -54,7 +54,7 @@ public class EDD_1S20_PY2_201709062 {
         arbol.remover(12);
         arbol.remover(10);
         arbol.remover(136);
-        arbol.imprimir();*/
+        arbol.imprimir();
         ArbolAVL avl=new ArbolAVL();
         avl.root=avl.insertar(avl.root, "miedo terrorifico");
         avl.root=avl.insertar(avl.root, "terror");
@@ -83,7 +83,19 @@ public class EDD_1S20_PY2_201709062 {
         avl.root=avl.borrar(avl.root,"estadistica");
         avl.root=avl.borrar(avl.root,"ciencia Ficcion");
         avl.root=avl.borrar(avl.root,"diseno");
-        System.out.println(avl.obtenerCodigoDot(avl.root));
+        System.out.println(avl.obtenerCodigoDot(avl.root));*/
+        TablaHash t=new TablaHash(45);
+        t.add(201709062, "Ahiezer", "Ramirez", "Ingenieria Ciencias Y Sistemas", "Abc123**");
+        t.add(20189820, "Mairo", "Salva Tierra", "Industrial", "Abc123*");
+        t.add(20151332, "Juanita", "Perez", "Ingenieria Ciencias Y Sistemas", "Abc13**");
+        t.add(20190921, "Covid", "Herrera", "Industrial", "Ac123*");
+        t.add(201601842, "Ahiezer", "Ramirez", "Ingenieria Ciencias Y Sistemas", "bc123**");
+        t.add(20188372, "Maria", "Salva Tierra", "Industrial", "Bbc123*");
+        t.add(201503476, "Orlando", "Perez", "Ingenieria Ciencias Y Sistemas", "ABc13**");
+        t.add(201503476, "Michael", "Jacson", "Ingenieria Ciencias Y Sistemas", "ABc13**");
+        t.add(20191129, "Ricardo", "Herrera", "Industrial", "Ac323*");
+        System.out.println(t.obetnerCodDot());//Falta separar la declaracion de la lista de las conexiones en el .Dot
+        //Hay que poner un método buscar para ver sí esxiste el nodo en la lista para eliminar, si no truena
     }
     
 }
