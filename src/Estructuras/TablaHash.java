@@ -15,10 +15,10 @@ public class TablaHash {
         int index =hashFuncion(car);
         NodoHash prev=null;
         NodoHash entrada=nodo[index];
-        while (entrada!=null && entrada.user.carne!=car) {            
-            prev=entrada;
-            entrada=entrada.getNext();
-        }
+        //while (entrada!=null && entrada.user.carne!=car) {            
+          //  prev=entrada;
+            //entrada=entrada.getNext();
+        //}
         if(entrada==null){
             NodoHash n=new NodoHash(car, u);
             nodo[index]=n;
@@ -32,8 +32,9 @@ public class TablaHash {
     public void remove(int carne){
         int index=hashFuncion(carne);
         NodoHash entrada=nodo[index];
+        System.out.println(index);
         if(entrada==null){
-            System.out.println("Usuario no encontrado");
+            System.out.println("Usuario: "+carne+" no encontrado");
         }else{
             if(entrada.user.carne==carne){
                 if(entrada.value.primero!=null){
@@ -47,7 +48,30 @@ public class TablaHash {
             }
         }
     }
-    
+    public void updateUser(int car,String Nombre, String Apellido,String Carrera, String Password){
+        int index=hashFuncion(car);
+        NodoHash entrada=nodo[index];
+        if(entrada!=null){
+            if(entrada.user.carne==car){
+                entrada.user.setNombre(Nombre);
+                entrada.user.setApellido(Apellido);
+                entrada.user.setCarrera(Carrera);
+                entrada.user.setPassword(Password);
+            }else{
+                Usuario auxuser=entrada.value.buscar(car);
+                if(auxuser!=null){
+                    auxuser.setNombre(Nombre);
+                    auxuser.setApellido(Apellido);
+                    auxuser.setCarrera(Carrera);
+                    auxuser.setPassword(Password);
+                }else{
+                    System.out.println("Usuario:"+car+" no encontrado");
+                }
+            }
+        }else{
+            System.out.println("Usuario: "+car+" no encontrado");
+        }
+    }
     
     public String obetnerCodDot(){
         StringBuilder s=new StringBuilder();

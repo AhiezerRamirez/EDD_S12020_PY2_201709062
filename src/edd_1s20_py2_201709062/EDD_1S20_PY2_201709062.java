@@ -85,16 +85,24 @@ public class EDD_1S20_PY2_201709062 {
         avl.root=avl.borrar(avl.root,"diseno");
         System.out.println(avl.obtenerCodigoDot(avl.root));*/
         TablaHash t=new TablaHash(45);
+        t.add(4011, "Silvia", "Xiloj", "Ingenieria Ciencias Y Sistemas", "ABc*");
         t.add(201709062, "Ahiezer", "Ramirez", "Ingenieria Ciencias Y Sistemas", "Abc123**");
         t.add(20189820, "Mairo", "Salva Tierra", "Industrial", "Abc123*");
+        t.add(2256, "Jenny", "Xiloj", "Ingenieria Ciencias Y Sistemas", "ABc*");
         t.add(20151332, "Juanita", "Perez", "Ingenieria Ciencias Y Sistemas", "Abc13**");
         t.add(20190921, "Covid", "Herrera", "Industrial", "Ac123*");
+        t.add(35466, "Abraham", "Xiloj", "Ingenieria Ciencias Y Sistemas", "ABc*");
         t.add(201601842, "Ahiezer", "Ramirez", "Ingenieria Ciencias Y Sistemas", "bc123**");
         t.add(20188372, "Maria", "Salva Tierra", "Industrial", "Bbc123*");
         t.add(201503476, "Orlando", "Perez", "Ingenieria Ciencias Y Sistemas", "ABc13**");
-        t.add(201503476, "Michael", "Jacson", "Ingenieria Ciencias Y Sistemas", "ABc13**");
+        t.add(411, "Michael", "Jacson", "Ingenieria Ciencias Y Sistemas", "ABc13**");
         t.add(20191129, "Ricardo", "Herrera", "Industrial", "Ac323*");
-        System.out.println(t.obetnerCodDot());//Falta separar la declaracion de la lista de las conexiones en el .Dot
+        System.out.println(t.obetnerCodDot());//Creo que esto ya lo hice Falta separar la declaracion de la lista de las conexiones en el .Dot
+        t.updateUser(20151332, "Juanito", "Peresoso", "Ingenieria Ciencias Y Sistemas", "Abc13**");
+        t.updateUser(98, "Silvio", "Portillo", "Ingenieria Ciencias Y Sistemas", "ABc*");
+        t.updateUser(2256, "Jennita De pelos", "Xiloj", "Ingenieria Ciencias Y Sistemas", "ABc*");
+        t.updateUser(411, "Michael", "Jordan", "Ingenieria Ciencias Y Sistemas", "ABc13**");
+        System.out.println(t.obetnerCodDot());
         //Hay que poner un método buscar para ver sí esxiste el nodo en la lista para eliminar, si no truena
     }
     

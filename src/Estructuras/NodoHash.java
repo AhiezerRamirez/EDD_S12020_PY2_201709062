@@ -53,6 +53,15 @@ class ListaSimple{
             ultimo=n;
         }
     }
+    Usuario buscar(int carne){
+        NodoLista aux=primero;
+        while (aux!=null) {            
+            if(aux.value.carne==carne)
+                return aux.value;
+            aux=aux.siguiente;
+        }
+        return null;
+    }
     public void borrar(int carne){
         if(primero ==null){
             System.out.println("Lista está vacía");
@@ -60,17 +69,17 @@ class ListaSimple{
             ultimo=primero=null;
         }else if(primero.value.carne==carne){
             NodoLista aux = primero;
-            primero.siguiente=primero;
+            primero=primero.siguiente;
             aux.siguiente=null;
         }else if(ultimo.value.carne==carne){
             NodoLista aux=primero;
-            NodoLista aux2;
+            NodoLista aux2=aux;
             while (aux.siguiente!=null) {                
                 aux2=aux;
                 aux=aux.siguiente;
             }
-            ultimo=aux;
-            aux.siguiente=null;
+            ultimo=aux2;
+            aux2.siguiente=null;
         }else{
             NodoLista aux=primero;
             NodoLista aux2;
