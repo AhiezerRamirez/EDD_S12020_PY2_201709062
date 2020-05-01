@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package edd_1s20_py2_201709062;
-import Estructuras.*;
+//import Estructuras.*;
 /**
  *
  * @author Lissette
@@ -15,6 +15,9 @@ public class EDD_1S20_PY2_201709062 {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        Core core=new Core();
+        Login login=new Login(core);
+        login.setVisible(true);
         // TODO code application logic here
         /*ArbolB arbol=new ArbolB(5);
         arbol.insertar(12, 4221, "Rocio", "De nada ", "20 Century Fox", "Pablo Escobar", 1, "Sagas");
@@ -83,7 +86,7 @@ public class EDD_1S20_PY2_201709062 {
         avl.root=avl.borrar(avl.root,"estadistica");
         avl.root=avl.borrar(avl.root,"ciencia Ficcion");
         avl.root=avl.borrar(avl.root,"diseno");
-        System.out.println(avl.obtenerCodigoDot(avl.root));*/
+        System.out.println(avl.obtenerCodigoDot(avl.root));
         TablaHash t=new TablaHash(45);
         t.add(4011, "Silvia", "Xiloj", "Ingenieria Ciencias Y Sistemas", "ABc*");
         t.add(201709062, "Ahiezer", "Ramirez", "Ingenieria Ciencias Y Sistemas", "Abc123**");
@@ -102,7 +105,7 @@ public class EDD_1S20_PY2_201709062 {
         t.updateUser(98, "Silvio", "Portillo", "Ingenieria Ciencias Y Sistemas", "ABc*");
         t.updateUser(2256, "Jennita De pelos", "Xiloj", "Ingenieria Ciencias Y Sistemas", "ABc*");
         t.updateUser(411, "Michael", "Jordan", "Ingenieria Ciencias Y Sistemas", "ABc13**");
-        System.out.println(t.obetnerCodDot());
+        System.out.println(t.obetnerCodDot());*/
         //Hay que poner un método buscar para ver sí esxiste el nodo en la lista para eliminar, si no truena
     }
     
