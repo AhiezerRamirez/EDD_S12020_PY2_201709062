@@ -5,18 +5,20 @@
  */
 package edd_1s20_py2_201709062;
 //import Estructuras.*;
+
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  *
  * @author Lissette
  */
 public class EDD_1S20_PY2_201709062 {
-
-    /**
-     * @param args the command line arguments
-     */
+    public static int indexBloque=0;
     public static void main(String[] args) {
+        List<Data> listaParaBloque=new LinkedList();
         Core core=new Core();
-        Login login=new Login(core);
+        Login login=new Login(core,listaParaBloque,indexBloque);
         login.setVisible(true);
         // TODO code application logic here
         /*ArbolB arbol=new ArbolB(5);

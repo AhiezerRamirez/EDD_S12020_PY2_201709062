@@ -17,6 +17,9 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import Estructuras.Usuario;
+import static java.lang.Math.toIntExact;
+import java.util.LinkedList;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -26,9 +29,13 @@ import javax.swing.JOptionPane;
 public class Login extends javax.swing.JFrame {
 
     Core auxcore;
-    public Login(Core core) {
+    List<Data> listaBloque;
+    int index;
+    public Login(Core core,List paraBloque, int ind) {
         initComponents();
         this.auxcore=core;
+        this.listaBloque=paraBloque;
+        this.index=ind;
     }
 
     @SuppressWarnings("unchecked")
@@ -53,6 +60,7 @@ public class Login extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         btnRegistrar = new javax.swing.JButton();
         btnCargaMasiva = new javax.swing.JButton();
+        btnCrearBolque = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -128,6 +136,13 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
+        btnCrearBolque.setText("Crear Bloque");
+        btnCrearBolque.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCrearBolqueActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -153,11 +168,15 @@ public class Login extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 207, Short.MAX_VALUE)
                 .addComponent(btnCargaMasiva)
                 .addGap(117, 117, 117))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(btnCrearBolque))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(28, 28, 28)
+                .addComponent(btnCrearBolque)
+                .addGap(5, 5, 5)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(textCarnet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -225,6 +244,8 @@ public class Login extends javax.swing.JFrame {
                     String carrera=(String)user.get("Carrera");
                     String password=(String)user.get("Password");
                     auxcore.insertarUsuario(carnet, nombre, apellido, carrera, password);
+                    int auxint=toIntExact(carnet);
+                    listaBloque.add(new CrearUsuario(auxint, nombre, apellido, carrera, password));
                     System.out.println(user.get("Carnet")+" "+ user.get("Nombre"));
                 }
             } catch (ParseException ex) {
@@ -259,7 +280,23 @@ public class Login extends javax.swing.JFrame {
         String carrer=textCarrera.getText();
         String pass=textPassword.getText();
         auxcore.insertarUsuario(car, nombr, apellido, carrer, pass);
+        int auxint=toIntExact(car);
+        listaBloque.add(new CrearUsuario(auxint, nombr, apellido, carrer, pass));
+        textCarnet.setText("");
+        textNombre.setText("");
+        textApellido.setText("");
+        textCarrera.setText("");
+        textPassword.setText("");
+        JOptionPane.showMessageDialog(null, "Usuario ingresado con éxito");
     }//GEN-LAST:event_btnRegistrarActionPerformed
+
+    private void btnCrearBolqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearBolqueActionPerformed
+        
+        Boque block=new Boque(index, listaBloque, "0000");
+        block.minar(block.juntarParaHash());
+        block.mostrarString();
+        index++;
+    }//GEN-LAST:event_btnCrearBolqueActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -295,6 +332,7 @@ public class Login extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCargaMasiva;
+    private javax.swing.JButton btnCrearBolque;
     private javax.swing.JButton btnIniciar;
     private javax.swing.JButton btnRegistrar;
     private javax.swing.JLabel jLabel1;
