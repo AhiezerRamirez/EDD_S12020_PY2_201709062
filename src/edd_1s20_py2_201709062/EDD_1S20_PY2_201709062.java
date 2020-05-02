@@ -4,8 +4,9 @@
  * and open the template in the editor.
  */
 package edd_1s20_py2_201709062;
-//import Estructuras.*;
 
+import Estructuras.*;
+import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -17,8 +18,11 @@ public class EDD_1S20_PY2_201709062 {
     public static int indexBloque=0;
     public static void main(String[] args) {
         List<Data> listaParaBloque=new LinkedList();
+        ListaDoble listaBloques=new ListaDoble();
         Core core=new Core();
-        Login login=new Login(core,listaParaBloque,indexBloque);
+        File dir = new File("./BloquesJson");
+        dir.mkdir();
+        Login login=new Login(core,listaParaBloque,indexBloque,listaBloques);
         login.setVisible(true);
         // TODO code application logic here
         /*ArbolB arbol=new ArbolB(5);

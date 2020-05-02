@@ -5,6 +5,10 @@
  */
 package edd_1s20_py2_201709062;
 
+import Estructuras.CrearUsuario;
+import Estructuras.Data;
+import Estructuras.Boque;
+import Estructuras.ListaDoble;
 import javax.swing.JFileChooser;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -31,11 +35,13 @@ public class Login extends javax.swing.JFrame {
     Core auxcore;
     List<Data> listaBloque;
     int index;
-    public Login(Core core,List paraBloque, int ind) {
+    ListaDoble listablocks;
+    public Login(Core core,List paraBloque, int ind,ListaDoble list) {
         initComponents();
         this.auxcore=core;
         this.listaBloque=paraBloque;
         this.index=ind;
+        this.listablocks=list;
     }
 
     @SuppressWarnings("unchecked")
@@ -291,11 +297,24 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
     private void btnCrearBolqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearBolqueActionPerformed
+        Boque block;
+        if(listablocks.estaVacia()){
+            block=new Boque(index, listaBloque, "0000");
+            block.minar(block.juntarParaHash());
+            block.mostrarString();
+            listablocks.insert(block);
+            listablocks.NodosToString();
+        }else{
+            block=new Boque(index, listaBloque, listablocks.returnLastHash());
+            block.minar(block.juntarParaHash());
+            block.mostrarString();
+            listablocks.insert(block);
+            listablocks.NodosToString();
+        }
         
-        Boque block=new Boque(index, listaBloque, "0000");
-        block.minar(block.juntarParaHash());
-        block.mostrarString();
+        
         index++;
+        listaBloque.clear();
     }//GEN-LAST:event_btnCrearBolqueActionPerformed
 
     public static void main(String args[]) {

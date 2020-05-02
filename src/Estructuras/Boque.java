@@ -3,9 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package edd_1s20_py2_201709062;
+package Estructuras;
 
 //import java.util.Date;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.LinkedList;
@@ -13,6 +16,7 @@ import java.util.List;
 import java.time.LocalDateTime;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.xml.bind.DatatypeConverter;
 
 public class Boque {
@@ -91,5 +95,16 @@ public class Boque {
         s.append("\"PREVIOSHASH\" :\"").append(prevHash).append("\",\n\t");
         s.append("\"HASH: \"").append(hash).append("\"\n}");
         System.out.println(s.toString());
+        try {
+            FileOutputStream archivoJson=new FileOutputStream("./BloquesJson/Bloque"+Integer.toString(index)+".json", true);
+            byte[] b=s.toString().getBytes();
+            archivoJson.write(b);
+            archivoJson.close();
+        } catch (FileNotFoundException ex) {
+            JOptionPane.showMessageDialog(null,"Error al guardar el Archivo Json");
+            //Logger.getLogger(Boque.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Boque.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

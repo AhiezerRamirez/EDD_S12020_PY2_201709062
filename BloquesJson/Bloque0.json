@@ -1,0 +1,41 @@
+{
+	"INDEX: 0,
+	"TIMESTAMP":  "2020-05-02T01:08:45.378",
+	"NONCE: 45842,
+	"DATA": [		{
+			"CREAR_USUARIO" :[
+				{
+					"Carnet": 201503476,
+					"Nombre": Ricardo,
+					"Apellido": Cutz,
+					"Carrera": Ingenieria en Sistemas,
+					"Password": 123456
+				}
+			]
+		},
+		{
+			"CREAR_USUARIO" :[
+				{
+					"Carnet": 201503477,
+					"Nombre": Juanito,
+					"Apellido": Hernandez,
+					"Carrera": Ingenieria Civil,
+					"Password": 123456
+				}
+			]
+		},
+		{
+			"CREAR_USUARIO" :[
+				{
+					"Carnet": 202005878,
+					"Nombre": Antonio,
+					"Apellido": Hernandez,
+					"Carrera": Ingenieria Electrica,
+					"Password": 123456
+				}
+			]
+		}
+	],
+	"PREVIOSHASH" :"0000",
+	"HASH: "00003B69AEA446EFDFA925C9294B679112EB125FD17912A5AF1C946CFADC752E"
+}
