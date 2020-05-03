@@ -5,6 +5,8 @@
  */
 package Estructuras;
 
+import java.util.LinkedList;
+
 public class ArbolAVL {
     public NodoAVL root;
     public ArbolAVL(){
@@ -46,13 +48,13 @@ public class ArbolAVL {
             return 0;
         return altura(N.getDer()) - altura(N.getIzq());
     }
-    public NodoAVL insertar(NodoAVL nodo,String categoria){
+    public NodoAVL insertar(NodoAVL nodo,String categoria,int propie){
         if(nodo == null)
-            return (new NodoAVL(categoria));
+            return (new NodoAVL(categoria,propie));
         else if(categoria.compareToIgnoreCase(nodo.getCategoria()) < 0)
-            nodo.setIzq(insertar(nodo.getIzq(),categoria));
+            nodo.setIzq(insertar(nodo.getIzq(),categoria,propie));
         else if(categoria.compareToIgnoreCase(nodo.getCategoria()) > 0)
-            nodo.setDer(insertar(nodo.getDer(),categoria));
+            nodo.setDer(insertar(nodo.getDer(),categoria,propie));
         else
             return nodo;
         nodo.setAltura(1+ max(altura(nodo.getIzq()),altura(nodo.getDer())));
@@ -163,5 +165,25 @@ public class ArbolAVL {
         }
         
         return raiz;
+    }
+    private void getAuxCategories(NodoAVL raiz,LinkedList<String> l,int carnet){
+        if(raiz==null)
+            return;
+        getAuxCategories(raiz.getIzq(), l,carnet);
+        if(carnet==raiz.propietario)
+            l.add(raiz.getCategoria());
+        getAuxCategories(raiz.getDer(), l, carnet);
+    }
+    public LinkedList<String> getOwnersCategories(NodoAVL raiz,int carnet){
+        LinkedList<String> auxdata=new LinkedList<>();
+        getAuxCategories(raiz, auxdata, carnet);
+        return auxdata;
+    }
+    public NodoAVL getOwner(NodoAVL raiz, String catego){
+        if(raiz==null|| raiz.getCategoria().equals(catego))
+            return raiz;
+        if(catego.compareToIgnoreCase(raiz.getCategoria())>0)
+            return getOwner(raiz.getDer(), catego);
+        return getOwner(raiz.getIzq(), catego);
     }
 }

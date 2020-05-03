@@ -16,6 +16,7 @@ import java.util.List;
  */
 public class EDD_1S20_PY2_201709062 {
     public static int indexBloque=0;
+    public static int curSession=0;
     public static void main(String[] args) {
         List<Data> listaParaBloque=new LinkedList();
         ListaDoble listaBloques=new ListaDoble();

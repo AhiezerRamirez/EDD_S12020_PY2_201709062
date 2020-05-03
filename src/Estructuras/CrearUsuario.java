@@ -37,7 +37,7 @@ public class CrearUsuario extends Data{
 
     @Override
     public String strintParaHash() {
-        String cadena="{\"CREAR_USUARIO\" :[{";
+        String cadena="{\"CREAR_USUARIO\":[{";
         cadena+="\"Carnet\": "+carnet+",";
         cadena+="\"Nombre\": "+nombre+",";
         cadena+="\"Apellido\": "+apellido+",";

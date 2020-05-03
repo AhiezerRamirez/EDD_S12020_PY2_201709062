@@ -36,12 +36,15 @@ public class Login extends javax.swing.JFrame {
     List<Data> listaBloque;
     int index;
     ListaDoble listablocks;
+    PanelPrincipal ventanaPanel;
     public Login(Core core,List paraBloque, int ind,ListaDoble list) {
         initComponents();
         this.auxcore=core;
         this.listaBloque=paraBloque;
         this.index=ind;
         this.listablocks=list;
+        this.ventanaPanel=new PanelPrincipal(core, paraBloque, ind, list);
+        ventanaPanel.setVisible(false);
     }
 
     @SuppressWarnings("unchecked")
@@ -272,7 +275,11 @@ public class Login extends javax.swing.JFrame {
         String passwor=txtPass.getText();
         Usuario curSesion=auxcore.buscarUsuario(carnet, passwor);
         if(curSesion!=null){
-            JOptionPane.showMessageDialog(null, "Todo Chileron");
+            EDD_1S20_PY2_201709062.curSession=curSesion.getCarne();
+            PanelPrincipal.lbUsuario.setText(Integer.toString(curSesion.getCarne()));
+            ventanaPanel.setVisible(true);
+            setVisible(false);
+            //JOptionPane.showMessageDialog(null, "Todo Chileron");
         }else{
             JOptionPane.showMessageDialog(null, "Carnet o contraseña incorrecta");
         }
@@ -311,8 +318,6 @@ public class Login extends javax.swing.JFrame {
             listablocks.insert(block);
             listablocks.NodosToString();
         }
-        
-        
         index++;
         listaBloque.clear();
     }//GEN-LAST:event_btnCrearBolqueActionPerformed

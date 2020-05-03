@@ -14,8 +14,10 @@ public class NodoAVL {
     private ArbolB arbolb;
     private int altura;
     private NodoAVL izq,der;
-    public NodoAVL(String cate){
+    public int propietario;
+    public NodoAVL(String cate, int propie){
         this.categoria=cate;
+        this.propietario=propie;
         this.arbolb=new ArbolB(5);
         this.altura=1;
         this.izq=null;
