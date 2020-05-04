@@ -9,6 +9,8 @@ import static java.lang.Math.toIntExact;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.LinkedList;
+import java.util.Stack;
 public class Core {
     TablaHash tabla;
     ArbolAVL arbolAVL;
@@ -38,5 +40,47 @@ public class Core {
             System.out.println(e.getMessage());
         }
         return "";
+    }
+    public Libro buscarLibro(NodoAVL raiz,int isnl){
+        if(raiz==null)
+            return null;
+        Stack<NodoAVL> nodeStack = new Stack<>(); 
+        nodeStack.push(raiz); 
+        while (nodeStack.empty()==false) {            
+            NodoAVL mynode = nodeStack.peek(); 
+            System.out.print(mynode.getCategoria() + " "); 
+            Libro auxnodoB=mynode.getArbolb().buscar(isnl);
+            if(auxnodoB!=null){
+                return auxnodoB;
+            }
+            nodeStack.pop();
+            if (mynode.getDer() != null) { 
+                nodeStack.push(mynode.getDer()); 
+            } 
+            if (mynode.getIzq() != null) { 
+                nodeStack.push(mynode.getIzq()); 
+            } 
+        }
+        return null;
+    }
+    public LinkedList<LinkedList<Libro>> buscarSubString(NodoAVL raiz,String substring){
+        LinkedList<LinkedList<Libro>> listaListasLibros=new LinkedList();
+        if(raiz==null)
+            return null;
+        Stack<NodoAVL> nodeStack = new Stack<>(); 
+        nodeStack.push(raiz); 
+        while (nodeStack.empty()==false) {            
+            NodoAVL mynode = nodeStack.peek(); 
+            System.out.print(mynode.getCategoria() + " "); 
+            listaListasLibros.add(mynode.getArbolb().buscarSubConsidencias(substring));
+            nodeStack.pop();
+            if (mynode.getDer() != null) { 
+                nodeStack.push(mynode.getDer()); 
+            } 
+            if (mynode.getIzq() != null) { 
+                nodeStack.push(mynode.getIzq()); 
+            } 
+        }
+        return listaListasLibros;
     }
 }

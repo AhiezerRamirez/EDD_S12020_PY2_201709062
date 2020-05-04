@@ -21,6 +21,7 @@ public class EDD_1S20_PY2_201709062 {
         List<Data> listaParaBloque=new LinkedList();
         ListaDoble listaBloques=new ListaDoble();
         Core core=new Core();
+        core.tabla.add(123, "Ahiezer", "Ramirez", "Ing Sistemas", "123");
         File dir = new File("./BloquesJson");
         dir.mkdir();
         Login login=new Login(core,listaParaBloque,indexBloque,listaBloques);

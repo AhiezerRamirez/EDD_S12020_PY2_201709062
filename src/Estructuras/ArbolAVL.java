@@ -186,4 +186,5 @@ public class ArbolAVL {
             return getOwner(raiz.getDer(), catego);
         return getOwner(raiz.getIzq(), catego);
     }
+    
 }

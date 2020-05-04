@@ -6,10 +6,10 @@
 package Estructuras;
 
 public class Libro {
-    private int ISBN, Year,Edicion;
+    private int ISBN, Year,Edicion,Propietario;
     private String Idioma,Titulo,Editorial,Autor,Categoria;
     
-    public Libro(int isbn,int year,String idioma, String titulo, String editorial,String autor,int edicion,String categoria){
+    public Libro(int isbn,int year,String idioma, String titulo, String editorial,String autor,int edicion,String categoria,int propietaario){
         this.ISBN = isbn;
         this.Year = year;
         this.Edicion = edicion;
@@ -18,7 +18,17 @@ public class Libro {
         this.Editorial = editorial;
         this.Autor = autor;
         this.Categoria = categoria;
+        this.Propietario=propietaario;
     }
+
+    public int getPropietario() {
+        return Propietario;
+    }
+
+    public void setPropietario(int Propietario) {
+        this.Propietario = Propietario;
+    }
+    
 
     public int getISBN() {
         return ISBN;
