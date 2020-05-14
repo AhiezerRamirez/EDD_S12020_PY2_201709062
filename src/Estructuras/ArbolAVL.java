@@ -187,4 +187,13 @@ public class ArbolAVL {
         return getOwner(raiz.getIzq(), catego);
     }
     
+    public NodoAVL buscar(NodoAVL raiz, String categoria){
+        if(raiz ==null || raiz.getCategoria().equals(categoria))
+            return raiz;
+        if(categoria.compareToIgnoreCase(raiz.getCategoria()) < 0)
+            return buscar(raiz.getIzq(),categoria);
+        
+        return buscar(raiz.getDer(),categoria);
+    }
+    
 }

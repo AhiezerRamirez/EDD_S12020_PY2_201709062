@@ -15,10 +15,10 @@ public class NodoB{
     NodoB[] C=null;
     boolean hoja;
     public NodoB(int orden, boolean leaf){
-        this.t=2;
+        this.t=orden;
         this.hoja=leaf;
-        this.libros=new Libro[orden-1];
-        this.C=new NodoB[orden];
+        this.libros=new Libro[2*orden-1];
+        this.C=new NodoB[2*orden];
         this.n=0;
     }
     LinkedList<Libro> buscarSubSring(String substring){
@@ -26,17 +26,18 @@ public class NodoB{
         Queue<NodoB> cola=new LinkedList();
         cola.add(this);
         while (!cola.isEmpty()) {            
-            NodoB nodoaux=cola.peek();
+            NodoB nodoaux=cola.poll();
             int i;
-            for ( i = 0; i < n; i++) {
-        	if(hoja==false)
-                    cola.add(C[i]);
-               	if(nodoaux.libros[i].getTitulo().contains(substring))
+            for ( i = 0; i < nodoaux.n; i++) {
+        	if(!nodoaux.hoja){
+                    cola.add(nodoaux.C[i]);
+                }
+                if(nodoaux.libros[i].getTitulo().contains(substring))
                     listLibros.add(nodoaux.libros[i]);
+                
             }
-            cola.remove();
-            if(hoja==false)
-            cola.add(C[i]);
+            if(!nodoaux.hoja)
+                cola.add(nodoaux.C[i]);
         }
         return listLibros;
     }
@@ -100,12 +101,13 @@ public class NodoB{
     }
     public Libro buscar(int k){
         int i=0;
-        while(i<n&&k>libros[i].getISBN()){
+        while(i < n && k > libros[i].getISBN()){
             i++;
         }
-        if(libros[i].getISBN()==k)
+        if(i<n){
+            if(libros[i].getISBN()==k)
             return this.libros[i];
-        
+        }
         if(this.hoja==true){
             return null;
         }
@@ -123,7 +125,7 @@ public class NodoB{
         }else{
             while(i>=0 && libros[i].getISBN()>book.getISBN())
                 i--;
-            if(C[i+1].n == 4){
+            if(C[i+1].n == 5){
                 dividirNodo(i+1,C[i+1]);
                 if(libros[i+1].getISBN() < book.getISBN())
                     i++;
@@ -133,13 +135,13 @@ public class NodoB{
         }
     }
     void dividirNodo(int i, NodoB y){
-        NodoB z=new NodoB(5,y.hoja);
-        z.n=t;
-        for (int j = 0; j < t; j++) {
+        NodoB z=new NodoB(y.t,y.hoja);
+        z.n=t-1;
+        for (int j = 0; j < t-1; j++) {
             z.libros[j]=y.libros[j+t];
         }
         if(y.hoja==false){
-            for (int j = 0; j <=t; j++) {
+            for (int j = 0; j < t; j++) {
                 z.C[j]=y.C[j+t];
             }
         }
@@ -173,11 +175,11 @@ public class NodoB{
                 hijo.C[i+t]=hermano.C[i];
             }
         }
-        for (int i = idx+1; i < n; i++) {
+        for (int i = idx+1; i < n; ++i) {
             libros[i-1]=libros[i];
         }
-        for (int i = idx+2; i < n; i++) {
-            C[i-2]=C[i];
+        for (int i = idx+2; i <= n; ++i) {
+            C[i-1]=C[i];
         }
         hijo.n+=hermano.n+1;
         n--;
@@ -190,11 +192,11 @@ public class NodoB{
             hijo.C[(hijo.n)+1]=hermano.C[0];
         }
         libros[idx]=hermano.libros[0];
-        for (int i = 1; i < hermano.n; i++) {
+        for (int i = 1; i < hermano.n; ++i) {
             hermano.libros[i-1]=hermano.libros[i];
         }
         if(!hermano.hoja){
-            for (int i = 1; i < hermano.n; i++) {
+            for (int i = 1; i < hermano.n; ++i) {
                 hermano.C[i-1]=hermano.C[i];
             }
         }
@@ -280,7 +282,7 @@ public class NodoB{
         }
     }
     void removerHoja(int idx){
-        for (int i = idx+1; i < n; i++) {
+        for (int i = idx+1; i < n; ++i) {
             libros[i-1]=libros[i];
         }
         n--;

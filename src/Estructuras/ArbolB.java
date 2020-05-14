@@ -18,7 +18,7 @@ public class ArbolB {
             root.libros[0]=book;
             root.n=1;
         }else{
-            if(root.n==4){
+            if(root.n==2*t-1){
                 NodoB n=new NodoB(t,false);
                 n.C[0]=root;
                 n.dividirNodo(0, root);
@@ -40,12 +40,12 @@ public class ArbolB {
         }
         root.remover(k);
         if(root.n==0){
-            NodoB temp=root;
             if(root.hoja){
                 root=null;
             }else{
                 root=root.C[0];
             }
+            
         }
     }
     public void imprimir(){
@@ -62,7 +62,10 @@ public class ArbolB {
             System.out.print("El árbol está vacío");
     }
     public Libro buscar(int isn){
-        return root.buscar(t);
+        if(root==null)
+            return null;
+        else
+        return root.buscar(isn);
     } 
     public LinkedList<Libro> buscarSubConsidencias(String substring){
         return root.buscarSubSring(substring);

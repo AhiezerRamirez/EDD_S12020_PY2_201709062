@@ -95,6 +95,28 @@ public class TablaHash {
             return null;
         }
     }
+    
+    public Usuario buscarlogin(int car){
+        int index=hashFuncion(car);
+        NodoHash entrada=nodo[index];
+        if(entrada!=null){
+            if(entrada.user.carne==car ){
+                return entrada.user;
+            }else{
+                Usuario auxuser=entrada.value.buscar(car);
+                if(auxuser!=null){
+                    return auxuser;
+                }else{
+                    System.out.println("Usuario:"+car+" no encontrado");
+                    return null;
+                }
+            }
+        }else{
+            System.out.println("Usuario: "+car+" no encontrado");
+            return null;
+        }
+    }
+    
     public String obetnerCodDot(){
         StringBuilder s=new StringBuilder();
         s.append("digraph G {\n\tnodesep=.05;\n\trankdir=LR;\n\tnode [shape=record,width=.1,height=.1];\n\t");

@@ -24,34 +24,41 @@ public class EDD_1S20_PY2_201709062 {
         core.tabla.add(123, "Ahiezer", "Ramirez", "Ing Sistemas", "123");
         File dir = new File("./BloquesJson");
         dir.mkdir();
-        Login login=new Login(core,listaParaBloque,indexBloque,listaBloques);
+        Login login=new Login(core,listaParaBloque,indexBloque,listaBloques); //No encuentra unos libros auque usualment son los que están en las hojas del árbol b
         login.setVisible(true);
+        /*
+        
+            ***Falta validar que no esté el libro repetido, Y también validar que sea de él*****
+            ***Me quedé en eliminar perfil
+        */
         // TODO code application logic here
-        /*ArbolB arbol=new ArbolB(5);
-        arbol.insertar(12, 4221, "Rocio", "De nada ", "20 Century Fox", "Pablo Escobar", 1, "Sagas");
-        arbol.insertar(4, 4221, "Rocio", "De nada ", "20 Century Fox", "Pablo Escobar", 1, "Sagas");
-        arbol.insertar(63, 4221, "Rocio", "De nada ", "20 Century Fox", "Pablo Escobar", 1, "Sagas");
-        arbol.insertar(64, 4221, "Rocio", "De nada ", "20 Century Fox", "Pablo Escobar", 1, "Sagas");
-        arbol.insertar(9, 4221, "Rocio", "De nada ", "20 Century Fox", "Pablo Escobar", 1, "Sagas");
-        arbol.insertar(2, 4221, "Rocio", "De nada ", "20 Century Fox", "Pablo Escobar", 1, "Sagas");
-        arbol.insertar(62, 4221, "Rocio", "De nada ", "20 Century Fox", "Pablo Escobar", 1, "Sagas");        
-        arbol.insertar(45, 4221, "Rocio", "De nada ", "20 Century Fox", "Pablo Escobar", 1, "Sagas");
-        arbol.insertar(50, 4221, "Rocio", "De nada ", "20 Century Fox", "Pablo Escobar", 1, "Sagas");
-        arbol.insertar(56, 4221, "Rocio", "De nada ", "20 Century Fox", "Pablo Escobar", 1, "Sagas");
-        arbol.insertar(44, 4221, "Rocio", "De nada ", "20 Century Fox", "Pablo Escobar", 1, "Sagas");
-        arbol.insertar(120, 4221, "Rocio", "De nada ", "20 Century Fox", "Pablo Escobar", 1, "Sagas");
-        arbol.insertar(34, 4221, "Rocio", "De nada ", "20 Century Fox", "Pablo Escobar", 1, "Sagas");
-        arbol.insertar(10, 1432, "Aleman", "De nada ", "20 Century Fox", "Pablo Escobar", 1, "Sagas");
-        arbol.insertar(20, 4221, "Rocio", "De nada ", "20 Century Fox", "Pablo Escobar", 1, "Sagas");
-        arbol.insertar(11, 1999, "Aleman", "Harry ", "20 Century Fox", "Pablo Escobar", 1, "Sagas");
-        arbol.insertar(3, 9291, "Frances", "Rapídos ", "20 Century Fox", "Pablo Escobar", 1, "Sagas");        
-        arbol.insertar(7, 1929, "Español", "Lejos ", "20 Century Fox", "Pablo Escobar", 1, "Sagas");
-        arbol.insertar(5, 1038, "Castellano", "2012 ", "20 Century Fox", "Pablo Escobar", 1, "Sagas");        
-        arbol.insertar(1, 300, "Mandarin", "Gemelas ", "20 Century Fox", "Pablo Escobar", 1, "Sagas");        
-        arbol.insertar(8, 1129, "italiano", "Temblores ", "20 Century Fox", "Pablo Escobar", 1, "Sagas");
-        arbol.insertar(6, 4221, "Rocio", "De nada ", "20 Century Fox", "Pablo Escobar", 1, "Sagas");
-        arbol.insertar(128, 1129, "italiano", "Temblores ", "20 Century Fox", "Pablo Escobar", 1, "Sagas");
-        arbol.insertar(136, 4221, "Rocio", "De nada ", "20 Century Fox", "Pablo Escobar", 1, "Sagas");
+        /*ArbolB arbol=new ArbolB(6);
+        arbol.insertar(12, 4221, "Rocio", "De nada ", "20 Century Fox", "Pablo Escobar", 1, "Sagas",20);
+        arbol.insertar(4, 4221, "Rocio", "De nada ", "20 Century Fox", "Pablo Escobar", 1, "Sagas",23);
+        arbol.insertar(63, 4221, "Rocio", "De nada ", "20 Century Fox", "Pablo Escobar", 1, "Sagas",23);
+        arbol.insertar(64, 4221, "Rocio", "De nada ", "20 Century Fox", "Pablo Escobar", 1, "Sagas",23);
+        arbol.insertar(9, 4221, "Rocio", "De nada ", "20 Century Fox", "Pablo Escobar", 1, "Sagas",33);
+        arbol.insertar(2, 4221, "Rocio", "De nada ", "20 Century Fox", "Pablo Escobar", 1, "Sagas",33);
+        arbol.insertar(62, 4221, "Rocio", "De nada ", "20 Century Fox", "Pablo Escobar", 1, "Sagas",1);        
+        arbol.insertar(45, 4221, "Rocio", "De nada ", "20 Century Fox", "Pablo Escobar", 1, "Sagas",1);
+        arbol.insertar(50, 4221, "Rocio", "De nada ", "20 Century Fox", "Pablo Escobar", 1, "Sagas",1);
+        arbol.insertar(56, 4221, "Rocio", "De nada ", "20 Century Fox", "Pablo Escobar", 1, "Sagas",1);
+        arbol.insertar(44, 4221, "Rocio", "De nada ", "20 Century Fox", "Pablo Escobar", 1, "Sagas",3);
+        arbol.insertar(120, 4221, "Rocio", "De nada ", "20 Century Fox", "Pablo Escobar", 1, "Sagas",3);
+        arbol.insertar(34, 4221, "Rocio", "De nada ", "20 Century Fox", "Pablo Escobar", 1, "Sagas",1);
+        arbol.insertar(10, 1432, "Aleman", "De nada ", "20 Century Fox", "Pablo Escobar", 1, "Sagas",3);
+        arbol.insertar(20, 4221, "Rocio", "De nada ", "20 Century Fox", "Pablo Escobar", 1, "Sagas",1);
+        arbol.insertar(11, 1999, "Aleman", "Harry ", "20 Century Fox", "Pablo Escobar", 1, "Sagas",1);
+        arbol.insertar(3, 9291, "Frances", "Rapídos ", "20 Century Fox", "Pablo Escobar", 1, "Sagas",3);        
+        arbol.insertar(7, 1929, "Español", "Lejos ", "20 Century Fox", "Pablo Escobar", 1, "Sagas",3);
+        arbol.insertar(5, 1038, "Castellano", "2012 ", "20 Century Fox", "Pablo Escobar", 1, "Sagas",3);        
+        arbol.insertar(1, 300, "Mandarin", "Gemelas ", "20 Century Fox", "Pablo Escobar", 1, "Sagas",1);        
+        arbol.insertar(8, 1129, "italiano", "Temblores ", "20 Century Fox", "Pablo Escobar", 1, "Sagas",1);
+        arbol.insertar(6, 4221, "Rocio", "De nada ", "20 Century Fox", "Pablo Escobar", 1, "Sagas",1);
+        arbol.insertar(128, 1129, "italiano", "Temblores ", "20 Century Fox", "Pablo Escobar", 1, "Sagas",1);
+        arbol.insertar(46, 1129, "italiano", "Temblores ", "20 Century Fox", "Pablo Escobar", 1, "Sagas",1);
+        arbol.insertar(136, 4221, "Rocio", "De nada ", "20 Century Fox", "Pablo Escobar", 1, "Sagas",1);
+        arbol.insertar(47, 4221, "Rocio", "De nada ", "20 Century Fox", "Pablo Escobar", 1, "Sagas",1);
         arbol.imprimir();
         arbol.remover(63);
         arbol.remover(62);

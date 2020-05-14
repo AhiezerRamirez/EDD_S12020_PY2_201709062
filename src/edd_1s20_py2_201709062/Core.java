@@ -15,7 +15,7 @@ public class Core {
     TablaHash tabla;
     ArbolAVL arbolAVL;
     public Core(){
-        this.tabla=new TablaHash(5);
+        this.tabla=new TablaHash(45);
         this.arbolAVL=new ArbolAVL();
     }
     public void insertarUsuario(Long car,String Nombre, String Apellido,String Carrera, String Password){
@@ -25,6 +25,13 @@ public class Core {
     public Usuario buscarUsuario(int car,String password){
         String pass=getMD5(password);
         return tabla.buscar(car, pass);
+    }
+    public Usuario buscarLogin(int car){
+        return tabla.buscarlogin(car);
+    }
+    public void editarUsuario(int car,String Nombre, String Apellido,String Carrera, String Password){
+        String auxpass=getMD5(Password);
+        tabla.updateUser(car, Nombre, Apellido, Carrera, auxpass);
     }
     private String getMD5(String input){
         try {
@@ -45,10 +52,13 @@ public class Core {
         if(raiz==null)
             return null;
         Stack<NodoAVL> nodeStack = new Stack<>(); 
+        
         nodeStack.push(raiz); 
         while (nodeStack.empty()==false) {            
             NodoAVL mynode = nodeStack.peek(); 
-            System.out.print(mynode.getCategoria() + " "); 
+            //System.out.print(mynode.getCategoria() + " ");
+            System.out.println(mynode.getCategoria());
+            mynode.getArbolb().imprimir();
             Libro auxnodoB=mynode.getArbolb().buscar(isnl);
             if(auxnodoB!=null){
                 return auxnodoB;
@@ -70,17 +80,24 @@ public class Core {
         Stack<NodoAVL> nodeStack = new Stack<>(); 
         nodeStack.push(raiz); 
         while (nodeStack.empty()==false) {            
-            NodoAVL mynode = nodeStack.peek(); 
+            NodoAVL mynode = nodeStack.pop(); 
             System.out.print(mynode.getCategoria() + " "); 
             listaListasLibros.add(mynode.getArbolb().buscarSubConsidencias(substring));
-            nodeStack.pop();
+            
             if (mynode.getDer() != null) { 
                 nodeStack.push(mynode.getDer()); 
             } 
             if (mynode.getIzq() != null) { 
                 nodeStack.push(mynode.getIzq()); 
-            } 
+            }
+            //nodeStack.pop();
         }
         return listaListasLibros;
+    }
+    public void borrarLibro(NodoAVL raiz,String categoria,int isbn){
+        NodoAVL avlnode=this.arbolAVL.buscar(raiz, categoria);
+        if(avlnode!=null){
+            avlnode.getArbolb().remover(isbn);
+        }
     }
 }
