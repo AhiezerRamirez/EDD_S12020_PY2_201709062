@@ -109,7 +109,7 @@ class ListaSimple{
         NodoLista aux=primero;
         while (aux!=null) {            
             c.append("nodo").append(aux.value.carne).append("[label=\"").append(aux.value.carne).append("\\n").
-            append(aux.value.nombre).append(" ").append(aux.value.apellido).append(" \"];\n\t");
+            append(aux.value.nombre).append(" ").append(aux.value.apellido).append("\\n").append(aux.value.password).append(" \"];\n\t");
             aux=aux.siguiente;
         }
         return c.toString();

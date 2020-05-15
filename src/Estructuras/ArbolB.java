@@ -1,12 +1,16 @@
 
 package Estructuras;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 public class ArbolB {
     public NodoB root;
-    public int t;
+    public int t,numLibros=0;
     public ArbolB(int orden){
         this.root=null;
         this.t=orden;
@@ -32,6 +36,7 @@ public class ArbolB {
                 root.insertNotFull(book);
             }
         }
+        numLibros++;
     }
     public void remover(int k){
         if(root==null){
@@ -48,7 +53,7 @@ public class ArbolB {
             
         }
     }
-    public void imprimir(){
+    public void imprimir(String categoria){
         StringBuilder cod=new StringBuilder();
         List<Integer> recorridos=new LinkedList<>();
         if(this.root!=null){
@@ -56,10 +61,10 @@ public class ArbolB {
             this.root.recorrer(cod,recorridos);
             this.root.recorrerhojas(cod,recorridos);
             cod.append("\n}");
-            System.out.println(cod.toString());
+            comandoDot(categoria+"_arbolB",cod.toString());
         }
         else
-            System.out.print("El árbol está vacío");
+            JOptionPane.showMessageDialog(null,"El árbol está vacío");
     }
     public Libro buscar(int isn){
         if(root==null)
@@ -69,6 +74,25 @@ public class ArbolB {
     } 
     public LinkedList<Libro> buscarSubConsidencias(String substring){
         return root.buscarSubSring(substring);
+    }
+    public LinkedList<Integer> getAllBooks(){
+        return root.getAllBooks();
+    }
+    private void comandoDot(String nombre,String codigoDot){
+        String ruta="./BloquesJson/Graficas/"+nombre+".dot";
+        try {
+            FileOutputStream fos=new FileOutputStream(ruta, true);
+            byte[] b= codigoDot.getBytes();       //converts string into bytes  
+            fos.write(b);           //writes bytes into file  
+            fos.close();
+            ProcessBuilder builder = new ProcessBuilder(
+            "cmd.exe", "/c", "dot -Tjpg ./BloquesJson/Graficas/"+nombre+".dot -o ./BloquesJson/Graficas/"+nombre+".jpg");
+            builder.start();
+        } catch (FileNotFoundException ex) {
+            JOptionPane.showMessageDialog(null, "Algo salió mal con el archivo dot");
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Algo salió mal con la imagen jpg");
+        }
     }
 }
 

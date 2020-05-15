@@ -29,6 +29,9 @@ public class Core {
     public Usuario buscarLogin(int car){
         return tabla.buscarlogin(car);
     }
+    public void eliminarUsuario(int car){
+        tabla.remove(car);
+    }
     public void editarUsuario(int car,String Nombre, String Apellido,String Carrera, String Password){
         String auxpass=getMD5(Password);
         tabla.updateUser(car, Nombre, Apellido, Carrera, auxpass);
@@ -58,7 +61,7 @@ public class Core {
             NodoAVL mynode = nodeStack.peek(); 
             //System.out.print(mynode.getCategoria() + " ");
             System.out.println(mynode.getCategoria());
-            mynode.getArbolb().imprimir();
+            //mynode.getArbolb().imprimir();
             Libro auxnodoB=mynode.getArbolb().buscar(isnl);
             if(auxnodoB!=null){
                 return auxnodoB;

@@ -7,6 +7,9 @@ package edd_1s20_py2_201709062;
 
 
 import Estructuras.*;
+import java.awt.event.ItemEvent;
+//import java.awt.event.ItemEvent;
+//import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -30,12 +33,17 @@ public class PanelPrincipal extends javax.swing.JFrame {
     List<Data> listaBloque;
     int index;
     ListaDoble listablocks;
-    public PanelPrincipal(Core core,List paraBloque, int ind,ListaDoble list) {
+    javax.swing.JFrame VentanaLogin;
+    String infolibro;//Es para expandir la info del libro
+    String auxinfolibro;
+    //private final ItemHandler handler;
+    public PanelPrincipal(Core core,List paraBloque, int ind,ListaDoble list,javax.swing.JFrame loginFrame) {
         initComponents();
         jRadioButton1.setMnemonic(KeyEvent.VK_B);
         jRadioButton2.setMnemonic(KeyEvent.VK_B);
         jRadioButton1.setSelected(true);
         txtBuscarTitulo.setEditable(false);//jRadioButton1.addActionListener(this);
+        this.VentanaLogin=loginFrame;
         ButtonGroup group = new ButtonGroup();
         group.add(jRadioButton1);
         group.add(jRadioButton2);
@@ -44,6 +52,8 @@ public class PanelPrincipal extends javax.swing.JFrame {
         this.listaBloque=paraBloque;
         this.index=ind;
         this.listablocks=list;
+        //handler=new ItemHandler();
+        //NavegacionC.addItemListener(handler);
     }
 
     @SuppressWarnings("unchecked")
@@ -89,6 +99,17 @@ public class PanelPrincipal extends javax.swing.JFrame {
         jLabel37 = new javax.swing.JLabel();
         jButton4 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
+        jLabelx = new javax.swing.JLabel();
+        NavegacionC = new javax.swing.JComboBox<>();
+        NavegacionL = new javax.swing.JComboBox<>();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        NavegacionInfo = new javax.swing.JTextArea();
+        NavegacionMasInfo = new javax.swing.JCheckBox();
+        jLabelx1 = new javax.swing.JLabel();
+        BusquedaNavegacion = new javax.swing.JTextField();
+        jButton5 = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        NavegacionBuscar = new javax.swing.JTextArea();
         jPanel5 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
@@ -173,7 +194,7 @@ public class PanelPrincipal extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("Reflescar");
+        jButton2.setText("Refrescar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -387,9 +408,9 @@ public class PanelPrincipal extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel28)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(textNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtEditNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtEditNombre, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(textNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel29))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
@@ -432,15 +453,97 @@ public class PanelPrincipal extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Usuario", jPanel3);
 
+        jLabelx.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jLabelx.setText("Navegación Por Categoria");
+
+        NavegacionC.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Categoria" }));
+        NavegacionC.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                NavegacionCItemStateChanged(evt);
+            }
+        });
+
+        NavegacionL.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Libros" }));
+        NavegacionL.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                NavegacionLItemStateChanged(evt);
+            }
+        });
+
+        NavegacionInfo.setColumns(20);
+        NavegacionInfo.setRows(5);
+        jScrollPane2.setViewportView(NavegacionInfo);
+
+        NavegacionMasInfo.setText("Más Información");
+        NavegacionMasInfo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                NavegacionMasInfoActionPerformed(evt);
+            }
+        });
+
+        jLabelx1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jLabelx1.setText("Búsqueda de Libros");
+
+        jButton5.setText("Buscar");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
+        NavegacionBuscar.setColumns(20);
+        NavegacionBuscar.setRows(5);
+        jScrollPane3.setViewportView(NavegacionBuscar);
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1079, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(115, 115, 115)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabelx, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(NavegacionC, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(NavegacionL, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jScrollPane2))
+                        .addGap(359, 359, 359)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabelx1, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE)
+                            .addComponent(BusquedaNavegacion)
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jButton5)
+                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE))))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(149, 149, 149)
+                        .addComponent(NavegacionMasInfo)))
+                .addGap(241, 241, 241))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 551, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelx)
+                    .addComponent(jLabelx1))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(NavegacionC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BusquedaNavegacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(60, 60, 60)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(NavegacionL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                .addComponent(NavegacionMasInfo)
+                .addGap(34, 34, 34)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2))
+                .addGap(32, 32, 32))
         );
 
         jTabbedPane1.addTab("Biblioteca", jPanel4);
@@ -855,6 +958,12 @@ public class PanelPrincipal extends javax.swing.JFrame {
             jComboBox1.addItem(string);
         });
         txtNuevaCategoria.setText("");
+        //********************************Acutaliza las categorias para navegar*****************************************
+        NavegacionC.removeAllItems();
+        LinkedList<String> auxcatego=auxcore.arbolAVL.getAllCategoris(auxcore.arbolAVL.root);
+                    auxcatego.forEach((string) -> {
+                    NavegacionC.addItem(string);
+                });
     }//GEN-LAST:event_btnNuevaCategoriaActionPerformed
 
     private void btnBorrarCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarCategoriaActionPerformed
@@ -869,12 +978,14 @@ public class PanelPrincipal extends javax.swing.JFrame {
                 auxcatego.forEach((string) -> {
                     jComboBox1.addItem(string);
                 });
+                actualizarCategorias();
             }else{
                 JOptionPane.showMessageDialog(null, "Usted no es el propietario de la categoria");
             }
         }else{
             JOptionPane.showMessageDialog(null, "Categoria no encontrada");
         }
+        
     }//GEN-LAST:event_btnBorrarCategoriaActionPerformed
 
     private void btnGuardarBloqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarBloqueActionPerformed
@@ -904,6 +1015,7 @@ public class PanelPrincipal extends javax.swing.JFrame {
             existeCategori=auxcore.arbolAVL.getOwner(auxcore.arbolAVL.root, categoria);
             existeCategori.getArbolb().insertar(Integer.valueOf(txtIsn.getText()), Integer.valueOf(txtYear.getText()), txtIdioma.getText(), txtTitulo.getText()
             , txtEitorial.getText(), txtAutor.getText(), Integer.valueOf(txtEdicion.getText()), txtCategoria.getText(), EDD_1S20_PY2_201709062.curSession);
+            actualizarCategorias();
         }else{
             existeCategori.getArbolb().insertar(Integer.valueOf(txtIsn.getText()), Integer.valueOf(txtYear.getText()), txtIdioma.getText(), txtTitulo.getText()
             , txtEitorial.getText(), txtAutor.getText(), Integer.valueOf(txtEdicion.getText()), txtCategoria.getText(), EDD_1S20_PY2_201709062.curSession);
@@ -1032,6 +1144,7 @@ public class PanelPrincipal extends javax.swing.JFrame {
                         existeCategori.getArbolb().insertar(toIntExact(Isbn), toIntExact(ano), idiom, titu, edito, aut, toIntExact(edici), cate, EDD_1S20_PY2_201709062.curSession);
                         listaBloque.add(new CrearLibro(toIntExact(Isbn), toIntExact(ano), idiom, titu, edito, aut, toIntExact(edici), categoria, EDD_1S20_PY2_201709062.curSession));
                         //System.out.println(Isbn+" "+titu);
+                        actualizarCategorias();
                     }else{
                         existeCategori=auxcore.arbolAVL.getOwner(auxcore.arbolAVL.root, categoria);
                         Long Isbn=(Long)libro.get("ISBN");
@@ -1075,6 +1188,7 @@ public class PanelPrincipal extends javax.swing.JFrame {
         auxcatego.forEach((string) -> {
                     jComboBox1.addItem(string);
                 });
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
@@ -1158,9 +1272,90 @@ public class PanelPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
+        setVisible(false);
+        auxcore.eliminarUsuario(EDD_1S20_PY2_201709062.curSession);
+        JOptionPane.showMessageDialog(null, "Usuario Eliminado con éxito");
+        VentanaLogin.setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
 
+    private void NavegacionCItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_NavegacionCItemStateChanged
+        if(evt.getStateChange()==ItemEvent.SELECTED){
+            //if (!NavegacionC.getSelectedItem().toString().equals("Categoria")) {
+                String auxcategoriaN = (String) NavegacionC.getSelectedItem();
+                NodoAVL auxcategorias = auxcore.arbolAVL.buscar(auxcore.arbolAVL.root, auxcategoriaN);
+                if (auxcategorias != null) {
+                    LinkedList<Integer> allbooks = auxcategorias.getArbolb().getAllBooks();
+                    NavegacionL.removeAllItems();
+                    allbooks.forEach((string) -> {
+                        NavegacionL.addItem(string.toString());
+                    });
+                }
+            //}
+        }
+    }//GEN-LAST:event_NavegacionCItemStateChanged
+
+    private void NavegacionLItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_NavegacionLItemStateChanged
+        if(evt.getStateChange()==ItemEvent.SELECTED){
+            if(NavegacionL.getItemCount()>0){
+                String auxisdn=(String)NavegacionL.getSelectedItem();
+                String auxcate=(String)NavegacionC.getSelectedItem();
+                NodoAVL auxcategorias = auxcore.arbolAVL.buscar(auxcore.arbolAVL.root, auxcate);
+                if(auxcategorias!=null){
+                    Libro auxlibro= auxcategorias.getArbolb().buscar(Integer.valueOf(auxisdn));
+                    if(auxlibro!=null){
+                        infolibro=auxlibro.getTitulo()+"\n";
+                        auxinfolibro=auxlibro.getTitulo()+"\n";
+                        infolibro+=auxlibro.getAutor()+"\n";
+                        auxinfolibro+=auxlibro.getAutor()+"\n";
+                        infolibro+=auxlibro.getEdicion()+"\n";
+                        infolibro+=auxlibro.getCategoria()+"\n";
+                        infolibro+=auxlibro.getEditorial()+"\n";
+                        infolibro+=auxlibro.getIdioma()+"\n";
+                        infolibro+=auxlibro.getYear()+"\n";
+                        NavegacionInfo.setText(auxinfolibro);
+                    }else{
+                        JOptionPane.showMessageDialog(null, "Libro no encontrado");
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(null, "Categoria no encontrada");
+                }
+            }
+        }
+    }//GEN-LAST:event_NavegacionLItemStateChanged
+
+    private void NavegacionMasInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NavegacionMasInfoActionPerformed
+        if(NavegacionMasInfo.isSelected()){
+            NavegacionInfo.setText(infolibro);
+        }else{
+            NavegacionInfo.setText(auxinfolibro);
+        }
+    }//GEN-LAST:event_NavegacionMasInfoActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        Libro libroBuscado=auxcore.buscarLibro(auxcore.arbolAVL.root, Integer.valueOf(BusquedaNavegacion.getText()));
+        
+        if(libroBuscado!=null){
+            String auxbuscarLibro="";
+            auxbuscarLibro+=libroBuscado.getTitulo()+"\n";
+            auxbuscarLibro+=libroBuscado.getTitulo()+"\n";
+            auxbuscarLibro+=libroBuscado.getEditorial()+"\n";
+            auxbuscarLibro+=Integer.toString(libroBuscado.getYear())+"\n";
+            auxbuscarLibro+=Integer.toString(libroBuscado.getEdicion())+"\n";
+            auxbuscarLibro+=libroBuscado.getCategoria()+"\n";
+            auxbuscarLibro+=libroBuscado.getIdioma()+"\n";
+            NavegacionBuscar.setText(auxbuscarLibro);
+        }else{
+            JOptionPane.showMessageDialog(null, "No se encontró el libro indicado");
+        }
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void actualizarCategorias(){
+        NavegacionC.removeAllItems();
+        LinkedList<String> auxcatego=auxcore.arbolAVL.getAllCategoris(auxcore.arbolAVL.root);
+                    auxcatego.forEach((string) -> {
+                    NavegacionC.addItem(string);
+                });
+    }
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -1194,9 +1389,15 @@ public class PanelPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField BusquedaNavegacion;
     private javax.swing.JLabel CategoriaBorrar;
     private javax.swing.JComboBox<String> ComboBorrarLb1;
     private javax.swing.JLabel LbCarnetEditar;
+    private javax.swing.JTextArea NavegacionBuscar;
+    private javax.swing.JComboBox<String> NavegacionC;
+    private javax.swing.JTextArea NavegacionInfo;
+    private javax.swing.JComboBox<String> NavegacionL;
+    private javax.swing.JCheckBox NavegacionMasInfo;
     private javax.swing.JPasswordField PasswordEdit;
     private javax.swing.JButton btnBorrarCategoria;
     private javax.swing.JButton btnBorrarLibro;
@@ -1213,6 +1414,7 @@ public class PanelPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
@@ -1252,6 +1454,8 @@ public class PanelPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLabelx;
+    private javax.swing.JLabel jLabelx1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -1261,6 +1465,8 @@ public class PanelPrincipal extends javax.swing.JFrame {
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
     public static javax.swing.JLabel lbUsuario;
     private javax.swing.JTextField textApellido;
@@ -1292,4 +1498,25 @@ public class PanelPrincipal extends javax.swing.JFrame {
     private javax.swing.JTextField txtTitulo;
     private javax.swing.JTextField txtYear;
     // End of variables declaration//GEN-END:variables
+/*
+    private class ItemHandler implements ItemListener{
+    
+        @Override
+        public void itemStateChanged(ItemEvent event) {
+            if(event.getSource()==NavegacionC){
+                if(!NavegacionC.getSelectedItem().equals("Categoria")){
+                    String auxcategoriaN=(String)NavegacionC.getSelectedItem();
+                    NodoAVL auxcategorias=auxcore.arbolAVL.buscar(auxcore.arbolAVL.root, auxcategoriaN);
+                    if(auxcategorias!=null){
+                        LinkedList<Integer> allbooks=auxcategorias.getArbolb().getAllBooks();
+                        NavegacionL.removeAllItems();
+                        allbooks.forEach((string) -> {
+                    NavegacionL.addItem(string.toString());
+                });
+                }
+                
+            }
+            //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+    }}*/
 }

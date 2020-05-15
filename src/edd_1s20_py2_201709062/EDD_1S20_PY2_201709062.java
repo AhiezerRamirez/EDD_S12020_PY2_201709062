@@ -18,21 +18,22 @@ public class EDD_1S20_PY2_201709062 {
     public static int indexBloque=0;
     public static int curSession=0;
     public static void main(String[] args) {
-        List<Data> listaParaBloque=new LinkedList();
+        File dir = new File("./BloquesJson");
+        dir.mkdir();
+        File dir2=new File("./BloquesJson/Graficas");
+        dir2.mkdir();
+        /*List<Data> listaParaBloque=new LinkedList();
         ListaDoble listaBloques=new ListaDoble();
         Core core=new Core();
         core.tabla.add(123, "Ahiezer", "Ramirez", "Ing Sistemas", "123");
-        File dir = new File("./BloquesJson");
-        dir.mkdir();
         Login login=new Login(core,listaParaBloque,indexBloque,listaBloques); //No encuentra unos libros auque usualment son los que están en las hojas del árbol b
-        login.setVisible(true);
+        login.setVisible(true);*/
         /*
         
             ***Falta validar que no esté el libro repetido, Y también validar que sea de él*****
-            ***Me quedé en eliminar perfil
         */
         // TODO code application logic here
-        /*ArbolB arbol=new ArbolB(6);
+        /*ArbolB arbol=new ArbolB(3);
         arbol.insertar(12, 4221, "Rocio", "De nada ", "20 Century Fox", "Pablo Escobar", 1, "Sagas",20);
         arbol.insertar(4, 4221, "Rocio", "De nada ", "20 Century Fox", "Pablo Escobar", 1, "Sagas",23);
         arbol.insertar(63, 4221, "Rocio", "De nada ", "20 Century Fox", "Pablo Escobar", 1, "Sagas",23);
@@ -72,33 +73,34 @@ public class EDD_1S20_PY2_201709062 {
         arbol.remover(12);
         arbol.remover(10);
         arbol.remover(136);
-        arbol.imprimir();
+        arbol.imprimir();*/
         ArbolAVL avl=new ArbolAVL();
-        avl.root=avl.insertar(avl.root, "miedo terrorifico");
-        avl.root=avl.insertar(avl.root, "terror");
-        avl.root=avl.insertar(avl.root, "fantacia");
-        avl.root=avl.insertar(avl.root, "sagas pajas");
-        avl.root=avl.insertar(avl.root, "quimica");
+        avl.root=avl.insertar(avl.root, "miedo terrorifico",29392);
+        avl.root=avl.insertar(avl.root, "terror",29392);
+        avl.root=avl.insertar(avl.root, "fantacia",29392);
+        avl.root=avl.insertar(avl.root, "sagas pajas",29392);
+        avl.root=avl.insertar(avl.root, "quimica",29392);
         //avl.root=avl.insertar(avl.root, "biologia");
-        avl.root=avl.insertar(avl.root, "fisica");
-        avl.root=avl.insertar(avl.root, "arte");
-        avl.root=avl.insertar(avl.root, "zootecnia");
-        avl.root=avl.insertar(avl.root, "estadistica");
-        avl.root=avl.insertar(avl.root, "matematicas");
+        avl.root=avl.insertar(avl.root, "fisica",29392);
+        avl.root=avl.insertar(avl.root, "arte",29392);
+        avl.root=avl.insertar(avl.root, "zootecnia",29392);
+        avl.root=avl.insertar(avl.root, "estadistica",29392);
+        avl.root=avl.insertar(avl.root, "matematicas",29392);
         //avl.root=avl.insertar(avl.root, "calculo");
-        avl.root=avl.insertar(avl.root, "diseno");
-        //avl.root=avl.insertar(avl.root, "arquitectura");
-        avl.root=avl.insertar(avl.root, "yank hummor");
-        avl.root=avl.insertar(avl.root, "xilofono");
-        avl.root=avl.insertar(avl.root, "liston");
-        avl.root=avl.insertar(avl.root, "interiores");
-        avl.root=avl.insertar(avl.root, "ciencia Ficcion");
-        //avl.root=avl.insertar(avl.root, "cocina");
-        avl.root=avl.insertar(avl.root, "teologia");
-        avl.root=avl.insertar(avl.root, "meme");
-        System.out.println(avl.obtenerCodigoDot(avl.root));
+        avl.root=avl.insertar(avl.root, "diseno",29392);
+        avl.root=avl.insertar(avl.root, "arquitectura",213);
+        avl.root=avl.insertar(avl.root, "yank hummor",29392);
+        avl.root=avl.insertar(avl.root, "xilofono",29392);
+        avl.root=avl.insertar(avl.root, "liston",29392);
+        avl.root=avl.insertar(avl.root, "interiores",29392);
+        avl.root=avl.insertar(avl.root, "ciencia Ficcion",29392);
+        avl.root=avl.insertar(avl.root, "cocina",2342);
+        avl.root=avl.insertar(avl.root, "teologia",29392);
+        avl.root=avl.insertar(avl.root, "meme",29392);
+        avl.graficarPostorder(avl.root);
+        //System.out.println(avl.obtenerCodigoDot(avl.root));
         //avl.root=avl.borrar(avl.root,"interiores");
-        avl.root=avl.borrar(avl.root,"estadistica");
+        /*avl.root=avl.borrar(avl.root,"estadistica");
         avl.root=avl.borrar(avl.root,"ciencia Ficcion");
         avl.root=avl.borrar(avl.root,"diseno");
         System.out.println(avl.obtenerCodigoDot(avl.root));
@@ -115,7 +117,7 @@ public class EDD_1S20_PY2_201709062 {
         t.add(201503476, "Orlando", "Perez", "Ingenieria Ciencias Y Sistemas", "ABc13**");
         t.add(411, "Michael", "Jacson", "Ingenieria Ciencias Y Sistemas", "ABc13**");
         t.add(20191129, "Ricardo", "Herrera", "Industrial", "Ac323*");
-        System.out.println(t.obetnerCodDot());//Creo que esto ya lo hice Falta separar la declaracion de la lista de las conexiones en el .Dot
+        //System.out.println(t.obetnerCodDot());//Creo que esto ya lo hice Falta separar la declaracion de la lista de las conexiones en el .Dot
         t.updateUser(20151332, "Juanito", "Peresoso", "Ingenieria Ciencias Y Sistemas", "Abc13**");
         t.updateUser(98, "Silvio", "Portillo", "Ingenieria Ciencias Y Sistemas", "ABc*");
         t.updateUser(2256, "Jennita De pelos", "Xiloj", "Ingenieria Ciencias Y Sistemas", "ABc*");

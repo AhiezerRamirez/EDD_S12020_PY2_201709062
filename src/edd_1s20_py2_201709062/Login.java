@@ -43,7 +43,7 @@ public class Login extends javax.swing.JFrame {
         this.listaBloque=paraBloque;
         this.index=ind;
         this.listablocks=list;
-        this.ventanaPanel=new PanelPrincipal(core, paraBloque, ind, list);
+        this.ventanaPanel=new PanelPrincipal(core, paraBloque, ind, list,this);
         ventanaPanel.setVisible(false);
     }
 
@@ -279,6 +279,8 @@ public class Login extends javax.swing.JFrame {
             PanelPrincipal.lbUsuario.setText(Integer.toString(curSesion.getCarne()));
             ventanaPanel.setVisible(true);
             setVisible(false);
+            txtPass.setText("");
+            txtUserName.setText("");
             //JOptionPane.showMessageDialog(null, "Todo Chileron");
         }else{
             JOptionPane.showMessageDialog(null, "Carnet o contraseña incorrecta");

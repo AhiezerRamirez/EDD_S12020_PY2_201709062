@@ -1,5 +1,11 @@
 
 package Estructuras;
+
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import javax.swing.JOptionPane;
+
 public class TablaHash {
     public NodoHash[] nodo;
     private final int size;
@@ -117,7 +123,7 @@ public class TablaHash {
         }
     }
     
-    public String obetnerCodDot(){
+    public void obetnerCodDot(){
         StringBuilder s=new StringBuilder();
         s.append("digraph G {\n\tnodesep=.05;\n\trankdir=LR;\n\tnode [shape=record,width=.1,height=.1];\n\t");
         s.append("nodo0[label = \"");
@@ -138,7 +144,7 @@ public class TablaHash {
         for ( i = 0; i < nodo.length; i++) {
             if(nodo[i]!=null){
                 s.append("nodo").append(nodo[i].user.carne).append("[label = \"{<n> |").append(nodo[i].user.carne).append("\\n").
-                append(nodo[i].user.nombre).append(" ").append(nodo[i].user.apellido).append(" |<p> }\"];\n\t");
+                append(nodo[i].user.nombre).append(" ").append(nodo[i].user.apellido).append("\\n").append(nodo[i].user.password).append(" |<p> }\"];\n\t");
                 if(nodo[i].value.primero!=null){
                     s.append(nodo[i].value.declararNodos());
                 }
@@ -153,6 +159,23 @@ public class TablaHash {
             }
         }
         s.append("}");
-        return s.toString();
+        comandoDot("tablaHash",s.toString());
+    }
+    
+    private void comandoDot(String nombre,String codigoDot){
+        String ruta="./BloquesJson/Graficas/"+nombre+".dot";
+        try {
+            FileOutputStream fos=new FileOutputStream(ruta, true);
+            byte[] b= codigoDot.getBytes();       //converts string into bytes  
+            fos.write(b);           //writes bytes into file  
+            fos.close();
+            ProcessBuilder builder = new ProcessBuilder(
+            "cmd.exe", "/c", "dot -Tjpg ./BloquesJson/Graficas/"+nombre+".dot -o ./BloquesJson/Graficas/"+nombre+".jpg");
+            builder.start();
+        } catch (FileNotFoundException ex) {
+            JOptionPane.showMessageDialog(null, "Algo salió mal con el archivo dot");
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Algo salió mal con la imagen jpg");
+        }
     }
 }

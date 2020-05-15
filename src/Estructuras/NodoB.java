@@ -41,6 +41,24 @@ public class NodoB{
         }
         return listLibros;
     }
+    
+    private void getAllBooksAux(List<Integer> recorridos){
+        int i = 0; 
+        for (i = 0; i < this.n; i++) { 
+  
+            if (this.hoja == false) { 
+                C[i].getAllBooksAux(recorridos); 
+            } 
+            recorridos.add(libros[i].getISBN()); 
+        } 
+        if (hoja == false) 
+            C[i].getAllBooksAux(recorridos); 
+    }
+    public LinkedList<Integer> getAllBooks(){
+        LinkedList<Integer> listaIsbn=new LinkedList<>();
+        getAllBooksAux(listaIsbn);
+        return listaIsbn;
+    }
     void recorrer(StringBuilder cod,List<Integer> recorridos){
         int i;
         for ( i = 0; i < n; i++) {
@@ -50,7 +68,7 @@ public class NodoB{
                     cod.append("node").append(libros[0].getISBN()).append("[label = \"");
                     for (j = 0; j < n; j++) {
                         cod.append("<f").append(j).append("> | ");
-                        cod.append(libros[j].getISBN()).append(" | ");
+                        cod.append(libros[j].getISBN()).append("\\n").append(libros[j].getTitulo()).append(" | ");
                     }
                     cod.append("<f").append(j).append(">\"];\n\t");
                     recorridos.add(libros[0].getISBN());
@@ -66,7 +84,7 @@ public class NodoB{
                 cod.append("node").append(libros[0].getISBN()).append("[label = \"");
                 for (j = 0; j < n; j++) {
                     cod.append("<f").append(j).append("> | ");
-                    cod.append(libros[j].getISBN()).append(" | ");
+                    cod.append(libros[j].getISBN()).append(libros[j].getISBN()).append("\\n").append(libros[j].getTitulo()).append(" | ");
                 }
                 cod.append("<f").append(j).append(">\"];\n\t");
                 recorridos.add(libros[0].getISBN());
@@ -87,7 +105,7 @@ public class NodoB{
                     cod.append("node").append(libros[0].getISBN()).append("[label = \"");
                     for (j = 0; j < n; j++) {
                         cod.append("<f").append(j).append("> | ");
-                        cod.append(libros[j].getISBN()).append(" | ");
+                        cod.append(libros[j].getISBN()).append("\\n").append(libros[j].getTitulo()).append(" | ");
                     }
                     cod.append("<f").append(j).append(">\"];\n\t");
                     recorridos.add(libros[0].getISBN());

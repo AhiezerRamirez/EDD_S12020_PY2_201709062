@@ -5,7 +5,14 @@
  */
 package Estructuras;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.LinkedList;
+import java.util.Queue;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 public class ArbolAVL {
     public NodoAVL root;
@@ -100,7 +107,14 @@ public class ArbolAVL {
             imprimirNull(nodo.getCategoria(), nullcount++, s);
         }
     }
-    public String obtenerCodigoDot(NodoAVL raiz){
+    private void graficar1(NodoAVL nodo, StringBuilder s){
+        if(nodo==null)
+            return;
+        graficar1(nodo.getIzq(),s);
+        s.append("\"").append(nodo.getCategoria()).append("\"[label=\"").append(nodo.getCategoria()).append("\\n").append(nodo.getArbolb().numLibros).append("\"]\n\t");
+        graficar1(nodo.getDer(),s);
+    }
+    public void obtenerCodigoDot(NodoAVL raiz){
         nullcount=0;
         StringBuilder cadena=new StringBuilder();
         cadena.append("digraph BST {\n\tnode [fontname=\"Arial\"];\n \t");
@@ -109,10 +123,104 @@ public class ArbolAVL {
         }else if(raiz.getIzq()==null && raiz.getDer()==null){
             cadena.append(raiz.getClass()).append("\n");
         }else{
+            graficar1(raiz,cadena);
             graficarAux(raiz, cadena);
         }
         cadena.append("}");
-        return cadena.toString();
+        comandoDot("arboAVL", cadena.toString());
+    }
+    private void preorder(NodoAVL raiz, Queue<String> s){
+        if(raiz==null)
+            return;
+        s.add(raiz.getCategoria());
+        preorder(raiz.getIzq(),s);
+        preorder(raiz.getDer(), s);
+    }
+    public void graficarPreorder(NodoAVL raiz){
+        StringBuilder cadena=new StringBuilder();
+        Queue<String> inorder=new LinkedList<>();
+        cadena.append("digraph BST {\n\tnode [fontname=\"Arial\"];\n \t rankdir=LR;\n\t");
+        if(raiz==null){
+            cadena.append("\"null\"\n");
+        }else if(raiz.getIzq()==null && raiz.getDer()==null){
+            cadena.append(raiz.getCategoria()).append("\n");
+        }else{
+            preorder(raiz, inorder);
+        }
+        while(!inorder.isEmpty()){
+            cadena.append("\"").append(inorder.poll()).append("\" -> ");
+        }
+        cadena.append("\"null\"\n");
+        cadena.append("}");
+        comandoDot("preOrder",cadena.toString());
+    }
+    private void Inorder(NodoAVL raiz, Queue<String> s){
+        if(raiz==null)
+            return;
+        Inorder(raiz.getIzq(),s);
+        s.add(raiz.getCategoria());
+        Inorder(raiz.getDer(), s);
+    }
+    public void graficarInorder(NodoAVL raiz){
+        StringBuilder cadena=new StringBuilder();
+        Queue<String> inorder=new LinkedList<>();
+        cadena.append("digraph BST {\n\tnode [fontname=\"Arial\"];\n \t rankdir=LR;\n\t");
+        if(raiz==null){
+            System.out.println("Arbol vacío");
+            //cadena.append("\"null\"\n");
+        }else if(raiz.getIzq()==null && raiz.getDer()==null){
+            cadena.append(raiz.getCategoria()).append("\n");
+        }else{
+            Inorder(raiz, inorder);
+        }
+        while(!inorder.isEmpty()){
+            cadena.append("\"").append(inorder.poll()).append("\" -> ");
+        }
+        cadena.append("\"null\"\n");
+        cadena.append("}");
+        comandoDot("inOrder",cadena.toString());
+    }
+    private void postorder(NodoAVL raiz, Queue<String> s){
+        if(raiz==null)
+            return;
+        postorder(raiz.getIzq(),s);
+        Inorder(raiz.getDer(), s);
+        s.add(raiz.getCategoria());
+    }
+    public void graficarPostorder(NodoAVL raiz){
+        StringBuilder cadena=new StringBuilder();
+        Queue<String> inorder=new LinkedList<>();
+        cadena.append("digraph BST {\n\tnode [fontname=\"Arial\"];\n \t rankdir=LR;\n\t");
+        if(raiz==null){
+            System.out.println("Arbol vacío");
+            //cadena.append("\"null\"\n");
+        }else if(raiz.getIzq()==null && raiz.getDer()==null){
+            cadena.append(raiz.getCategoria()).append("\n");
+        }else{
+            postorder(raiz, inorder);
+        }
+        while(!inorder.isEmpty()){
+            cadena.append("\"").append(inorder.poll()).append("\" -> ");
+        }
+        cadena.append("\"null\"\n");
+        cadena.append("}");
+        comandoDot("postOrden", cadena.toString());
+    }
+    private void comandoDot(String nombre,String codigoDot){
+        String ruta="./BloquesJson/Graficas/"+nombre+".dot";
+        try {
+            FileOutputStream fos=new FileOutputStream(ruta, true);
+            byte[] b= codigoDot.getBytes();       //converts string into bytes  
+            fos.write(b);           //writes bytes into file  
+            fos.close();
+            ProcessBuilder builder = new ProcessBuilder(
+            "cmd.exe", "/c", "dot -Tjpg ./BloquesJson/Graficas/"+nombre+".dot -o ./BloquesJson/Graficas/"+nombre+".jpg");
+            builder.start();
+        } catch (FileNotFoundException ex) {
+            JOptionPane.showMessageDialog(null, "Algo salió mal con el archivo dot");
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Algo salió mal con la imagen jpg");
+        }
     }
     private NodoAVL getMinVal(NodoAVL node){
         NodoAVL cur=node;
@@ -179,6 +287,21 @@ public class ArbolAVL {
         getAuxCategories(raiz, auxdata, carnet);
         return auxdata;
     }
+    
+    private void getAllCategoria(NodoAVL raiz,LinkedList<String> l){
+        if(raiz==null)
+            return;
+        getAllCategoria(raiz.getIzq(), l);
+            l.add(raiz.getCategoria());
+        getAllCategoria(raiz.getDer(), l);
+    }
+    
+    public LinkedList<String> getAllCategoris(NodoAVL raiz){
+        LinkedList<String> auxdata=new LinkedList<>();
+        getAllCategoria(raiz, auxdata);
+        return auxdata;
+    }
+    
     public NodoAVL getOwner(NodoAVL raiz, String catego){
         if(raiz==null|| raiz.getCategoria().equals(catego))
             return raiz;
