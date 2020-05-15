@@ -2,8 +2,8 @@
 package Estructuras;
 
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.LinkedList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -76,15 +76,17 @@ public class ArbolB {
         return root.buscarSubSring(substring);
     }
     public LinkedList<Integer> getAllBooks(){
-        return root.getAllBooks();
+        if(root!=null)
+            return root.getAllBooks();
+        else
+            return new LinkedList<>();//Ver si esto no da clavo despues
     }
     private void comandoDot(String nombre,String codigoDot){
         String ruta="./BloquesJson/Graficas/"+nombre+".dot";
         try {
-            FileOutputStream fos=new FileOutputStream(ruta, true);
-            byte[] b= codigoDot.getBytes();       //converts string into bytes  
-            fos.write(b);           //writes bytes into file  
-            fos.close();
+            PrintWriter writer = new PrintWriter(ruta, "UTF-8");
+            writer.println(codigoDot);           //writes bytes into file  
+            writer.close();
             ProcessBuilder builder = new ProcessBuilder(
             "cmd.exe", "/c", "dot -Tjpg ./BloquesJson/Graficas/"+nombre+".dot -o ./BloquesJson/Graficas/"+nombre+".jpg");
             builder.start();

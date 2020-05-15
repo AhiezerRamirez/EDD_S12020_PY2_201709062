@@ -6,12 +6,10 @@
 package Estructuras;
 
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.LinkedList;
 import java.util.Queue;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class ArbolAVL {
@@ -62,8 +60,10 @@ public class ArbolAVL {
             nodo.setIzq(insertar(nodo.getIzq(),categoria,propie));
         else if(categoria.compareToIgnoreCase(nodo.getCategoria()) > 0)
             nodo.setDer(insertar(nodo.getDer(),categoria,propie));
-        else
+        else{
+            System.out.println("La categoria ya existe");
             return nodo;
+        }
         nodo.setAltura(1+ max(altura(nodo.getIzq()),altura(nodo.getDer())));
         int balance=obtenerBalance(nodo);
         
@@ -127,7 +127,7 @@ public class ArbolAVL {
             graficarAux(raiz, cadena);
         }
         cadena.append("}");
-        comandoDot("arboAVL", cadena.toString());
+        comandoDot("arbolAVL", cadena.toString());
     }
     private void preorder(NodoAVL raiz, Queue<String> s){
         if(raiz==null)
@@ -151,7 +151,7 @@ public class ArbolAVL {
             cadena.append("\"").append(inorder.poll()).append("\" -> ");
         }
         cadena.append("\"null\"\n");
-        cadena.append("}");
+        cadena.append("labelloc=\"t\";\n\tlabel=\"Pre Orden\";\n}");
         comandoDot("preOrder",cadena.toString());
     }
     private void Inorder(NodoAVL raiz, Queue<String> s){
@@ -177,7 +177,7 @@ public class ArbolAVL {
             cadena.append("\"").append(inorder.poll()).append("\" -> ");
         }
         cadena.append("\"null\"\n");
-        cadena.append("}");
+        cadena.append("labelloc=\"t\";\n\tlabel=\"In Orden\";\n}");
         comandoDot("inOrder",cadena.toString());
     }
     private void postorder(NodoAVL raiz, Queue<String> s){
@@ -202,17 +202,16 @@ public class ArbolAVL {
         while(!inorder.isEmpty()){
             cadena.append("\"").append(inorder.poll()).append("\" -> ");
         }
-        cadena.append("\"null\"\n");
-        cadena.append("}");
+        cadena.append("\"null\"\n\t");
+        cadena.append("labelloc=\"t\";\n\tlabel=\"Post Orden\";\n}");
         comandoDot("postOrden", cadena.toString());
     }
     private void comandoDot(String nombre,String codigoDot){
         String ruta="./BloquesJson/Graficas/"+nombre+".dot";
         try {
-            FileOutputStream fos=new FileOutputStream(ruta, true);
-            byte[] b= codigoDot.getBytes();       //converts string into bytes  
-            fos.write(b);           //writes bytes into file  
-            fos.close();
+            PrintWriter writer = new PrintWriter(ruta, "UTF-8");
+            writer.println(codigoDot);           //writes bytes into file  
+            writer.close();
             ProcessBuilder builder = new ProcessBuilder(
             "cmd.exe", "/c", "dot -Tjpg ./BloquesJson/Graficas/"+nombre+".dot -o ./BloquesJson/Graficas/"+nombre+".jpg");
             builder.start();

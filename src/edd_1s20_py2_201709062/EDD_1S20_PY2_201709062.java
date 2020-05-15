@@ -22,15 +22,16 @@ public class EDD_1S20_PY2_201709062 {
         dir.mkdir();
         File dir2=new File("./BloquesJson/Graficas");
         dir2.mkdir();
-        /*List<Data> listaParaBloque=new LinkedList();
+        List<Data> listaParaBloque=new LinkedList();
         ListaDoble listaBloques=new ListaDoble();
         Core core=new Core();
         core.tabla.add(123, "Ahiezer", "Ramirez", "Ing Sistemas", "123");
         Login login=new Login(core,listaParaBloque,indexBloque,listaBloques); //No encuentra unos libros auque usualment son los que están en las hojas del árbol b
-        login.setVisible(true);*/
+        login.setVisible(true);
         /*
         
-            ***Falta validar que no esté el libro repetido, Y también validar que sea de él*****
+            ***Falta validar que no esté el libro repetido, Y también validar que sea de él*****Todavía
+            ******Hay que hacer que borre el archivo y que lo vuela a hacer, que tengo clavos con eso, eso fue lo último que hice
         */
         // TODO code application logic here
         /*ArbolB arbol=new ArbolB(3);
@@ -73,7 +74,7 @@ public class EDD_1S20_PY2_201709062 {
         arbol.remover(12);
         arbol.remover(10);
         arbol.remover(136);
-        arbol.imprimir();*/
+        arbol.imprimir();
         ArbolAVL avl=new ArbolAVL();
         avl.root=avl.insertar(avl.root, "miedo terrorifico",29392);
         avl.root=avl.insertar(avl.root, "terror",29392);

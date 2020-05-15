@@ -11,6 +11,8 @@ import java.awt.event.ItemEvent;
 //import java.awt.event.ItemEvent;
 //import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -18,9 +20,12 @@ import static java.lang.Math.toIntExact;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import org.json.simple.JSONArray;
@@ -111,6 +116,30 @@ public class PanelPrincipal extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         NavegacionBuscar = new javax.swing.JTextArea();
         jPanel5 = new javax.swing.JPanel();
+        jTabbedPane2 = new javax.swing.JTabbedPane();
+        jPanel7 = new javax.swing.JPanel();
+        jButton6 = new javax.swing.JButton();
+        scrollAVL = new javax.swing.JScrollPane();
+        lbArbolAVL = new javax.swing.JLabel();
+        jPanel8 = new javax.swing.JPanel();
+        jButton7 = new javax.swing.JButton();
+        scrollBtree = new javax.swing.JScrollPane();
+        lbArbolB = new javax.swing.JLabel();
+        btnBtreeGraph = new javax.swing.JTextField();
+        jLabel38 = new javax.swing.JLabel();
+        jPanel9 = new javax.swing.JPanel();
+        jButton8 = new javax.swing.JButton();
+        scrollTabla = new javax.swing.JScrollPane();
+        lbTablaHash = new javax.swing.JLabel();
+        jPanel10 = new javax.swing.JPanel();
+        jButton9 = new javax.swing.JButton();
+        scrollPreorder = new javax.swing.JScrollPane();
+        lbPreorder = new javax.swing.JLabel();
+        scrollInorder = new javax.swing.JScrollPane();
+        lbInorder = new javax.swing.JLabel();
+        scrollPostorder = new javax.swing.JScrollPane();
+        lbPostOrder = new javax.swing.JLabel();
+        jPanel11 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         txtIsn = new javax.swing.JTextField();
@@ -548,15 +577,199 @@ public class PanelPrincipal extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Biblioteca", jPanel4);
 
+        jButton6.setText("Refrescar");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+
+        lbArbolAVL.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edd_1s20_py2_201709062/arbolAVL.jpg"))); // NOI18N
+        lbArbolAVL.setText(".");
+        scrollAVL.setViewportView(lbArbolAVL);
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addComponent(jButton6)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(scrollAVL, javax.swing.GroupLayout.DEFAULT_SIZE, 1034, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addComponent(jButton6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(scrollAVL, javax.swing.GroupLayout.DEFAULT_SIZE, 461, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jTabbedPane2.addTab("Árbol AVL", jPanel7);
+
+        jButton7.setText("Mostrar gráfica");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
+
+        lbArbolB.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edd_1s20_py2_201709062/arbolAVL.jpg"))); // NOI18N
+        lbArbolB.setText(".");
+        scrollBtree.setViewportView(lbArbolB);
+
+        jLabel38.setText("Ingreasar Categoria");
+
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(scrollBtree, javax.swing.GroupLayout.DEFAULT_SIZE, 1034, Short.MAX_VALUE)
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addComponent(jLabel38)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnBtreeGraph, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton7)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton7)
+                    .addComponent(btnBtreeGraph, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel38))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(scrollBtree, javax.swing.GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jTabbedPane2.addTab("Arbol B", jPanel8);
+
+        jButton8.setText("Refrescar");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
+
+        lbTablaHash.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edd_1s20_py2_201709062/arbolAVL.jpg"))); // NOI18N
+        lbTablaHash.setText(".");
+        scrollTabla.setViewportView(lbTablaHash);
+
+        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
+        jPanel9.setLayout(jPanel9Layout);
+        jPanel9Layout.setHorizontalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(scrollTabla, javax.swing.GroupLayout.DEFAULT_SIZE, 1034, Short.MAX_VALUE)
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addComponent(jButton8)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel9Layout.setVerticalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButton8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(scrollTabla, javax.swing.GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jTabbedPane2.addTab("Tabla Dispersion", jPanel9);
+
+        jButton9.setText("Refrescar");
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
+            }
+        });
+
+        lbPreorder.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edd_1s20_py2_201709062/arbolAVL.jpg"))); // NOI18N
+        lbPreorder.setText(".");
+        scrollPreorder.setViewportView(lbPreorder);
+
+        lbInorder.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edd_1s20_py2_201709062/arbolAVL.jpg"))); // NOI18N
+        lbInorder.setText(".");
+        scrollInorder.setViewportView(lbInorder);
+
+        lbPostOrder.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edd_1s20_py2_201709062/arbolAVL.jpg"))); // NOI18N
+        lbPostOrder.setText(".");
+        scrollPostorder.setViewportView(lbPostOrder);
+
+        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
+        jPanel10.setLayout(jPanel10Layout);
+        jPanel10Layout.setHorizontalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(scrollInorder)
+                    .addComponent(scrollPreorder, javax.swing.GroupLayout.DEFAULT_SIZE, 1034, Short.MAX_VALUE)
+                    .addGroup(jPanel10Layout.createSequentialGroup()
+                        .addComponent(jButton9)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(scrollPostorder))
+                .addContainerGap())
+        );
+        jPanel10Layout.setVerticalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButton9)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(scrollPreorder, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(scrollInorder, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(scrollPostorder, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jTabbedPane2.addTab("Recorridos AVL", jPanel10);
+
+        javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
+        jPanel11.setLayout(jPanel11Layout);
+        jPanel11Layout.setHorizontalGroup(
+            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1054, Short.MAX_VALUE)
+        );
+        jPanel11Layout.setVerticalGroup(
+            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 501, Short.MAX_VALUE)
+        );
+
+        jTabbedPane2.addTab("Listas Block Chain", jPanel11);
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1079, Short.MAX_VALUE)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTabbedPane2)
+                .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 551, Short.MAX_VALUE)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTabbedPane2)
+                .addContainerGap())
         );
 
         jTabbedPane1.addTab("Reportes", jPanel5);
@@ -1016,12 +1229,20 @@ public class PanelPrincipal extends javax.swing.JFrame {
             existeCategori.getArbolb().insertar(Integer.valueOf(txtIsn.getText()), Integer.valueOf(txtYear.getText()), txtIdioma.getText(), txtTitulo.getText()
             , txtEitorial.getText(), txtAutor.getText(), Integer.valueOf(txtEdicion.getText()), txtCategoria.getText(), EDD_1S20_PY2_201709062.curSession);
             actualizarCategorias();
-        }else{
-            existeCategori.getArbolb().insertar(Integer.valueOf(txtIsn.getText()), Integer.valueOf(txtYear.getText()), txtIdioma.getText(), txtTitulo.getText()
-            , txtEitorial.getText(), txtAutor.getText(), Integer.valueOf(txtEdicion.getText()), txtCategoria.getText(), EDD_1S20_PY2_201709062.curSession);
-        }
-        listaBloque.add(new CrearLibro(Integer.valueOf(txtIsn.getText()), Integer.valueOf(txtYear.getText()), txtIdioma.getText(), txtTitulo.getText()
+            listaBloque.add(new CrearLibro(Integer.valueOf(txtIsn.getText()), Integer.valueOf(txtYear.getText()), txtIdioma.getText(), txtTitulo.getText()
             , txtEitorial.getText(), txtAutor.getText(), Integer.valueOf(txtEdicion.getText()), txtCategoria.getText(), EDD_1S20_PY2_201709062.curSession));
+        }else{
+            Libro existeLibro=existeCategori.getArbolb().buscar(Integer.valueOf(txtIsn.getText()));
+            if(existeLibro==null){
+                existeCategori.getArbolb().insertar(Integer.valueOf(txtIsn.getText()), Integer.valueOf(txtYear.getText()), txtIdioma.getText(), txtTitulo.getText()
+            , txtEitorial.getText(), txtAutor.getText(), Integer.valueOf(txtEdicion.getText()), txtCategoria.getText(), EDD_1S20_PY2_201709062.curSession);
+            listaBloque.add(new CrearLibro(Integer.valueOf(txtIsn.getText()), Integer.valueOf(txtYear.getText()), txtIdioma.getText(), txtTitulo.getText()
+            , txtEitorial.getText(), txtAutor.getText(), Integer.valueOf(txtEdicion.getText()), txtCategoria.getText(), EDD_1S20_PY2_201709062.curSession));
+            }else{
+                System.out.println("El libro ya existe");
+            }
+        }
+        
         txtIsn.setText("");
         txtYear.setText("");
         txtIdioma.setText("");
@@ -1155,8 +1376,13 @@ public class PanelPrincipal extends javax.swing.JFrame {
                         String aut=(String)libro.get("Autor");
                         Long edici=(Long)libro.get("Edicion");
                         String cate=(String)libro.get("Categoria");
-                        existeCategori.getArbolb().insertar(toIntExact(Isbn), toIntExact(ano), idiom, titu, edito, aut, toIntExact(edici), cate, EDD_1S20_PY2_201709062.curSession);
-                        listaBloque.add(new CrearLibro(toIntExact(Isbn), toIntExact(ano), idiom, titu, edito, aut, toIntExact(edici), categoria, EDD_1S20_PY2_201709062.curSession));
+                        Libro existeLibro=existeCategori.getArbolb().buscar(toIntExact(Isbn));
+                        if(existeLibro==null){
+                            existeCategori.getArbolb().insertar(toIntExact(Isbn), toIntExact(ano), idiom, titu, edito, aut, toIntExact(edici), cate, EDD_1S20_PY2_201709062.curSession);
+                            listaBloque.add(new CrearLibro(toIntExact(Isbn), toIntExact(ano), idiom, titu, edito, aut, toIntExact(edici), categoria, EDD_1S20_PY2_201709062.curSession));
+                        }else{
+                            System.out.println("El libro ya existe");
+                        }
                         //System.out.println(Isbn+" "+titu);
                     }
                 }
@@ -1349,6 +1575,74 @@ public class PanelPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton5ActionPerformed
 
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        try {
+            auxcore.arbolAVL.obtenerCodigoDot(auxcore.arbolAVL.root);
+            TimeUnit.SECONDS.sleep(2);
+            lbArbolAVL.setIcon(new ImageIcon(ImageIO.read( new File("./BloquesJson/Graficas/arbolAVL.jpg"))));
+            scrollAVL.setViewportView(lbArbolAVL);
+        } catch (InterruptedException ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(PanelPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        if(!btnBtreeGraph.getText().isEmpty()){
+            NodoAVL auxavl=auxcore.arbolAVL.buscar(auxcore.arbolAVL.root, btnBtreeGraph.getText());
+            if(auxavl!=null){
+                try {
+                    auxavl.getArbolb().imprimir(btnBtreeGraph.getText());
+                    TimeUnit.SECONDS.sleep(2);
+                    BufferedImage img = ImageIO.read(new File("./BloquesJson/Graficas/"+btnBtreeGraph.getText()+"_arbolB.jpg"));
+                    ImageIcon icon = new ImageIcon(img);
+                    lbArbolB.setIcon(icon);
+                    scrollBtree.setViewportView(lbArbolB);
+                } catch (IOException ex) {
+                    JOptionPane.showMessageDialog(null, ex);
+                } catch (InterruptedException ex) {
+                    JOptionPane.showMessageDialog(null, ex);
+                }
+            }else{
+                JOptionPane.showMessageDialog(null, "Categoria no encontrada");
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Area de búsqueda vacía");
+        }
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        auxcore.tabla.obetnerCodDot();
+        try {
+            TimeUnit.SECONDS.sleep(2);
+            BufferedImage img = ImageIO.read(new File("./BloquesJson/Graficas/tablaHash.jpg"));
+            ImageIcon icon = new ImageIcon(img);
+            lbTablaHash.setIcon(icon);
+            scrollTabla.setViewportView(lbTablaHash);
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        } catch (InterruptedException ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
+    }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        auxcore.arbolAVL.graficarPreorder(auxcore.arbolAVL.root);
+        auxcore.arbolAVL.graficarInorder(auxcore.arbolAVL.root);
+        auxcore.arbolAVL.graficarPostorder(auxcore.arbolAVL.root);
+        try {
+            TimeUnit.SECONDS.sleep(2);
+            lbPreorder.setIcon(new ImageIcon(ImageIO.read( new File("./BloquesJson/Graficas/preOrder.jpg"))));
+            scrollPreorder.setViewportView(lbPreorder);
+            lbInorder.setIcon(new ImageIcon(ImageIO.read( new File("./BloquesJson/Graficas/inOrder.jpg"))));
+            scrollInorder.setViewportView(lbInorder);
+            lbPostOrder.setIcon(new ImageIcon(ImageIO.read( new File("./BloquesJson/Graficas/postOrden.jpg"))));
+            scrollPostorder.setViewportView(lbPostOrder);
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_jButton9ActionPerformed
+
     private void actualizarCategorias(){
         NavegacionC.removeAllItems();
         LinkedList<String> auxcatego=auxcore.arbolAVL.getAllCategoris(auxcore.arbolAVL.root);
@@ -1401,6 +1695,7 @@ public class PanelPrincipal extends javax.swing.JFrame {
     private javax.swing.JPasswordField PasswordEdit;
     private javax.swing.JButton btnBorrarCategoria;
     private javax.swing.JButton btnBorrarLibro;
+    private javax.swing.JTextField btnBtreeGraph;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnBuscarModificar;
     private javax.swing.JButton btnCargaMasiva;
@@ -1415,6 +1710,10 @@ public class PanelPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
+    private javax.swing.JButton jButton9;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
@@ -1448,6 +1747,7 @@ public class PanelPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel37;
+    private javax.swing.JLabel jLabel38;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -1457,18 +1757,36 @@ public class PanelPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelx;
     private javax.swing.JLabel jLabelx1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel10;
+    private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTabbedPane jTabbedPane2;
+    private javax.swing.JLabel lbArbolAVL;
+    private javax.swing.JLabel lbArbolB;
+    private javax.swing.JLabel lbInorder;
+    private javax.swing.JLabel lbPostOrder;
+    private javax.swing.JLabel lbPreorder;
+    private javax.swing.JLabel lbTablaHash;
     public static javax.swing.JLabel lbUsuario;
+    private javax.swing.JScrollPane scrollAVL;
+    private javax.swing.JScrollPane scrollBtree;
+    private javax.swing.JScrollPane scrollInorder;
+    private javax.swing.JScrollPane scrollPostorder;
+    private javax.swing.JScrollPane scrollPreorder;
+    private javax.swing.JScrollPane scrollTabla;
     private javax.swing.JTextField textApellido;
     private javax.swing.JTextField textCarnet;
     private javax.swing.JTextField textCarrera;
