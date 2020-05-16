@@ -18,7 +18,7 @@ public class CrearLibro extends Data{
         this.edicion=edicio;
         this.categoria=categori;
         this.propietario=propiet;
-        this.tipo="\t\t{\n\t\t\t\"CREAR_LIBRO\" :[\n\t\t\t\t{\n\t\t\t\t\t";
+        this.tipo="\t\t{\n\t\t\t\"CREAR_LIBRO\" :\n\t\t\t\t{\n\t\t\t\t\t";
     }
 
     @Override
@@ -26,13 +26,14 @@ public class CrearLibro extends Data{
         String cadena=tipo;
         cadena+="\"ISBN\": "+isbn+",\n\t\t\t\t\t";
         cadena+="\"Año\": "+year+",\n\t\t\t\t\t";
-        cadena+="\"Idioma\": "+idioma+",\n\t\t\t\t\t";
-        cadena+="\"Titulo\": "+titulo+",\n\t\t\t\t\t";
-        cadena+="\"Editorial\": "+editorial+",\n\t\t\t\t";
-        cadena+="\"Autor\": "+autor+",\n\t\t\t\t\t";
-        cadena+="\"Edicio\": "+edicion+",\n\t\t\t\t\t";
-        cadena+="\"Categoria\": "+categoria+"\n\t\t\t\t";
-        cadena+="}\n\t\t\t]\n\t\t}";
+        cadena+="\"Idioma\": \""+idioma+"\",\n\t\t\t\t\t";
+        cadena+="\"Titulo\": \""+titulo+"\",\n\t\t\t\t\t";
+        cadena+="\"Editorial\": \""+editorial+"\",\n\t\t\t\t\t";
+        cadena+="\"Autor\": \""+autor+"\",\n\t\t\t\t\t";
+        cadena+="\"Edicion\": "+edicion+",\n\t\t\t\t\t";
+        cadena+="\"Categoria\": \""+categoria+"\",\n\t\t\t\t\t";
+        cadena+="\"Propietario\": "+propietario+"\n\t\t\t\t";
+        cadena+="}\n\t\t}";
         return cadena;
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -46,7 +47,7 @@ public class CrearLibro extends Data{
         cadena+="\"Titulo\": "+titulo+",";
         cadena+="\"Editorial\": "+editorial+",";
         cadena+="\"Autor\": "+autor+",";
-        cadena+="\"Edicio\": "+edicion+",";
+        cadena+="\"Edicion\": "+edicion+",";
         cadena+="\"Categoria\": "+categoria;
         cadena+="}]}";
         return cadena;

@@ -36,13 +36,12 @@ import org.json.simple.parser.ParseException;
 public class PanelPrincipal extends javax.swing.JFrame {
     Core auxcore;
     List<Data> listaBloque;
-    int index;
     ListaDoble listablocks;
     javax.swing.JFrame VentanaLogin;
     String infolibro;//Es para expandir la info del libro
     String auxinfolibro;
     //private final ItemHandler handler;
-    public PanelPrincipal(Core core,List paraBloque, int ind,ListaDoble list,javax.swing.JFrame loginFrame) {
+    public PanelPrincipal(Core core,List paraBloque, ListaDoble list,javax.swing.JFrame loginFrame) {
         initComponents();
         jRadioButton1.setMnemonic(KeyEvent.VK_B);
         jRadioButton2.setMnemonic(KeyEvent.VK_B);
@@ -55,7 +54,6 @@ public class PanelPrincipal extends javax.swing.JFrame {
         
         this.auxcore=core;
         this.listaBloque=paraBloque;
-        this.index=ind;
         this.listablocks=list;
         //handler=new ItemHandler();
         //NavegacionC.addItemListener(handler);
@@ -140,6 +138,9 @@ public class PanelPrincipal extends javax.swing.JFrame {
         scrollPostorder = new javax.swing.JScrollPane();
         lbPostOrder = new javax.swing.JLabel();
         jPanel11 = new javax.swing.JPanel();
+        jButton10 = new javax.swing.JButton();
+        scrollBlackChain = new javax.swing.JScrollPane();
+        lbBlockChain = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         txtIsn = new javax.swing.JTextField();
@@ -192,6 +193,8 @@ public class PanelPrincipal extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         txtBoTitulo3 = new javax.swing.JTextArea();
         CategoriaBorrar = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
+        jLabel39 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         lbUsuario = new javax.swing.JLabel();
@@ -742,15 +745,38 @@ public class PanelPrincipal extends javax.swing.JFrame {
 
         jTabbedPane2.addTab("Recorridos AVL", jPanel10);
 
+        jButton10.setText("Refrescar");
+        jButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton10ActionPerformed(evt);
+            }
+        });
+
+        lbBlockChain.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edd_1s20_py2_201709062/arbolAVL.jpg"))); // NOI18N
+        lbBlockChain.setText(".");
+        scrollBlackChain.setViewportView(lbBlockChain);
+
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
         jPanel11.setLayout(jPanel11Layout);
         jPanel11Layout.setHorizontalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1054, Short.MAX_VALUE)
+            .addGroup(jPanel11Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(scrollBlackChain, javax.swing.GroupLayout.DEFAULT_SIZE, 1034, Short.MAX_VALUE)
+                    .addGroup(jPanel11Layout.createSequentialGroup()
+                        .addComponent(jButton10)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel11Layout.setVerticalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 501, Short.MAX_VALUE)
+            .addGroup(jPanel11Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButton10)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(scrollBlackChain, javax.swing.GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jTabbedPane2.addTab("Listas Block Chain", jPanel11);
@@ -879,6 +905,8 @@ public class PanelPrincipal extends javax.swing.JFrame {
         txtBoTitulo3.setRows(5);
         jScrollPane1.setViewportView(txtBoTitulo3);
 
+        jLabel39.setText("Razón");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -907,18 +935,12 @@ public class PanelPrincipal extends javax.swing.JFrame {
                                     .addComponent(btnGuardarLibro))
                                 .addGap(105, 105, 105)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jButton3)
                                     .addComponent(jLabel18)
                                     .addComponent(txtMoYear1, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel19)
                                     .addComponent(txtMoEdicion1, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel20)
-                                    .addComponent(txtMoCategoria1, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel21)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(txtMoIdioma1, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(96, 96, 96)
-                                        .addComponent(btnBorrarLibro))
+                                    .addComponent(txtMoIdioma1, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(jPanel2Layout.createSequentialGroup()
                                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel16)
@@ -930,27 +952,38 @@ public class PanelPrincipal extends javax.swing.JFrame {
                                             .addComponent(txtMoTitulo1, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(jLabel17)
                                             .addComponent(txtMoEitorial1, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(55, 55, 55)
+                                        .addGap(116, 116, 116)
+                                        .addComponent(jLabel23)
+                                        .addGap(178, 178, 178)
+                                        .addComponent(jLabel25))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(txtMoCategoria1, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jButton3)
+                                            .addComponent(jLabel20))
                                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                                .addGap(61, 61, 61)
-                                                .addComponent(jLabel23)
-                                                .addGap(178, 178, 178)
-                                                .addComponent(jLabel25))
-                                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addGap(55, 55, 55)
+                                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                                     .addComponent(ComboBorrarLb1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addComponent(txtBuscarISBN, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addComponent(txtBuscarTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(txtBuscarISBN, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE)
+                                                    .addComponent(txtBuscarTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE)
                                                     .addGroup(jPanel2Layout.createSequentialGroup()
                                                         .addGap(59, 59, 59)
                                                         .addComponent(jLabel24))
+                                                    .addComponent(CategoriaBorrar)
+                                                    .addComponent(jTextField1)
                                                     .addGroup(jPanel2Layout.createSequentialGroup()
                                                         .addGap(43, 43, 43)
-                                                        .addComponent(btnBuscar))
-                                                    .addComponent(CategoriaBorrar))
-                                                .addGap(30, 30, 30)
-                                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                            .addComponent(jLabel39)
+                                                            .addComponent(btnBuscar))))
+                                                .addGap(30, 30, 30))
+                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(btnBorrarLibro)
+                                                .addGap(94, 94, 94)))
+                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -1062,13 +1095,15 @@ public class PanelPrincipal extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel20)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtMoCategoria1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(txtMoCategoria1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel39))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel21)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(txtMoIdioma1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(btnBorrarLibro)))
+                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel23)
@@ -1080,7 +1115,9 @@ public class PanelPrincipal extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jLabel24)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(txtBuscarTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(txtBuscarTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(btnBorrarLibro))
                                     .addComponent(jScrollPane1))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addComponent(btnCargaMasiva)
@@ -1103,6 +1140,11 @@ public class PanelPrincipal extends javax.swing.JFrame {
         jTabbedPane1.addTab("Configuarcion", jPanel6);
 
         jButton1.setText("Salir");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         lbUsuario.setText("jLabel4");
 
@@ -1204,20 +1246,20 @@ public class PanelPrincipal extends javax.swing.JFrame {
     private void btnGuardarBloqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarBloqueActionPerformed
         Boque block;
         if(listablocks.estaVacia()){
-            block=new Boque(index, listaBloque, "0000");
+            block=new Boque(EDD_1S20_PY2_201709062.indexBloque, listaBloque, "0000");
             block.minar(block.juntarParaHash());
             block.mostrarString();
             listablocks.insert(block);
-            listablocks.NodosToString();
+            
         }else{
-            block=new Boque(index, listaBloque, listablocks.returnLastHash());
+            block=new Boque(EDD_1S20_PY2_201709062.indexBloque, listaBloque, listablocks.returnLastHash());
             block.minar(block.juntarParaHash());
             block.mostrarString();
             listablocks.insert(block);
-            listablocks.NodosToString();
         }
-        index++;
+        EDD_1S20_PY2_201709062.indexBloque++;
         listaBloque.clear();
+        JOptionPane.showMessageDialog(null, "Bloque Creado");
     }//GEN-LAST:event_btnGuardarBloqueActionPerformed
 
     private void btnGuardarLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarLibroActionPerformed
@@ -1225,6 +1267,7 @@ public class PanelPrincipal extends javax.swing.JFrame {
         NodoAVL existeCategori=auxcore.arbolAVL.getOwner(auxcore.arbolAVL.root, categoria);
         if(existeCategori==null){
             auxcore.arbolAVL.root=auxcore.arbolAVL.insertar(auxcore.arbolAVL.root, categoria, EDD_1S20_PY2_201709062.curSession);
+            //listaBloque.add(new CrearCategoria(categoria, EDD_1S20_PY2_201709062.curSession));
             existeCategori=auxcore.arbolAVL.getOwner(auxcore.arbolAVL.root, categoria);
             existeCategori.getArbolb().insertar(Integer.valueOf(txtIsn.getText()), Integer.valueOf(txtYear.getText()), txtIdioma.getText(), txtTitulo.getText()
             , txtEitorial.getText(), txtAutor.getText(), Integer.valueOf(txtEdicion.getText()), txtCategoria.getText(), EDD_1S20_PY2_201709062.curSession);
@@ -1402,9 +1445,20 @@ public class PanelPrincipal extends javax.swing.JFrame {
         if(ComboBorrarLb1.getItemCount() > 0){
             String libroAborrar=(String)ComboBorrarLb1.getSelectedItem();
             String[] info=libroAborrar.split(";");
-            System.out.println(info[0]+" "+info[1]);
-            auxcore.borrarLibro(auxcore.arbolAVL.root, info[1],Integer.valueOf(info[0]));
-            //auxcore.arbolAVL.
+            NodoAVL auxcategoria=auxcore.arbolAVL.buscar(auxcore.arbolAVL.root, info[1]);
+            Libro auxlibro=auxcategoria.getArbolb().buscar(Integer.valueOf(info[0]));
+            if(auxlibro.getPropietario()==EDD_1S20_PY2_201709062.curSession){
+                auxcore.borrarLibro(auxcore.arbolAVL.root, info[1],Integer.valueOf(info[0]));
+                listaBloque.add(new BorrarLibro(Integer.valueOf(info[0]), auxlibro.getTitulo(), info[1]));
+            }else{
+                JOptionPane.showMessageDialog(null, "El libro no es tuyo");
+            }
+            
+            txtBuscarISBN.setText("");
+            txtBoTitulo3.setText("");
+            ComboBorrarLb1.removeAllItems();
+        }else{
+            JOptionPane.showMessageDialog(null, "No hay libros para borrar");
         }
     }//GEN-LAST:event_btnBorrarLibroActionPerformed
 
@@ -1493,6 +1547,7 @@ public class PanelPrincipal extends javax.swing.JFrame {
         String carre=txtEditCarrera.getText();
         String pass=PasswordEdit.getText();
         auxcore.editarUsuario(EDD_1S20_PY2_201709062.curSession, nom, ape, carre, pass);
+        listaBloque.add(new EditarUsuario(EDD_1S20_PY2_201709062.curSession,nom,ape,carre,pass));
         JOptionPane.showMessageDialog(null, "Usuario Editado Exitosamente");
         llenarUsuario();
     }//GEN-LAST:event_btnEditarActionPerformed
@@ -1643,6 +1698,21 @@ public class PanelPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton9ActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        setVisible(false);
+        VentanaLogin.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+        listablocks.NodosToString();
+        try {
+            TimeUnit.SECONDS.sleep(2);
+            lbBlockChain.setIcon(new ImageIcon(ImageIO.read(new File("./BloquesJson/Graficas/BlocChain.jpg"))));
+            scrollBlackChain.setViewportView(lbBlockChain);
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_jButton10ActionPerformed
+
     private void actualizarCategorias(){
         NavegacionC.removeAllItems();
         LinkedList<String> auxcatego=auxcore.arbolAVL.getAllCategoris(auxcore.arbolAVL.root);
@@ -1706,6 +1776,7 @@ public class PanelPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btnNuevaCategoria;
     private javax.swing.JButton btnRegistrar;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -1748,6 +1819,7 @@ public class PanelPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel37;
     private javax.swing.JLabel jLabel38;
+    private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -1774,14 +1846,17 @@ public class PanelPrincipal extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lbArbolAVL;
     private javax.swing.JLabel lbArbolB;
+    private javax.swing.JLabel lbBlockChain;
     private javax.swing.JLabel lbInorder;
     private javax.swing.JLabel lbPostOrder;
     private javax.swing.JLabel lbPreorder;
     private javax.swing.JLabel lbTablaHash;
     public static javax.swing.JLabel lbUsuario;
     private javax.swing.JScrollPane scrollAVL;
+    private javax.swing.JScrollPane scrollBlackChain;
     private javax.swing.JScrollPane scrollBtree;
     private javax.swing.JScrollPane scrollInorder;
     private javax.swing.JScrollPane scrollPostorder;

@@ -1,41 +1,78 @@
 {
-	"INDEX: 1,
-	"TIMESTAMP":  "2020-05-02T01:09:22.706",
-	"NONCE: 43897,
+	"INDEX": 1,
+	"TIMESTAMP":  "2020-05-15T16:51:36.712",
+	"NONCE": 17353,
 	"DATA": [		{
-			"CREAR_USUARIO" :[
+			"CREAR_LIBRO" :
 				{
-					"Carnet": 201709062,
-					"Nombre": Ahiezer,
-					"Apellido": Ramirez,
-					"Carrera": Ingenieria en Sistemas,
-					"Password": 654321
+					"ISBN": 10939,
+					"Ano": 1973,
+					"Idioma": "Español",
+					"Titulo": "Desarrollo organizacional : estrategias de interrelación humana para el desarrollo de organizaciones v 2 : Desarrollo organizacional: estrategias y modelos",
+					"Editorial": "Ad Qualite",
+					"Autor": "ESPINOZA DE LEE, OLGA",
+					"Edicion": 1,
+					"Categoria": "Ensayo",
+					"Propietario": 123
 				}
-			]
 		},
 		{
-			"CREAR_USUARIO" :[
+			"CREAR_LIBRO" :
 				{
-					"Carnet": 201703173,
-					"Nombre": Byron,
-					"Apellido": Gomez,
-					"Carrera": Ingenieria Civil,
-					"Password": 48383ho
+					"ISBN": 10940,
+					"Ano": 1973,
+					"Idioma": "Espanol",
+					"Titulo": "Desarrollo organizacional : estrategias de interrelación humana para el desarrollo de organizaciones v 3 El modelo de cuadro organizacional GRID",
+					"Editorial": "Ad-Hoc",
+					"Autor": "ESPINOZA DE TARACENA, TELMA ONELIA",
+					"Edicion": 3,
+					"Categoria": "Ensayo",
+					"Propietario": 123
 				}
-			]
 		},
 		{
-			"CREAR_USUARIO" :[
+			"CREAR_LIBRO" :
 				{
-					"Carnet": 20193829,
-					"Nombre": Tonito,
-					"Apellido": Silva,
-					"Carrera": Ingenieria Electrica,
-					"Password": 483327hdh
+					"ISBN": 13549,
+					"Ano": 1998,
+					"Idioma": "Mandarin",
+					"Titulo": "Introducción al código procesal penal",
+					"Editorial": "Agencia para la Planeación del Desarrollo Urbano de Nuevo León",
+					"Autor": "FAST, HOWARD MELVIN",
+					"Edicion": 1,
+					"Categoria": "Lirico",
+					"Propietario": 123
 				}
-			]
+		},
+		{
+			"CREAR_LIBRO" :
+				{
+					"ISBN": 13550,
+					"Ano": 1996,
+					"Idioma": "Ingles",
+					"Titulo": "Future libraries, future catalogues",
+					"Editorial": "AGENGIA EspañolA DE COOPERACIÓN INTERNACIONAL / OIT",
+					"Autor": "FAT, CHOW YUN",
+					"Edicion": 1,
+					"Categoria": "Epico",
+					"Propietario": 123
+				}
+		},
+		{
+			"CREAR_LIBRO" :
+				{
+					"ISBN": 13551,
+					"Ano": 2000,
+					"Idioma": "Español",
+					"Titulo": "La revalorización del art nouveau en Guatemala un caso : la casa Fenix",
+					"Editorial": "AGEXPRONT",
+					"Autor": "FATAS, GUILLERMO",
+					"Edicion": 1,
+					"Categoria": "Epico",
+					"Propietario": 123
+				}
 		}
 	],
-	"PREVIOSHASH" :"00003B69AEA446EFDFA925C9294B679112EB125FD17912A5AF1C946CFADC752E",
-	"HASH: "0000310A4A9FEC9D26917711DA2D6681662EE9AC03E28EF34BEBEFD00E7ACB5B"
+	"PREVIOSHASH" :"0000500E3A2A599A6ED1DF950FF222278115493FCC8D1578827FDD3532F86CB3",
+	"HASH": "000097ABF3CF8D5E35D919FDAC91C456950615693817A3B47E429742C64F6716"
 }

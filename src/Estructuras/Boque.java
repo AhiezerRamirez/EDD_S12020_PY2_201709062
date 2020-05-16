@@ -7,8 +7,8 @@ package Estructuras;
 
 //import java.util.Date;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.LinkedList;
@@ -60,7 +60,6 @@ public class Boque {
     public String juntarParaHash(){
         StringBuilder s=new StringBuilder();
         s.append(index).append(fecha.toString());
-        System.out.println(fecha.toString());
         s.append(prevHash).append(dataToString()).append(nonce);
         return s.toString();
     }
@@ -83,9 +82,9 @@ public class Boque {
     }
     public void mostrarString(){
         StringBuilder s =new StringBuilder();
-        s.append("{\n\t\"INDEX: ").append(index).append(",\n\t");
+        s.append("{\n\t\"INDEX\": ").append(index).append(",\n\t");
         s.append("\"TIMESTAMP\":  \"").append(fecha.toString()).append("\",\n\t");
-        s.append("\"NONCE: ").append(nonce).append(",\n\t");
+        s.append("\"NONCE\": ").append(nonce).append(",\n\t");
         s.append("\"DATA\": [");
         data.forEach((data1) -> {
             s.append(data1.graficar()).append(",\n");
@@ -93,12 +92,11 @@ public class Boque {
         s.deleteCharAt(s.length()-2);
         s.append("\t],\n\t");
         s.append("\"PREVIOSHASH\" :\"").append(prevHash).append("\",\n\t");
-        s.append("\"HASH: \"").append(hash).append("\"\n}");
+        s.append("\"HASH\": \"").append(hash).append("\"\n}");
         System.out.println(s.toString());
         try {
-            FileOutputStream archivoJson=new FileOutputStream("./BloquesJson/Bloque"+Integer.toString(index)+".json", true);
-            byte[] b=s.toString().getBytes();
-            archivoJson.write(b);
+            PrintWriter archivoJson=new PrintWriter("./BloquesJson/Bloque"+Integer.toString(index)+".json", "UTF-8");
+            archivoJson.write(s.toString());
             archivoJson.close();
         } catch (FileNotFoundException ex) {
             JOptionPane.showMessageDialog(null,"Error al guardar el Archivo Json");

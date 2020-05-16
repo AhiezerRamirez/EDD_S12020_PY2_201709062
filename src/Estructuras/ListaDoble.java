@@ -5,6 +5,11 @@
  */
 package Estructuras;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
+import javax.swing.JOptionPane;
+
 public class ListaDoble {
     NodoListaDoble header, tail;
 
@@ -49,14 +54,28 @@ public class ListaDoble {
             aux=aux.getNext();
         }
         aux=this.header;
-        while (aux!=tail) {
-            s.append("nodo").append(aux.block.index).append(" -> ");
+        while (aux.getNext()!=null) {
+            s.append("nodo").append(aux.block.index).append(" -> ").append("nodo").append(aux.getNext().block.index).append("[dir=both];\n\t");
             aux=aux.getNext();
         }
-        if(aux!=null)
-            s.append("nodo").append(aux.block.index).append("\n");
+        
         s.append("}");
-        System.out.println(s.toString());
+        comandoDot("BlocChain",s.toString());
+    }
+    private void comandoDot(String nombre,String codigoDot){
+        String ruta="./BloquesJson/Graficas/"+nombre+".dot";
+        try {
+            PrintWriter writer = new PrintWriter(ruta, "UTF-8");
+            writer.println(codigoDot);           //writes bytes into file  
+            writer.close();
+            ProcessBuilder builder = new ProcessBuilder(
+            "cmd.exe", "/c", "dot -Tjpg ./BloquesJson/Graficas/"+nombre+".dot -o ./BloquesJson/Graficas/"+nombre+".jpg");
+            builder.start();
+        } catch (FileNotFoundException ex) {
+            JOptionPane.showMessageDialog(null, "Algo salió mal con el archivo dot");
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Algo salió mal con la imagen jpg");
+        }
     }
 }
 

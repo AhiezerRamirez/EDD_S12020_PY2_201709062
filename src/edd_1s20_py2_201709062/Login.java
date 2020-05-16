@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package edd_1s20_py2_201709062;
 
 import Estructuras.CrearUsuario;
@@ -26,24 +22,18 @@ import java.util.LinkedList;
 import java.util.List;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author Lissette
- */
 public class Login extends javax.swing.JFrame {
 
     Core auxcore;
     List<Data> listaBloque;
-    int index;
     ListaDoble listablocks;
     PanelPrincipal ventanaPanel;
-    public Login(Core core,List paraBloque, int ind,ListaDoble list) {
+    public Login(Core core,List paraBloque, ListaDoble list) {
         initComponents();
         this.auxcore=core;
         this.listaBloque=paraBloque;
-        this.index=ind;
         this.listablocks=list;
-        this.ventanaPanel=new PanelPrincipal(core, paraBloque, ind, list,this);
+        this.ventanaPanel=new PanelPrincipal(core, paraBloque,  list,this);
         ventanaPanel.setVisible(false);
     }
 
@@ -308,20 +298,21 @@ public class Login extends javax.swing.JFrame {
     private void btnCrearBolqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearBolqueActionPerformed
         Boque block;
         if(listablocks.estaVacia()){
-            block=new Boque(index, listaBloque, "0000");
+            block=new Boque(EDD_1S20_PY2_201709062.indexBloque, listaBloque, "0000");
             block.minar(block.juntarParaHash());
             block.mostrarString();
             listablocks.insert(block);
             listablocks.NodosToString();
         }else{
-            block=new Boque(index, listaBloque, listablocks.returnLastHash());
+            block=new Boque(EDD_1S20_PY2_201709062.indexBloque, listaBloque, listablocks.returnLastHash());
             block.minar(block.juntarParaHash());
             block.mostrarString();
             listablocks.insert(block);
             listablocks.NodosToString();
         }
-        index++;
+        EDD_1S20_PY2_201709062.indexBloque++;
         listaBloque.clear();
+        JOptionPane.showMessageDialog(null, "Bloque creado");
     }//GEN-LAST:event_btnCrearBolqueActionPerformed
 
     public static void main(String args[]) {

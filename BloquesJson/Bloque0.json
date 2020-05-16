@@ -1,41 +1,52 @@
 {
-	"INDEX: 0,
-	"TIMESTAMP":  "2020-05-02T01:08:45.378",
-	"NONCE: 45842,
+	"INDEX": 0,
+	"TIMESTAMP":  "2020-05-15T16:51:10.741",
+	"NONCE": 27787,
 	"DATA": [		{
-			"CREAR_USUARIO" :[
+			"CREAR_USUARIO" :
 				{
-					"Carnet": 201503476,
-					"Nombre": Ricardo,
-					"Apellido": Cutz,
-					"Carrera": Ingenieria en Sistemas,
-					"Password": 123456
+					"Carnet": 201709062,
+					"Nombre": "Ahiezer",
+					"Apellido": "Ramirez",
+					"Carrera": "Ingenieria en Sistemas",
+					"Password": "654321"
 				}
-			]
+			
 		},
 		{
-			"CREAR_USUARIO" :[
+			"CREAR_USUARIO" :
 				{
-					"Carnet": 201503477,
-					"Nombre": Juanito,
-					"Apellido": Hernandez,
-					"Carrera": Ingenieria Civil,
-					"Password": 123456
+					"Carnet": 201703173,
+					"Nombre": "Byron",
+					"Apellido": "Gomez",
+					"Carrera": "Ingenieria Civil",
+					"Password": "48383ho"
 				}
-			]
+			
 		},
 		{
-			"CREAR_USUARIO" :[
+			"CREAR_USUARIO" :
 				{
-					"Carnet": 202005878,
-					"Nombre": Antonio,
-					"Apellido": Hernandez,
-					"Carrera": Ingenieria Electrica,
-					"Password": 123456
+					"Carnet": 20193829,
+					"Nombre": "Tonito",
+					"Apellido": "Silva",
+					"Carrera": "Ingenieria Electrica",
+					"Password": "483327hdh"
 				}
-			]
+			
+		},
+		{
+			"CREAR_USUARIO" :
+				{
+					"Carnet": 2123942,
+					"Nombre": "Carlitos",
+					"Apellido": "Gomez",
+					"Carrera": "Ingenieria Civil",
+					"Password": "48383ho"
+				}
+			
 		}
 	],
 	"PREVIOSHASH" :"0000",
-	"HASH: "00003B69AEA446EFDFA925C9294B679112EB125FD17912A5AF1C946CFADC752E"
+	"HASH": "0000500E3A2A599A6ED1DF950FF222278115493FCC8D1578827FDD3532F86CB3"
 }
