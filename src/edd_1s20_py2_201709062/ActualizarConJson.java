@@ -8,7 +8,11 @@ import java.io.FileReader;
 import java.io.IOException;
 import static java.lang.Math.toIntExact;
 import java.security.MessageDigest;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.bind.DatatypeConverter;
@@ -19,12 +23,15 @@ import org.json.simple.parser.ParseException;
 
 public class ActualizarConJson {
     Core auxcore;
-    public ActualizarConJson(Core cor){
+    ListaDoble listaBloques;
+    public ActualizarConJson(Core cor,ListaDoble listaBlocks){
         this.auxcore=cor;
+        this.listaBloques=listaBlocks;
     }
     
     public void actualizarRed(String recibido){
         JSONParser parser = new JSONParser();
+        List<Data> l=new LinkedList();
         //System.out.println(recibido);
         try {
             Object jsonrecived=parser.parse(recibido);
@@ -35,7 +42,6 @@ public class ActualizarConJson {
             JSONArray datas=(JSONArray)json.get("DATA");
             String prevHash=(String) json.get("PREVIOSHASH");
             String curHash=(String) json.get("HASH");
-            
             Iterator<JSONObject> acciones=datas.iterator();
             while(acciones.hasNext()){
                 JSONObject dat =(JSONObject)acciones.next();
@@ -47,7 +53,40 @@ public class ActualizarConJson {
                     String carrera=(String)auxjson.get("Carrera");
                     String password=(String)auxjson.get("Password");
                     auxcore.tabla.add(Math.toIntExact(carnet), nombre, apellido, carrera, password);
-                }else if(dat.keySet().contains("EDITAR_USUARIO")){
+                    l.add(new CrearUsuario(toIntExact(carnet), nombre, apellido, carrera, password));
+                }else if(dat.keySet().contains("EDITAR_LIBRO")){
+                    JSONObject auxjson=(JSONObject)dat.get("EDITAR_LIBRO");
+                    String categoria=(String)auxjson.get("Categoria");
+                    NodoAVL existeCategori=auxcore.arbolAVL.getOwner(auxcore.arbolAVL.root, categoria);
+                    if(existeCategori!=null){
+                        Long Isbn=(Long)auxjson.get("ISBN");
+                        Long ano=(Long)auxjson.get("Año");
+                        String idiom=(String)auxjson.get("Idioma");
+                        String titu=(String)auxjson.get("Titulo");
+                        String edito=(String)auxjson.get("Editorial");
+                        String aut=(String)auxjson.get("Autor");
+                        Long edici=(Long)auxjson.get("Edicion");
+                        String cate=(String)auxjson.get("Categoria");
+                        Libro existeLibro=existeCategori.getArbolb().buscar(toIntExact(Isbn));
+                        if(existeLibro!=null){
+                            existeLibro.setYear(toIntExact(ano));
+                            existeLibro.setIdioma(idiom);
+                            existeLibro.setTitulo(titu);
+                            existeLibro.setEditorial(edito);
+                            existeLibro.setAutor(aut);
+                            existeLibro.setEdicion(toIntExact(edici));
+                            existeLibro.setCategoria(cate);
+                            l.add(new EditarLibro(toIntExact(Isbn), toIntExact(ano), idiom, titu, edito, aut, toIntExact(edici), categoria));
+                        }else{
+                            System.out.println("El libro no existe");
+                        }
+                    }
+                }else if(dat.keySet().contains("BORRAR_USUARIO")){
+                    JSONObject auxjson=(JSONObject)dat.get("EDITAR_USUARIO");
+                    Long carnet=(Long) auxjson.get("Carnet");
+                    auxcore.eliminarUsuario(toIntExact(carnet));
+                    l.add(new BorrarUsuario(toIntExact(carnet)));
+                } else if(dat.keySet().contains("EDITAR_USUARIO")){
                     JSONObject auxjson=(JSONObject)dat.get("EDITAR_USUARIO");
                     Long carnet=(Long) auxjson.get("Carnet");
                     String nombre=(String)auxjson.get("Nombre");
@@ -55,15 +94,19 @@ public class ActualizarConJson {
                     String carrera=(String)auxjson.get("Carrera");
                     String password=(String)auxjson.get("Password");
                     auxcore.editarUsuario(toIntExact(carnet), nombre, apellido, carrera, password);
+                    l.add(new EditarUsuario(toIntExact(carnet), nombre, apellido, carrera, password));
                 }else if(dat.keySet().contains("ELIMINAR_LIBRO")){
                     JSONObject auxjson=(JSONObject)dat.get("ELIMINAR_LIBRO");
                     Long isbn=(Long) auxjson.get("ISBN");
                     String categoria=(String)auxjson.get("Categoria");
+                    String titu=(String)auxjson.get("Titulo");
                     auxcore.borrarLibro(auxcore.arbolAVL.root, categoria,toIntExact(isbn));
+                    l.add(new BorrarLibro(toIntExact(isbn), titu, categoria));
                 }else if(dat.keySet().contains("ELIMINAR_CATEGORIA")){
                     JSONObject auxjson=(JSONObject)dat.get("ELIMINAR_CATEGORIA");
                     String categoria=(String)auxjson.get("NOMBRE");
                     auxcore.arbolAVL.borrar(auxcore.arbolAVL.root, categoria);
+                    l.add(new BorrarCategoria(categoria));
                 }else if(dat.keySet().contains("CREAR_LIBRO")){
                     JSONObject auxjson=(JSONObject)dat.get("CREAR_LIBRO");
                     String categoria=(String)auxjson.get("Categoria");
@@ -81,7 +124,8 @@ public class ActualizarConJson {
                         Long propie=(Long)auxjson.get("Propietario");
                         String cate=(String)auxjson.get("Categoria");
                         existeCategori.getArbolb().insertar(toIntExact(Isbn), toIntExact(ano), idiom, titu, edito, aut, toIntExact(edici), cate,toIntExact(propie));
-                     }else{
+                        l.add(new CrearLibro(toIntExact(Isbn), toIntExact(ano), idiom, titu, edito, aut, toIntExact(edici), cate, toIntExact(propie)));
+                    }else{
                         Long Isbn=(Long)auxjson.get("ISBN");
                         Long ano=(Long)auxjson.get("Año");
                         String idiom=(String)auxjson.get("Idioma");
@@ -90,22 +134,29 @@ public class ActualizarConJson {
                         String aut=(String)auxjson.get("Autor");
                         Long edici=(Long)auxjson.get("Edicion");
                         String cate=(String)auxjson.get("Categoria");
+                        Long propie=(Long)auxjson.get("Propietario");
                         Libro existeLibro=existeCategori.getArbolb().buscar(toIntExact(Isbn));
                         if(existeLibro==null){
-                            existeCategori.getArbolb().insertar(toIntExact(Isbn), toIntExact(ano), idiom, titu, edito, aut, toIntExact(edici), cate, EDD_1S20_PY2_201709062.curSession);
-                            }else{
+                            existeCategori.getArbolb().insertar(toIntExact(Isbn), toIntExact(ano), idiom, titu, edito, aut, toIntExact(edici), cate, toIntExact(propie));
+                            l.add(new CrearLibro(toIntExact(Isbn), toIntExact(ano), idiom, titu, edito, aut, toIntExact(edici), cate, toIntExact(propie)));
+                        }else{
                             System.out.println("El libro ya existe");
                         }
                     }
                 }else if(dat.keySet().contains("CREAR_CATEGORIA")){
                     JSONObject auxjson= (JSONObject)dat.get("CREAR_CATEGORIA");
                     String categoria=(String)auxjson.get("NOMBRE");
-                    Long protpietario=(Long) auxjson.get("propietario");
-                    auxcore.arbolAVL.insertar(auxcore.arbolAVL.root, categoria, Math.toIntExact(protpietario));
+                    Long propietario=(Long) auxjson.get("propietario");
+                    auxcore.arbolAVL.insertar(auxcore.arbolAVL.root, categoria, Math.toIntExact(propietario));
+                    l.add(new CrearCategoria(categoria, toIntExact(propietario)));
                 }
-                //System.out.println(dat);
-                //Data datos=(Data) dat;
             }
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            LocalDateTime dateTime = LocalDateTime.parse(timestamp, formatter);
+            Boque b=new Boque(toIntExact(index), dateTime, toIntExact(nonce), l, prevHash, curHash);
+            b.mostrarString();
+            listaBloques.insert(b);
+            EDD_1S20_PY2_201709062.indexBloque++;
         } catch (ParseException ex) {
             Logger.getLogger(ActualizarConJson.class.getName()).log(Level.SEVERE, null, ex);
         }

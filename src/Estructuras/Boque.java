@@ -33,6 +33,14 @@ public class Boque {
         this.prevHash=prevHas;
         this.hash=getHash256();
     }
+    public Boque(int ind, LocalDateTime time,int non, List<Data> da,String preH,String ha){
+        this.index=ind;
+        this.fecha=time;
+        this.nonce=non;
+        this.data=da;
+        this.prevHash=preH;
+        this.hash=ha;
+    }
     private String getHash256(){
         String resultado="";
         try {

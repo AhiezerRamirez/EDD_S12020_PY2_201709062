@@ -51,6 +51,7 @@ public class PanelPrincipal extends javax.swing.JFrame implements Observer {
     //private final ItemHandler handler;
     public PanelPrincipal(Core core,List paraBloque, ListaDoble list,javax.swing.JFrame loginFrame,String puerto) {
         initComponents();
+        setTitle("Puerto: "+puerto);
         jRadioButton1.setMnemonic(KeyEvent.VK_B);
         jRadioButton2.setMnemonic(KeyEvent.VK_B);
         jRadioButton1.setSelected(true);
@@ -64,7 +65,7 @@ public class PanelPrincipal extends javax.swing.JFrame implements Observer {
         this.listaBloque=paraBloque;
         this.listablocks=list;
         int port=Integer.valueOf(puerto);
-        networkUpdate=new ActualizarConJson(core);
+        networkUpdate=new ActualizarConJson(core,list);
         s=new Servidor("127.0.0.1",port);
         s.addObserver(this);
         t=new Thread(s);
@@ -1409,7 +1410,7 @@ public class PanelPrincipal extends javax.swing.JFrame implements Observer {
             if(existe.propietario==EDD_1S20_PY2_201709062.curSession){
                 auxcore.arbolAVL.root=auxcore.arbolAVL.borrar(auxcore.arbolAVL.root, auxcategoria);
                 LinkedList<String> auxcatego=auxcore.arbolAVL.getOwnersCategories(auxcore.arbolAVL.root, EDD_1S20_PY2_201709062.curSession);
-                listaBloque.add(new BorrarCategoria(auxcategoria, EDD_1S20_PY2_201709062.curSession));
+                listaBloque.add(new BorrarCategoria(auxcategoria));
                 jComboBox1.removeAllItems();
                 auxcatego.forEach((string) -> {
                     jComboBox1.addItem(string);
@@ -1450,7 +1451,7 @@ public class PanelPrincipal extends javax.swing.JFrame implements Observer {
         NodoAVL existeCategori=auxcore.arbolAVL.getOwner(auxcore.arbolAVL.root, categoria);
         if(existeCategori==null){
             auxcore.arbolAVL.root=auxcore.arbolAVL.insertar(auxcore.arbolAVL.root, categoria, EDD_1S20_PY2_201709062.curSession);
-            //listaBloque.add(new CrearCategoria(categoria, EDD_1S20_PY2_201709062.curSession));
+            listaBloque.add(new CrearCategoria(categoria, EDD_1S20_PY2_201709062.curSession));
             existeCategori=auxcore.arbolAVL.getOwner(auxcore.arbolAVL.root, categoria);
             existeCategori.getArbolb().insertar(Integer.valueOf(txtIsn.getText()), Integer.valueOf(txtYear.getText()), txtIdioma.getText(), txtTitulo.getText()
             , txtEitorial.getText(), txtAutor.getText(), Integer.valueOf(txtEdicion.getText()), txtCategoria.getText(), EDD_1S20_PY2_201709062.curSession);
@@ -1484,7 +1485,7 @@ public class PanelPrincipal extends javax.swing.JFrame implements Observer {
         Libro libroBuscado=auxcore.buscarLibro(auxcore.arbolAVL.root, Integer.valueOf(txtBuscarModificar.getText()));
         if(libroBuscado!=null){
             txtMoTitulo1.setText(libroBuscado.getTitulo());
-            txtMoAutor1.setText(libroBuscado.getTitulo());
+            txtMoAutor1.setText(libroBuscado.getAutor());
             txtMoEitorial1.setText(libroBuscado.getEditorial());
             txtMoYear1.setText(Integer.toString(libroBuscado.getYear()));
             txtMoEdicion1.setText(Integer.toString(libroBuscado.getEdicion()));
@@ -1498,8 +1499,9 @@ public class PanelPrincipal extends javax.swing.JFrame implements Observer {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         Libro libroBuscado=auxcore.buscarLibro(auxcore.arbolAVL.root, Integer.valueOf(txtBuscarModificar.getText()));
         if(libroBuscado!=null){
+            if(libroBuscado.getPropietario()==EDD_1S20_PY2_201709062.curSession){
             libroBuscado.setTitulo(txtMoTitulo1.getText());
-            libroBuscado.setTitulo(txtMoAutor1.getText());
+            libroBuscado.setAutor(txtMoAutor1.getText());
             libroBuscado.setEditorial(txtMoEitorial1.getText());
             libroBuscado.setYear(Integer.valueOf(txtMoYear1.getText()));
             libroBuscado.setEdicion(Integer.valueOf(txtMoEdicion1.getText()));
@@ -1513,6 +1515,11 @@ public class PanelPrincipal extends javax.swing.JFrame implements Observer {
             txtMoIdioma1.setText("");
             txtMoYear1.setText("");
             txtMoIdioma1.setText("");
+            listaBloque.add(new EditarLibro(Integer.valueOf(txtBuscarModificar.getText()), Integer.valueOf(txtMoYear1.getText()), txtMoIdioma1.getText(), txtMoTitulo1.getText()
+            , txtMoEitorial1.getText(), txtMoAutor1.getText(), Integer.valueOf(txtMoEdicion1.getText()), txtMoCategoria1.getText()));
+            }else{
+                JOptionPane.showMessageDialog(null, "El libro no es tuyo");
+            }
         }else{
             JOptionPane.showMessageDialog(null, "No se encontró el libro indicado");
         }
@@ -1579,6 +1586,7 @@ public class PanelPrincipal extends javax.swing.JFrame implements Observer {
                     NodoAVL existeCategori=auxcore.arbolAVL.getOwner(auxcore.arbolAVL.root, categoria);
                     if(existeCategori==null){
                         auxcore.arbolAVL.root=auxcore.arbolAVL.insertar(auxcore.arbolAVL.root, categoria, EDD_1S20_PY2_201709062.curSession);
+                        listaBloque.add(new CrearCategoria(categoria, EDD_1S20_PY2_201709062.curSession));
                         existeCategori=auxcore.arbolAVL.getOwner(auxcore.arbolAVL.root, categoria);
                         Long Isbn=(Long)libro.get("ISBN");
                         Long ano=(Long)libro.get("Año");
@@ -1738,6 +1746,7 @@ public class PanelPrincipal extends javax.swing.JFrame implements Observer {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         setVisible(false);
         auxcore.eliminarUsuario(EDD_1S20_PY2_201709062.curSession);
+        listaBloque.add(new BorrarUsuario(EDD_1S20_PY2_201709062.curSession));
         JOptionPane.showMessageDialog(null, "Usuario Eliminado con éxito");
         VentanaLogin.setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
@@ -2131,8 +2140,22 @@ public class PanelPrincipal extends javax.swing.JFrame implements Observer {
 
     @Override
     public void update(Observable o, Object o1) {
-        System.out.println(o1);
-        networkUpdate.actualizarRed((String)o1);
+        String entry=(String)o1;
+        System.out.println(entry);
+        if(entry.startsWith("1")){
+            String parame[]=entry.split(":");
+            System.out.println("IP:"+parame[0]);
+            System.out.println("Puerto:"+parame[1]);
+        }else{
+            System.out.println("Mensaje:\n"+entry);
+        }
+        /*networkUpdate.actualizarRed((String)o1);
+        actualizarCategorias();
+        jComboBox1.removeAllItems();
+        LinkedList<String> auxcatego=auxcore.arbolAVL.getAllCategoris(auxcore.arbolAVL.root);
+                    auxcatego.forEach((string) -> {
+                    jComboBox1.addItem(string);
+                });*/
     }
 
 }

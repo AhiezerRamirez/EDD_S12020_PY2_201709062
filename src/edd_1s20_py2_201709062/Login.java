@@ -27,11 +27,14 @@ public class Login extends javax.swing.JFrame {
     List<Data> listaBloque;
     ListaDoble listablocks;
     PanelPrincipal ventanaPanel;
+    String puerto;
     public Login(Core core,List paraBloque, ListaDoble list,String puerto) {
         initComponents();
+        setTitle("Puerto: "+puerto);
         this.auxcore=core;
         this.listaBloque=paraBloque;
         this.listablocks=list;
+        this.puerto=puerto;
         this.ventanaPanel=new PanelPrincipal(core, paraBloque,  list,this,puerto);
         ventanaPanel.setVisible(false);
     }
@@ -45,6 +48,7 @@ public class Login extends javax.swing.JFrame {
         txtUserName = new javax.swing.JTextField();
         btnIniciar = new javax.swing.JButton();
         txtPass = new javax.swing.JPasswordField();
+        jButton2 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         textCarnet = new javax.swing.JTextField();
         textNombre = new javax.swing.JTextField();
@@ -81,6 +85,13 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
+        jButton2.setText("Reportar Salida");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -88,19 +99,26 @@ public class Login extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(230, 230, 230)
-                        .addComponent(btnIniciar))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(162, 162, 162)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtUserName)
-                            .addComponent(txtPass, javax.swing.GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE))))
-                .addContainerGap(169, Short.MAX_VALUE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(230, 230, 230)
+                                .addComponent(btnIniciar))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(162, 162, 162)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtUserName)
+                                    .addComponent(txtPass, javax.swing.GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE))))
+                        .addGap(0, 159, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton2)))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(62, 62, 62)
+                .addComponent(jButton2)
+                .addGap(39, 39, 39)
                 .addComponent(txtUserName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(77, 77, 77)
                 .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -380,6 +398,11 @@ public class Login extends javax.swing.JFrame {
         jTextField2.setText("");
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        auxcore.listaip.reportarSalida("127.0.0.1:"+puerto);
+        System.exit(0);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -418,6 +441,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JButton btnIniciar;
     private javax.swing.JButton btnRegistrar;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

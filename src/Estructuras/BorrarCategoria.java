@@ -10,11 +10,9 @@ package Estructuras;
  * @author Lissette
  */
 public class BorrarCategoria extends Data{
-    int owner;
     String categoria;
-    public BorrarCategoria(String cate, int due){
+    public BorrarCategoria(String cate){
         this.categoria=cate;
-        this.owner=due;
         this.tipo="\t\t{\n\t\t\t\"BORRAR_CATEGORIA\" :\n\t\t\t\t{\n\t\t\t\t\t";
     }
 

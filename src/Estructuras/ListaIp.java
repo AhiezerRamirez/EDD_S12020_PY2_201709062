@@ -122,7 +122,18 @@ public class ListaIp {
             System.out.println(t.getId());
             aux=aux.getSiguiente();
         }
-        
+    }
+    public void reportarSalida(String s){
+        Cliente c;
+        Thread t;
+        Nodoip aux=primero;
+        while(aux!=null){
+            c=new Cliente(aux.getIp(),aux.getPuerto(),s);
+            t=new Thread(c);
+            t.start();
+            System.out.println(t.getId());
+            aux=aux.getSiguiente();
+        }
     }
 }
 

@@ -134,7 +134,7 @@ public class EDD_1S20_PY2_201709062 {
     }
     
     private static void actualizarConjson(Core core){
-        ActualizarConJson a=new ActualizarConJson(core);
+        /*ActualizarConJson a=new ActualizarConJson(core);
         a.actualizarRed("{\n" +
 "	\"INDEX\": 2,\n" +
 "	\"TIMESTAMP\":  \"2020-05-15T16:54:36.898\",\n" +
@@ -205,6 +205,6 @@ public class EDD_1S20_PY2_201709062 {
 "	\"PREVIOSHASH\" :\"000097ABF3CF8D5E35D919FDAC91C456950615693817A3B47E429742C64F6716\",\n" +
 "	\"HASH\": \"0000340729BDA3F5DAE07B8E08707E09A323E4135AA6AE5FFEA5D62A0B5751B3\"\n" +
 "}");
-        a.actualizarDirectorio();
+        a.actualizarDirectorio();*/
     }
 }
