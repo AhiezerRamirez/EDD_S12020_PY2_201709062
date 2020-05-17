@@ -9,6 +9,7 @@ import Estructuras.*;
 import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -18,80 +19,10 @@ public class EDD_1S20_PY2_201709062 {
     public static int indexBloque=0;
     public static int curSession=0;
     public static void main(String[] args) {
+        
         Core core=new Core();
-        ActualizarConJson a=new ActualizarConJson(core);
-        a.actualizarRed("{\n" +
-"	\"INDEX\": 2,\n" +
-"	\"TIMESTAMP\":  \"2020-05-15T16:54:36.898\",\n" +
-"	\"NONCE\": 7056,\n" +
-"	\"DATA\": [		{\n" +
-"				\"CREAR_CATEGORIA\" :\n" +
-"						{\n" +
-"						\"NOMBRE\": \"Ficcion\",\n" +
-"						\"propietario\": 123\n" +
-"						}\n" +
-"				\n" +
-"		},\n" +
-"		{\n" +
-"			\"CREAR_USUARIO\" :\n" +
-"				{\n" +
-"					\"Carnet\": 201703173,\n" +
-"					\"Nombre\": \"Byron\",\n" +
-"					\"Apellido\": \"Gomez\",\n" +
-"					\"Carrera\": \"Ingenieria Civil\",\n" +
-"					\"Password\": \"48383ho\"\n" +
-"				}\n" +
-"			\n" +
-"		},\n" +
-"		{\n" +
-"			\"CREAR_LIBRO\" :\n" +
-"				{\n" +
-"					\"ISBN\": 10940,\n" +
-"					\"Año\": 1973,\n" +
-"					\"Idioma\": \"Español\",\n" +
-"					\"Titulo\": \"Desarrollo organizacional : estrategias de interrelación humana para el desarrollo de organizaciones v 3 El modelo de cuadro organizacional GRID\",\n" +
-"					\"Editorial\": \"Ad-Hoc\",\n" +
-"					\"Autor\": \"ESPINOZA DE TARACENA, TELMA ONELIA\",\n" +
-"					\"Edicion\": 3,\n" +
-"					\"Categoria\": \"Ensayo\",\n" +
-"					\"Propietario\": 123\n" +
-"				}\n" +
-"			\n" +
-"		},\n" +
-"		{\n" +
-"			\"EDITAR_USUARIO\" :\n" +
-"			{\n" +
-"					\"Carnet\": 123,\n" +
-"					\"Nombre\": \"Pepito\",\n" +
-"					\"Apellido\": \"Pirir\",\n" +
-"					\"Carrera\": \"Ing Sistemas\",\n" +
-"					\"Password\": \"202cb962ac59075b964b07152d234b70\"\n" +
-"				}\n" +
-"			\n" +
-"			}\n" +
-",\n" +
-"		{\n" +
-"			\"ELIMINAR_LIBRO\" :\n" +
-"				{\n" +
-"					\"ISBN\": 10940,\n" +
-"					\"Titulo\": \"Desarrollo organizacional : estrategias de interrelación humana para el desarrollo de organizaciones v 3 El modelo de cuadro organizacional GRID\",\n" +
-"					\"Categoria\": \"Ensayo\"\n" +
-"				}\n" +
-"			\n" +
-"		},\n" +
-"		{\n" +
-"			\"BORRAR_CATEGORIA\" :\n" +
-"				{\n" +
-"					\"NOMBRE\": \"Épico\"\n" +
-"					}\n" +
-"			\n" +
-"		}\n" +
-"	],\n" +
-"	\"PREVIOSHASH\" :\"000097ABF3CF8D5E35D919FDAC91C456950615693817A3B47E429742C64F6716\",\n" +
-"	\"HASH\": \"0000340729BDA3F5DAE07B8E08707E09A323E4135AA6AE5FFEA5D62A0B5751B3\"\n" +
-"}");
-        a.actualizarDirectorio();
-        /*File dir = new File("./BloquesJson");
+        
+        File dir = new File("./BloquesJson");
         dir.mkdir();
         File dir2=new File("./BloquesJson/Graficas");
         dir2.mkdir();
@@ -99,10 +30,12 @@ public class EDD_1S20_PY2_201709062 {
         ListaDoble listaBloques=new ListaDoble();
         
         core.tabla.add(123, "Ahiezer", "Ramirez", "Ing Sistemas", "123");
-        Login login=new Login(core,listaParaBloque,listaBloques); //No encuentra unos libros auque usualment son los que están en las hojas del árbol b
+        String result = JOptionPane.showInputDialog(null, "Ingrese su puerto de conexión:");
+        
+        Login login=new Login(core,listaParaBloque,listaBloques,result); //No encuentra unos libros auque usualment son los que están en las hojas del árbol b
         login.setVisible(true);
         
-        
+        /*
             ***Falta descomenter para que cree accicion blockchain de catergoria al guardar libro con nueva categoria
             ******
         */
@@ -200,4 +133,78 @@ public class EDD_1S20_PY2_201709062 {
         //Hay que poner un método buscar para ver sí esxiste el nodo en la lista para eliminar, si no truena
     }
     
+    private static void actualizarConjson(Core core){
+        ActualizarConJson a=new ActualizarConJson(core);
+        a.actualizarRed("{\n" +
+"	\"INDEX\": 2,\n" +
+"	\"TIMESTAMP\":  \"2020-05-15T16:54:36.898\",\n" +
+"	\"NONCE\": 7056,\n" +
+"	\"DATA\": [		{\n" +
+"				\"CREAR_CATEGORIA\" :\n" +
+"						{\n" +
+"						\"NOMBRE\": \"Ficcion\",\n" +
+"						\"propietario\": 123\n" +
+"						}\n" +
+"				\n" +
+"		},\n" +
+"		{\n" +
+"			\"CREAR_USUARIO\" :\n" +
+"				{\n" +
+"					\"Carnet\": 201703173,\n" +
+"					\"Nombre\": \"Byron\",\n" +
+"					\"Apellido\": \"Gomez\",\n" +
+"					\"Carrera\": \"Ingenieria Civil\",\n" +
+"					\"Password\": \"48383ho\"\n" +
+"				}\n" +
+"			\n" +
+"		},\n" +
+"		{\n" +
+"			\"CREAR_LIBRO\" :\n" +
+"				{\n" +
+"					\"ISBN\": 10940,\n" +
+"					\"Año\": 1973,\n" +
+"					\"Idioma\": \"Español\",\n" +
+"					\"Titulo\": \"Desarrollo organizacional : estrategias de interrelación humana para el desarrollo de organizaciones v 3 El modelo de cuadro organizacional GRID\",\n" +
+"					\"Editorial\": \"Ad-Hoc\",\n" +
+"					\"Autor\": \"ESPINOZA DE TARACENA, TELMA ONELIA\",\n" +
+"					\"Edicion\": 3,\n" +
+"					\"Categoria\": \"Ensayo\",\n" +
+"					\"Propietario\": 123\n" +
+"				}\n" +
+"			\n" +
+"		},\n" +
+"		{\n" +
+"			\"EDITAR_USUARIO\" :\n" +
+"			{\n" +
+"					\"Carnet\": 123,\n" +
+"					\"Nombre\": \"Pepito\",\n" +
+"					\"Apellido\": \"Pirir\",\n" +
+"					\"Carrera\": \"Ing Sistemas\",\n" +
+"					\"Password\": \"202cb962ac59075b964b07152d234b70\"\n" +
+"				}\n" +
+"			\n" +
+"			}\n" +
+",\n" +
+"		{\n" +
+"			\"ELIMINAR_LIBRO\" :\n" +
+"				{\n" +
+"					\"ISBN\": 10940,\n" +
+"					\"Titulo\": \"Desarrollo organizacional : estrategias de interrelación humana para el desarrollo de organizaciones v 3 El modelo de cuadro organizacional GRID\",\n" +
+"					\"Categoria\": \"Ensayo\"\n" +
+"				}\n" +
+"			\n" +
+"		},\n" +
+"		{\n" +
+"			\"BORRAR_CATEGORIA\" :\n" +
+"				{\n" +
+"					\"NOMBRE\": \"Épico\"\n" +
+"					}\n" +
+"			\n" +
+"		}\n" +
+"	],\n" +
+"	\"PREVIOSHASH\" :\"000097ABF3CF8D5E35D919FDAC91C456950615693817A3B47E429742C64F6716\",\n" +
+"	\"HASH\": \"0000340729BDA3F5DAE07B8E08707E09A323E4135AA6AE5FFEA5D62A0B5751B3\"\n" +
+"}");
+        a.actualizarDirectorio();
+    }
 }

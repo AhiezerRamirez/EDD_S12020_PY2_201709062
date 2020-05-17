@@ -7,9 +7,8 @@ package edd_1s20_py2_201709062;
 
 
 import Estructuras.*;
+import Sockets.*;
 import java.awt.event.ItemEvent;
-//import java.awt.event.ItemEvent;
-//import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -17,9 +16,15 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import static java.lang.Math.toIntExact;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -33,15 +38,18 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-public class PanelPrincipal extends javax.swing.JFrame {
+public class PanelPrincipal extends javax.swing.JFrame implements Observer {
     Core auxcore;
     List<Data> listaBloque;
     ListaDoble listablocks;
     javax.swing.JFrame VentanaLogin;
     String infolibro;//Es para expandir la info del libro
     String auxinfolibro;
+    Servidor s;
+    Thread t;
+    ActualizarConJson networkUpdate;
     //private final ItemHandler handler;
-    public PanelPrincipal(Core core,List paraBloque, ListaDoble list,javax.swing.JFrame loginFrame) {
+    public PanelPrincipal(Core core,List paraBloque, ListaDoble list,javax.swing.JFrame loginFrame,String puerto) {
         initComponents();
         jRadioButton1.setMnemonic(KeyEvent.VK_B);
         jRadioButton2.setMnemonic(KeyEvent.VK_B);
@@ -51,12 +59,16 @@ public class PanelPrincipal extends javax.swing.JFrame {
         ButtonGroup group = new ButtonGroup();
         group.add(jRadioButton1);
         group.add(jRadioButton2);
-        
+        checkMyip();
         this.auxcore=core;
         this.listaBloque=paraBloque;
         this.listablocks=list;
-        //handler=new ItemHandler();
-        //NavegacionC.addItemListener(handler);
+        int port=Integer.valueOf(puerto);
+        networkUpdate=new ActualizarConJson(core);
+        s=new Servidor("127.0.0.1",port);
+        s.addObserver(this);
+        t=new Thread(s);
+        t.start();
     }
 
     @SuppressWarnings("unchecked")
@@ -141,6 +153,10 @@ public class PanelPrincipal extends javax.swing.JFrame {
         jButton10 = new javax.swing.JButton();
         scrollBlackChain = new javax.swing.JScrollPane();
         lbBlockChain = new javax.swing.JLabel();
+        jPanel12 = new javax.swing.JPanel();
+        jButton11 = new javax.swing.JButton();
+        scrollListaip = new javax.swing.JScrollPane();
+        lbListaip = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         txtIsn = new javax.swing.JTextField();
@@ -196,6 +212,18 @@ public class PanelPrincipal extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
         jLabel39 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
+        jLabel40 = new javax.swing.JLabel();
+        comboBoxIp = new javax.swing.JComboBox<>();
+        jButton12 = new javax.swing.JButton();
+        jLabel41 = new javax.swing.JLabel();
+        jTextField2 = new javax.swing.JTextField();
+        jButton14 = new javax.swing.JButton();
+        jPanel13 = new javax.swing.JPanel();
+        jLabel42 = new javax.swing.JLabel();
+        jTextField3 = new javax.swing.JTextField();
+        jLabel43 = new javax.swing.JLabel();
+        jTextField4 = new javax.swing.JTextField();
+        jButton13 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         lbUsuario = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -781,6 +809,40 @@ public class PanelPrincipal extends javax.swing.JFrame {
 
         jTabbedPane2.addTab("Listas Block Chain", jPanel11);
 
+        jButton11.setText("Refrescar");
+        jButton11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton11ActionPerformed(evt);
+            }
+        });
+
+        lbListaip.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edd_1s20_py2_201709062/arbolAVL.jpg"))); // NOI18N
+        lbListaip.setText(".");
+        scrollListaip.setViewportView(lbListaip);
+
+        javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
+        jPanel12.setLayout(jPanel12Layout);
+        jPanel12Layout.setHorizontalGroup(
+            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel12Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(scrollListaip, javax.swing.GroupLayout.DEFAULT_SIZE, 1044, Short.MAX_VALUE)
+                    .addGroup(jPanel12Layout.createSequentialGroup()
+                        .addComponent(jButton11)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+        );
+        jPanel12Layout.setVerticalGroup(
+            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel12Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButton11)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(scrollListaip, javax.swing.GroupLayout.DEFAULT_SIZE, 461, Short.MAX_VALUE))
+        );
+
+        jTabbedPane2.addTab("Lista ip", jPanel12);
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -1126,18 +1188,116 @@ public class PanelPrincipal extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Libros", jPanel2);
 
+        jLabel40.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel40.setText("IP's");
+
+        jButton12.setText("Cambiar");
+        jButton12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton12ActionPerformed(evt);
+            }
+        });
+
+        jLabel41.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel41.setText("Puerto");
+
+        jButton14.setText("Refrescar");
+        jButton14.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton14ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1079, Short.MAX_VALUE)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGap(178, 178, 178)
+                .addComponent(jLabel40)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel41)
+                .addGap(282, 282, 282))
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGap(68, 68, 68)
+                .addComponent(comboBoxIp, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 348, Short.MAX_VALUE)
+                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(183, 183, 183))
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGap(487, 487, 487)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton12)
+                    .addComponent(jButton14))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 551, Short.MAX_VALUE)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButton14)
+                .addGap(30, 30, 30)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel40)
+                    .addComponent(jLabel41))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(comboBoxIp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(146, 146, 146)
+                .addComponent(jButton12)
+                .addContainerGap(258, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Configuarcion", jPanel6);
+
+        jLabel42.setText("IP");
+
+        jLabel43.setText("Puerto");
+
+        jButton13.setText("Guardar");
+        jButton13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton13ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
+        jPanel13.setLayout(jPanel13Layout);
+        jPanel13Layout.setHorizontalGroup(
+            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel13Layout.createSequentialGroup()
+                .addGap(40, 40, 40)
+                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel13Layout.createSequentialGroup()
+                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel43)
+                            .addComponent(jLabel42)
+                            .addComponent(jTextField3)
+                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 867, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel13Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 918, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton13)))
+                .addContainerGap(50, Short.MAX_VALUE))
+        );
+        jPanel13Layout.setVerticalGroup(
+            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel13Layout.createSequentialGroup()
+                .addGap(99, 99, 99)
+                .addComponent(jLabel42)
+                .addGap(18, 18, 18)
+                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(48, 48, 48)
+                .addComponent(jButton13)
+                .addGap(38, 38, 38)
+                .addComponent(jLabel43)
+                .addGap(18, 18, 18)
+                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(239, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("Agregar Nodos", jPanel13);
 
         jButton1.setText("Salir");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -1195,6 +1355,27 @@ public class PanelPrincipal extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    private void checkMyip(){
+        String ip;
+    try {
+        Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
+        while (interfaces.hasMoreElements()) {
+            NetworkInterface iface = interfaces.nextElement();
+            // filters out 127.0.0.1 and inactive interfaces
+            
+
+            Enumeration<InetAddress> addresses = iface.getInetAddresses();
+            while(addresses.hasMoreElements()) {
+                InetAddress addr = addresses.nextElement();
+                ip = addr.getHostAddress();
+                comboBoxIp.addItem(ip);
+            }
+        }
+    } catch (SocketException e) {
+        throw new RuntimeException(e);
+    }
+    }
+    
     private void llenarUsuario(){
         Usuario cur=auxcore.buscarLogin(EDD_1S20_PY2_201709062.curSession);
         txtEditNombre.setText(cur.getNombre());
@@ -1245,20 +1426,22 @@ public class PanelPrincipal extends javax.swing.JFrame {
 
     private void btnGuardarBloqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarBloqueActionPerformed
         Boque block;
+        String bloqueToString;
         if(listablocks.estaVacia()){
             block=new Boque(EDD_1S20_PY2_201709062.indexBloque, listaBloque, "0000");
             block.minar(block.juntarParaHash());
-            block.mostrarString();
+            bloqueToString=block.mostrarString();
             listablocks.insert(block);
             
         }else{
             block=new Boque(EDD_1S20_PY2_201709062.indexBloque, listaBloque, listablocks.returnLastHash());
             block.minar(block.juntarParaHash());
-            block.mostrarString();
+            bloqueToString=block.mostrarString();
             listablocks.insert(block);
         }
         EDD_1S20_PY2_201709062.indexBloque++;
         listaBloque.clear();
+        auxcore.listaip.actualizarNodo(bloqueToString);
         JOptionPane.showMessageDialog(null, "Bloque Creado");
     }//GEN-LAST:event_btnGuardarBloqueActionPerformed
 
@@ -1713,6 +1896,44 @@ public class PanelPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton10ActionPerformed
 
+    private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
+        checkMyip();
+    }//GEN-LAST:event_jButton14ActionPerformed
+
+    private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
+        String puer=jTextField2.getText();
+        String ip=(String)comboBoxIp.getSelectedItem();
+        if(!puer.isEmpty()){
+            s.customServer(ip, Integer.valueOf(puer));
+        }else{
+            JOptionPane.showMessageDialog(null, "Puerto vacio");
+        }
+    }//GEN-LAST:event_jButton12ActionPerformed
+
+    private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
+        String interprotocol=jTextField1.getText();
+        String utpport=jTextField2.getText();
+        if(!interprotocol.isEmpty() || !utpport.isEmpty()){
+            
+            auxcore.listaip.ingresar(interprotocol, Integer.valueOf(utpport));
+        }else{
+            JOptionPane.showMessageDialog(null, "El campo puerto está vacío");
+        }
+    }//GEN-LAST:event_jButton13ActionPerformed
+
+    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
+        try {
+            auxcore.listaip.graficar();
+            TimeUnit.SECONDS.sleep(2);
+            lbListaip.setIcon(new ImageIcon(ImageIO.read(new File("./BloquesJson/Graficas/Listaip.jpg"))));
+            scrollListaip.setViewportView(lbListaip);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(PanelPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(PanelPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton11ActionPerformed
+
     private void actualizarCategorias(){
         NavegacionC.removeAllItems();
         LinkedList<String> auxcatego=auxcore.arbolAVL.getAllCategoris(auxcore.arbolAVL.root);
@@ -1775,8 +1996,13 @@ public class PanelPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btnGuardarLibro;
     private javax.swing.JButton btnNuevaCategoria;
     private javax.swing.JButton btnRegistrar;
+    private javax.swing.JComboBox<String> comboBoxIp;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
+    private javax.swing.JButton jButton11;
+    private javax.swing.JButton jButton12;
+    private javax.swing.JButton jButton13;
+    private javax.swing.JButton jButton14;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -1821,6 +2047,10 @@ public class PanelPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel38;
     private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel40;
+    private javax.swing.JLabel jLabel41;
+    private javax.swing.JLabel jLabel42;
+    private javax.swing.JLabel jLabel43;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -1831,6 +2061,8 @@ public class PanelPrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
+    private javax.swing.JPanel jPanel12;
+    private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -1847,10 +2079,14 @@ public class PanelPrincipal extends javax.swing.JFrame {
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField jTextField4;
     private javax.swing.JLabel lbArbolAVL;
     private javax.swing.JLabel lbArbolB;
     private javax.swing.JLabel lbBlockChain;
     private javax.swing.JLabel lbInorder;
+    private javax.swing.JLabel lbListaip;
     private javax.swing.JLabel lbPostOrder;
     private javax.swing.JLabel lbPreorder;
     private javax.swing.JLabel lbTablaHash;
@@ -1859,6 +2095,7 @@ public class PanelPrincipal extends javax.swing.JFrame {
     private javax.swing.JScrollPane scrollBlackChain;
     private javax.swing.JScrollPane scrollBtree;
     private javax.swing.JScrollPane scrollInorder;
+    private javax.swing.JScrollPane scrollListaip;
     private javax.swing.JScrollPane scrollPostorder;
     private javax.swing.JScrollPane scrollPreorder;
     private javax.swing.JScrollPane scrollTabla;
@@ -1891,25 +2128,11 @@ public class PanelPrincipal extends javax.swing.JFrame {
     private javax.swing.JTextField txtTitulo;
     private javax.swing.JTextField txtYear;
     // End of variables declaration//GEN-END:variables
-/*
-    private class ItemHandler implements ItemListener{
-    
-        @Override
-        public void itemStateChanged(ItemEvent event) {
-            if(event.getSource()==NavegacionC){
-                if(!NavegacionC.getSelectedItem().equals("Categoria")){
-                    String auxcategoriaN=(String)NavegacionC.getSelectedItem();
-                    NodoAVL auxcategorias=auxcore.arbolAVL.buscar(auxcore.arbolAVL.root, auxcategoriaN);
-                    if(auxcategorias!=null){
-                        LinkedList<Integer> allbooks=auxcategorias.getArbolb().getAllBooks();
-                        NavegacionL.removeAllItems();
-                        allbooks.forEach((string) -> {
-                    NavegacionL.addItem(string.toString());
-                });
-                }
-                
-            }
-            //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-    }}*/
+
+    @Override
+    public void update(Observable o, Object o1) {
+        System.out.println(o1);
+        networkUpdate.actualizarRed((String)o1);
+    }
+
 }

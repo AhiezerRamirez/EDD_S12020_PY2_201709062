@@ -80,7 +80,7 @@ public class Boque {
         this.nonce=nuevononce;
         this.hash= pruebahash;
     }
-    public void mostrarString(){
+    public String mostrarString(){
         StringBuilder s =new StringBuilder();
         s.append("{\n\t\"INDEX\": ").append(index).append(",\n\t");
         s.append("\"TIMESTAMP\":  \"").append(fecha.toString()).append("\",\n\t");
@@ -93,7 +93,6 @@ public class Boque {
         s.append("\t],\n\t");
         s.append("\"PREVIOSHASH\" :\"").append(prevHash).append("\",\n\t");
         s.append("\"HASH\": \"").append(hash).append("\"\n}");
-        System.out.println(s.toString());
         try {
             PrintWriter archivoJson=new PrintWriter("./BloquesJson/Bloque"+Integer.toString(index)+".json", "UTF-8");
             archivoJson.write(s.toString());
@@ -104,5 +103,6 @@ public class Boque {
         } catch (IOException ex) {
             Logger.getLogger(Boque.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return s.toString();
     }
 }

@@ -18,7 +18,6 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import Estructuras.Usuario;
 import static java.lang.Math.toIntExact;
-import java.util.LinkedList;
 import java.util.List;
 import javax.swing.JOptionPane;
 
@@ -28,12 +27,12 @@ public class Login extends javax.swing.JFrame {
     List<Data> listaBloque;
     ListaDoble listablocks;
     PanelPrincipal ventanaPanel;
-    public Login(Core core,List paraBloque, ListaDoble list) {
+    public Login(Core core,List paraBloque, ListaDoble list,String puerto) {
         initComponents();
         this.auxcore=core;
         this.listaBloque=paraBloque;
         this.listablocks=list;
-        this.ventanaPanel=new PanelPrincipal(core, paraBloque,  list,this);
+        this.ventanaPanel=new PanelPrincipal(core, paraBloque,  list,this,puerto);
         ventanaPanel.setVisible(false);
     }
 
@@ -60,6 +59,12 @@ public class Login extends javax.swing.JFrame {
         btnRegistrar = new javax.swing.JButton();
         btnCargaMasiva = new javax.swing.JButton();
         btnCrearBolque = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        jTextField2 = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -204,6 +209,52 @@ public class Login extends javax.swing.JFrame {
 
         loginTab.addTab("Registro de Usuarios", null, jPanel2, "Registrarse");
 
+        jLabel6.setText("IP");
+
+        jLabel7.setText("Puerto");
+
+        jButton1.setText("Guardar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(38, 38, 38)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel6)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)
+                    .addComponent(jTextField2))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(425, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(52, 52, 52))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addComponent(jLabel6)
+                .addGap(18, 18, 18)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(48, 48, 48)
+                .addComponent(jButton1)
+                .addGap(38, 38, 38)
+                .addComponent(jLabel7)
+                .addGap(18, 18, 18)
+                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(81, Short.MAX_VALUE))
+        );
+
+        loginTab.addTab("Inresar nodos", jPanel3);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -275,6 +326,7 @@ public class Login extends javax.swing.JFrame {
         }else{
             JOptionPane.showMessageDialog(null, "Carnet o contraseña incorrecta");
         }
+        
     }//GEN-LAST:event_btnIniciarActionPerformed
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
@@ -297,23 +349,36 @@ public class Login extends javax.swing.JFrame {
 
     private void btnCrearBolqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearBolqueActionPerformed
         Boque block;
+        String bloqueToString;
         if(listablocks.estaVacia()){
             block=new Boque(EDD_1S20_PY2_201709062.indexBloque, listaBloque, "0000");
             block.minar(block.juntarParaHash());
-            block.mostrarString();
+            bloqueToString= block.mostrarString();
             listablocks.insert(block);
             listablocks.NodosToString();
         }else{
             block=new Boque(EDD_1S20_PY2_201709062.indexBloque, listaBloque, listablocks.returnLastHash());
             block.minar(block.juntarParaHash());
-            block.mostrarString();
+            bloqueToString= block.mostrarString();
             listablocks.insert(block);
             listablocks.NodosToString();
         }
         EDD_1S20_PY2_201709062.indexBloque++;
         listaBloque.clear();
+        auxcore.listaip.actualizarNodo(bloqueToString);
         JOptionPane.showMessageDialog(null, "Bloque creado");
     }//GEN-LAST:event_btnCrearBolqueActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String interprotocol=jTextField1.getText();
+        String utpport=jTextField2.getText();
+        if(!interprotocol.isEmpty() || !utpport.isEmpty()){
+            auxcore.listaip.ingresar(interprotocol, Integer.valueOf(utpport));
+            System.out.println(auxcore.listaip.primero.getIp());
+        }
+        jTextField1.setText("");
+        jTextField2.setText("");
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -352,13 +417,19 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JButton btnCrearBolque;
     private javax.swing.JButton btnIniciar;
     private javax.swing.JButton btnRegistrar;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
     private javax.swing.JTabbedPane loginTab;
     private javax.swing.JTextField textApellido;
     private javax.swing.JTextField textCarnet;

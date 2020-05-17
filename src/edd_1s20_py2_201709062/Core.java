@@ -14,9 +14,11 @@ import java.util.Stack;
 public class Core {
     TablaHash tabla;
     ArbolAVL arbolAVL;
+    ListaIp listaip;
     public Core(){
         this.tabla=new TablaHash(45);
         this.arbolAVL=new ArbolAVL();
+        this.listaip=new ListaIp();
     }
     public void insertarUsuario(Long car,String Nombre, String Apellido,String Carrera, String Password){
         int carnet = toIntExact(car);
