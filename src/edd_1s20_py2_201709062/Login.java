@@ -17,6 +17,9 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import Estructuras.Usuario;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 import static java.lang.Math.toIntExact;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -300,7 +303,7 @@ public class Login extends javax.swing.JFrame {
             String path=fc.getSelectedFile().getAbsolutePath();
             JSONParser parser = new JSONParser();
             try {
-                Object obj = parser.parse(new FileReader(path));
+                Object obj = parser.parse(new BufferedReader(new InputStreamReader(new FileInputStream(path), "UTF-8")));
                 JSONObject jsonObject = (JSONObject) obj;
                 JSONArray usuarios = (JSONArray) jsonObject.get("Usuarios");
                 Iterator<JSONObject> iterator = usuarios.iterator();

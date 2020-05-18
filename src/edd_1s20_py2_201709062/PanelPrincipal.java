@@ -11,10 +11,13 @@ import Sockets.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import static java.lang.Math.toIntExact;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
@@ -1061,7 +1064,7 @@ public class PanelPrincipal extends javax.swing.JFrame implements Observer {
                                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                                             .addComponent(txtIsn, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addGap(345, 345, 345))))
-                                .addGap(17, 17, 17)
+                                .addGap(35, 35, 35)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel22)
                                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1582,7 +1585,7 @@ public class PanelPrincipal extends javax.swing.JFrame implements Observer {
             JSONParser parser = new JSONParser();
             System.out.println("Ya entré aquí");
             try {
-                Object obj = parser.parse(new FileReader(path));
+                Object obj = parser.parse(new BufferedReader(new InputStreamReader(new FileInputStream(path), "UTF-8")));
                 JSONObject jsonObject = (JSONObject) obj;
                 JSONArray usuarios = (JSONArray) jsonObject.get("libros");
                 Iterator<JSONObject> iterator = usuarios.iterator();
@@ -1595,7 +1598,7 @@ public class PanelPrincipal extends javax.swing.JFrame implements Observer {
                         listaBloque.add(new CrearCategoria(categoria, EDD_1S20_PY2_201709062.curSession));
                         existeCategori=auxcore.arbolAVL.getOwner(auxcore.arbolAVL.root, categoria);
                         Long Isbn=(Long)libro.get("ISBN");
-                        Long ano=(Long)libro.get("Anio");
+                        Long ano=(Long)libro.get("Año");
                         String idiom=(String)libro.get("Idioma");
                         String titu=(String)libro.get("Titulo");
                         String edito=(String)libro.get("Editorial");
@@ -1610,7 +1613,7 @@ public class PanelPrincipal extends javax.swing.JFrame implements Observer {
                     }else{
                         existeCategori=auxcore.arbolAVL.getOwner(auxcore.arbolAVL.root, categoria);
                         Long Isbn=(Long)libro.get("ISBN");
-                        Long ano=(Long)libro.get("Anio");
+                        Long ano=(Long)libro.get("Año");
                         String idiom=(String)libro.get("Idioma");
                         String titu=(String)libro.get("Titulo");
                         String edito=(String)libro.get("Editorial");
@@ -1932,14 +1935,11 @@ public class PanelPrincipal extends javax.swing.JFrame implements Observer {
     }//GEN-LAST:event_jButton12ActionPerformed
 
     private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
-        String interprotocol=jTextField1.getText();
-        String utpport=jTextField2.getText();
-        if(!interprotocol.isEmpty() || !utpport.isEmpty()){
+        String interprotocol=jTextField3.getText();
+        String utpport=jTextField4.getText();
             auxcore.listaip.ingresar(interprotocol, Integer.valueOf(utpport));
             JOptionPane.showMessageDialog(null, "Nodo Agregado");
-        }else{
-            JOptionPane.showMessageDialog(null, "El campo puerto está vacío","Error",JOptionPane.ERROR_MESSAGE);
-        }
+        
     }//GEN-LAST:event_jButton13ActionPerformed
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed

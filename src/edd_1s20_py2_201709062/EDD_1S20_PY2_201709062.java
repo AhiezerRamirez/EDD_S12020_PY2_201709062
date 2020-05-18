@@ -29,7 +29,7 @@ public class EDD_1S20_PY2_201709062 {
         List<Data> listaParaBloque=new LinkedList();
         ListaDoble listaBloques=new ListaDoble();
         
-        core.tabla.add(123, "Ahiezer", "Ramirez", "Ing Sistemas", "123");
+        //core.tabla.add(123, "Ahiezer", "Ramirez", "Ing Sistemas", "123");
         String result = JOptionPane.showInputDialog(null, "Ingrese su puerto de conexión:");
         
         Login login=new Login(core,listaParaBloque,listaBloques,result); //No encuentra unos libros auque usualment son los que están en las hojas del árbol b

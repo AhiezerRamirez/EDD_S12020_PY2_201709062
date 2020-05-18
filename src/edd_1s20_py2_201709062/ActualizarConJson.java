@@ -58,7 +58,7 @@ public class ActualizarConJson {
                     NodoAVL existeCategori=auxcore.arbolAVL.getOwner(auxcore.arbolAVL.root, categoria);
                     if(existeCategori!=null){
                         Long Isbn=(Long)auxjson.get("ISBN");
-                        Long ano=(Long)auxjson.get("Anio");
+                        Long ano=(Long)auxjson.get("Año");
                         String idiom=(String)auxjson.get("Idioma");
                         String titu=(String)auxjson.get("Titulo");
                         String edito=(String)auxjson.get("Editorial");
@@ -113,7 +113,7 @@ public class ActualizarConJson {
                         auxcore.arbolAVL.root=auxcore.arbolAVL.insertar(auxcore.arbolAVL.root, categoria, EDD_1S20_PY2_201709062.curSession);
                         existeCategori=auxcore.arbolAVL.getOwner(auxcore.arbolAVL.root, categoria);
                         Long Isbn=(Long)auxjson.get("ISBN");
-                        Long ano=(Long)auxjson.get("Anio");
+                        Long ano=(Long)auxjson.get("Año");
                         String idiom=(String)auxjson.get("Idioma");
                         String titu=(String)auxjson.get("Titulo");
                         String edito=(String)auxjson.get("Editorial");
@@ -125,7 +125,7 @@ public class ActualizarConJson {
                         l.add(new CrearLibro(toIntExact(Isbn), toIntExact(ano), idiom, titu, edito, aut, toIntExact(edici), cate, toIntExact(propie)));
                     }else{
                         Long Isbn=(Long)auxjson.get("ISBN");
-                        Long ano=(Long)auxjson.get("Anio");
+                        Long ano=(Long)auxjson.get("Año");
                         String idiom=(String)auxjson.get("Idioma");
                         String titu=(String)auxjson.get("Titulo");
                         String edito=(String)auxjson.get("Editorial");
