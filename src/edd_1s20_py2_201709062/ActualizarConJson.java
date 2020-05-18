@@ -8,8 +8,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import static java.lang.Math.toIntExact;
 import java.security.MessageDigest;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -60,7 +58,7 @@ public class ActualizarConJson {
                     NodoAVL existeCategori=auxcore.arbolAVL.getOwner(auxcore.arbolAVL.root, categoria);
                     if(existeCategori!=null){
                         Long Isbn=(Long)auxjson.get("ISBN");
-                        Long ano=(Long)auxjson.get("Año");
+                        Long ano=(Long)auxjson.get("Anio");
                         String idiom=(String)auxjson.get("Idioma");
                         String titu=(String)auxjson.get("Titulo");
                         String edito=(String)auxjson.get("Editorial");
@@ -115,7 +113,7 @@ public class ActualizarConJson {
                         auxcore.arbolAVL.root=auxcore.arbolAVL.insertar(auxcore.arbolAVL.root, categoria, EDD_1S20_PY2_201709062.curSession);
                         existeCategori=auxcore.arbolAVL.getOwner(auxcore.arbolAVL.root, categoria);
                         Long Isbn=(Long)auxjson.get("ISBN");
-                        Long ano=(Long)auxjson.get("Año");
+                        Long ano=(Long)auxjson.get("Anio");
                         String idiom=(String)auxjson.get("Idioma");
                         String titu=(String)auxjson.get("Titulo");
                         String edito=(String)auxjson.get("Editorial");
@@ -127,7 +125,7 @@ public class ActualizarConJson {
                         l.add(new CrearLibro(toIntExact(Isbn), toIntExact(ano), idiom, titu, edito, aut, toIntExact(edici), cate, toIntExact(propie)));
                     }else{
                         Long Isbn=(Long)auxjson.get("ISBN");
-                        Long ano=(Long)auxjson.get("Año");
+                        Long ano=(Long)auxjson.get("Anio");
                         String idiom=(String)auxjson.get("Idioma");
                         String titu=(String)auxjson.get("Titulo");
                         String edito=(String)auxjson.get("Editorial");
@@ -151,9 +149,7 @@ public class ActualizarConJson {
                     l.add(new CrearCategoria(categoria, toIntExact(propietario)));
                 }
             }
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-            LocalDateTime dateTime = LocalDateTime.parse(timestamp, formatter);
-            Boque b=new Boque(toIntExact(index), dateTime, toIntExact(nonce), l, prevHash, curHash);
+            Boque b=new Boque(toIntExact(index), timestamp, toIntExact(nonce), l, prevHash, curHash);
             b.mostrarString();
             listaBloques.insert(b);
             EDD_1S20_PY2_201709062.indexBloque++;

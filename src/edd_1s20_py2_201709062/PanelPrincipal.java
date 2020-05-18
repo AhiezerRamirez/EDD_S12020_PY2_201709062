@@ -1398,9 +1398,10 @@ public class PanelPrincipal extends javax.swing.JFrame implements Observer {
         //********************************Acutaliza las categorias para navegar*****************************************
         NavegacionC.removeAllItems();
         LinkedList<String> auxcatego=auxcore.arbolAVL.getAllCategoris(auxcore.arbolAVL.root);
-                    auxcatego.forEach((string) -> {
-                    NavegacionC.addItem(string);
-                });
+            auxcatego.forEach((string) -> {
+            NavegacionC.addItem(string);
+        });
+        JOptionPane.showMessageDialog(null, "Categoria Creada");
     }//GEN-LAST:event_btnNuevaCategoriaActionPerformed
 
     private void btnBorrarCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarCategoriaActionPerformed
@@ -1416,11 +1417,12 @@ public class PanelPrincipal extends javax.swing.JFrame implements Observer {
                     jComboBox1.addItem(string);
                 });
                 actualizarCategorias();
+                JOptionPane.showMessageDialog(null, "Borrada");
             }else{
-                JOptionPane.showMessageDialog(null, "Usted no es el propietario de la categoria");
+                JOptionPane.showMessageDialog(null, "Usted no es el propietario de la categoria","Error",JOptionPane.ERROR_MESSAGE);
             }
         }else{
-            JOptionPane.showMessageDialog(null, "Categoria no encontrada");
+            JOptionPane.showMessageDialog(null, "Categoria no encontrada","Error",JOptionPane.ERROR_MESSAGE);
         }
         
     }//GEN-LAST:event_btnBorrarCategoriaActionPerformed
@@ -1458,6 +1460,7 @@ public class PanelPrincipal extends javax.swing.JFrame implements Observer {
             actualizarCategorias();
             listaBloque.add(new CrearLibro(Integer.valueOf(txtIsn.getText()), Integer.valueOf(txtYear.getText()), txtIdioma.getText(), txtTitulo.getText()
             , txtEitorial.getText(), txtAutor.getText(), Integer.valueOf(txtEdicion.getText()), txtCategoria.getText(), EDD_1S20_PY2_201709062.curSession));
+            JOptionPane.showMessageDialog(null, "Guardado");
         }else{
             Libro existeLibro=existeCategori.getArbolb().buscar(Integer.valueOf(txtIsn.getText()));
             if(existeLibro==null){
@@ -1465,8 +1468,9 @@ public class PanelPrincipal extends javax.swing.JFrame implements Observer {
             , txtEitorial.getText(), txtAutor.getText(), Integer.valueOf(txtEdicion.getText()), txtCategoria.getText(), EDD_1S20_PY2_201709062.curSession);
             listaBloque.add(new CrearLibro(Integer.valueOf(txtIsn.getText()), Integer.valueOf(txtYear.getText()), txtIdioma.getText(), txtTitulo.getText()
             , txtEitorial.getText(), txtAutor.getText(), Integer.valueOf(txtEdicion.getText()), txtCategoria.getText(), EDD_1S20_PY2_201709062.curSession));
+            JOptionPane.showMessageDialog(null, "Guardado");
             }else{
-                System.out.println("El libro ya existe");
+                JOptionPane.showMessageDialog(null, "El libro ya existe","Error",JOptionPane.ERROR_MESSAGE);
             }
         }
         
@@ -1517,11 +1521,12 @@ public class PanelPrincipal extends javax.swing.JFrame implements Observer {
             txtMoIdioma1.setText("");
             listaBloque.add(new EditarLibro(Integer.valueOf(txtBuscarModificar.getText()), Integer.valueOf(txtMoYear1.getText()), txtMoIdioma1.getText(), txtMoTitulo1.getText()
             , txtMoEitorial1.getText(), txtMoAutor1.getText(), Integer.valueOf(txtMoEdicion1.getText()), txtMoCategoria1.getText()));
+            JOptionPane.showMessageDialog(null, "Libro Modificado");
             }else{
-                JOptionPane.showMessageDialog(null, "El libro no es tuyo");
+                JOptionPane.showMessageDialog(null, "El libro no es tuyo","Error",JOptionPane.ERROR_MESSAGE);
             }
         }else{
-            JOptionPane.showMessageDialog(null, "No se encontró el libro indicado");
+            JOptionPane.showMessageDialog(null, "No se encontró el libro indicado","Error",JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
@@ -1575,6 +1580,7 @@ public class PanelPrincipal extends javax.swing.JFrame implements Observer {
         if(response== JFileChooser.APPROVE_OPTION){
             String path=fc.getSelectedFile().getAbsolutePath();
             JSONParser parser = new JSONParser();
+            System.out.println("Ya entré aquí");
             try {
                 Object obj = parser.parse(new FileReader(path));
                 JSONObject jsonObject = (JSONObject) obj;
@@ -1589,13 +1595,14 @@ public class PanelPrincipal extends javax.swing.JFrame implements Observer {
                         listaBloque.add(new CrearCategoria(categoria, EDD_1S20_PY2_201709062.curSession));
                         existeCategori=auxcore.arbolAVL.getOwner(auxcore.arbolAVL.root, categoria);
                         Long Isbn=(Long)libro.get("ISBN");
-                        Long ano=(Long)libro.get("Año");
+                        Long ano=(Long)libro.get("Anio");
                         String idiom=(String)libro.get("Idioma");
                         String titu=(String)libro.get("Titulo");
                         String edito=(String)libro.get("Editorial");
                         String aut=(String)libro.get("Autor");
                         Long edici=(Long)libro.get("Edicion");
                         String cate=(String)libro.get("Categoria");
+                        System.out.println(Isbn+" " +idiom+" " +  titu+" " + edito+" " +  aut+" " + toIntExact(edici)+" " + cate+" " +  EDD_1S20_PY2_201709062.curSession);
                         existeCategori.getArbolb().insertar(toIntExact(Isbn), toIntExact(ano), idiom, titu, edito, aut, toIntExact(edici), cate, EDD_1S20_PY2_201709062.curSession);
                         listaBloque.add(new CrearLibro(toIntExact(Isbn), toIntExact(ano), idiom, titu, edito, aut, toIntExact(edici), categoria, EDD_1S20_PY2_201709062.curSession));
                         //System.out.println(Isbn+" "+titu);
@@ -1603,7 +1610,7 @@ public class PanelPrincipal extends javax.swing.JFrame implements Observer {
                     }else{
                         existeCategori=auxcore.arbolAVL.getOwner(auxcore.arbolAVL.root, categoria);
                         Long Isbn=(Long)libro.get("ISBN");
-                        Long ano=(Long)libro.get("Año");
+                        Long ano=(Long)libro.get("Anio");
                         String idiom=(String)libro.get("Idioma");
                         String titu=(String)libro.get("Titulo");
                         String edito=(String)libro.get("Editorial");
@@ -1614,12 +1621,14 @@ public class PanelPrincipal extends javax.swing.JFrame implements Observer {
                         if(existeLibro==null){
                             existeCategori.getArbolb().insertar(toIntExact(Isbn), toIntExact(ano), idiom, titu, edito, aut, toIntExact(edici), cate, EDD_1S20_PY2_201709062.curSession);
                             listaBloque.add(new CrearLibro(toIntExact(Isbn), toIntExact(ano), idiom, titu, edito, aut, toIntExact(edici), categoria, EDD_1S20_PY2_201709062.curSession));
+                            
                         }else{
-                            System.out.println("El libro ya existe");
+                            JOptionPane.showMessageDialog(null,"El libro ya existe");
                         }
                         //System.out.println(Isbn+" "+titu);
                     }
                 }
+                JOptionPane.showMessageDialog(null, "Libros cargados");
             } catch (ParseException ex) {
                 Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
                 System.out.println(ex.getMessage());
@@ -1703,6 +1712,7 @@ public class PanelPrincipal extends javax.swing.JFrame implements Observer {
                     listaBloque.add(new CrearUsuario(auxint, nombre, apellido, carrera, password));
                     System.out.println(user.get("Carnet")+" "+ user.get("Nombre"));
                 }
+                JOptionPane.showMessageDialog(null, "Usuarios Cargados");
             } catch (ParseException ex) {
                 Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
                 System.out.println(ex.getMessage());
@@ -1840,12 +1850,14 @@ public class PanelPrincipal extends javax.swing.JFrame implements Observer {
             NodoAVL auxavl=auxcore.arbolAVL.buscar(auxcore.arbolAVL.root, btnBtreeGraph.getText());
             if(auxavl!=null){
                 try {
-                    auxavl.getArbolb().imprimir(btnBtreeGraph.getText());
-                    TimeUnit.SECONDS.sleep(2);
-                    BufferedImage img = ImageIO.read(new File("./BloquesJson/Graficas/"+btnBtreeGraph.getText()+"_arbolB.jpg"));
-                    ImageIcon icon = new ImageIcon(img);
-                    lbArbolB.setIcon(icon);
-                    scrollBtree.setViewportView(lbArbolB);
+                    boolean sigue=auxavl.getArbolb().imprimir(btnBtreeGraph.getText());
+                    if(sigue){
+                        TimeUnit.SECONDS.sleep(2);
+                        BufferedImage img = ImageIO.read(new File("./BloquesJson/Graficas/"+btnBtreeGraph.getText()+"_arbolB.jpg"));
+                        ImageIcon icon = new ImageIcon(img);
+                        lbArbolB.setIcon(icon);
+                        scrollBtree.setViewportView(lbArbolB);
+                    }
                 } catch (IOException ex) {
                     JOptionPane.showMessageDialog(null, ex);
                 } catch (InterruptedException ex) {
@@ -1915,7 +1927,7 @@ public class PanelPrincipal extends javax.swing.JFrame implements Observer {
         if(!puer.isEmpty()){
             s.customServer(ip, Integer.valueOf(puer));
         }else{
-            JOptionPane.showMessageDialog(null, "Puerto vacio");
+            JOptionPane.showMessageDialog(null, "El campo puerto está vacío","Error",JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButton12ActionPerformed
 
@@ -1923,10 +1935,10 @@ public class PanelPrincipal extends javax.swing.JFrame implements Observer {
         String interprotocol=jTextField1.getText();
         String utpport=jTextField2.getText();
         if(!interprotocol.isEmpty() || !utpport.isEmpty()){
-            
             auxcore.listaip.ingresar(interprotocol, Integer.valueOf(utpport));
+            JOptionPane.showMessageDialog(null, "Nodo Agregado");
         }else{
-            JOptionPane.showMessageDialog(null, "El campo puerto está vacío");
+            JOptionPane.showMessageDialog(null, "El campo puerto está vacío","Error",JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButton13ActionPerformed
 
@@ -2144,18 +2156,19 @@ public class PanelPrincipal extends javax.swing.JFrame implements Observer {
         System.out.println(entry);
         if(entry.startsWith("1")){
             String parame[]=entry.split(":");
+            auxcore.listaip.borrar(parame[0], Integer.valueOf(parame[1]));
             System.out.println("IP:"+parame[0]);
             System.out.println("Puerto:"+parame[1]);
         }else{
             System.out.println("Mensaje:\n"+entry);
-        }
-        /*networkUpdate.actualizarRed((String)o1);
-        actualizarCategorias();
-        jComboBox1.removeAllItems();
-        LinkedList<String> auxcatego=auxcore.arbolAVL.getAllCategoris(auxcore.arbolAVL.root);
+            networkUpdate.actualizarRed((String)o1);
+            actualizarCategorias();
+            jComboBox1.removeAllItems();
+            LinkedList<String> auxcatego=auxcore.arbolAVL.getAllCategoris(auxcore.arbolAVL.root);
                     auxcatego.forEach((string) -> {
                     jComboBox1.addItem(string);
-                });*/
+            });
+        }
     }
 
 }

@@ -14,6 +14,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.LinkedList;
 import java.util.List;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -21,19 +22,21 @@ import javax.xml.bind.DatatypeConverter;
 
 public class Boque {
     public int index,nonce;
-    LocalDateTime fecha;
-    public String prevHash,hash;
+    LocalDateTime c;
+    public String prevHash,hash,fecha;
     List<Data> data;
     private LocalDateTime tiempoAhora;
+    
     public Boque(int ind, List<Data> dat, String prevHas){
         this.index=ind;
         this.nonce=0;
-        this.fecha=tiempoAhora.now();
+        this.fecha=getTime();
         this.data=new LinkedList(dat);
         this.prevHash=prevHas;
         this.hash=getHash256();
     }
-    public Boque(int ind, LocalDateTime time,int non, List<Data> da,String preH,String ha){
+    
+    public Boque(int ind, String time,int non, List<Data> da,String preH,String ha){
         this.index=ind;
         this.fecha=time;
         this.nonce=non;
@@ -53,6 +56,14 @@ public class Boque {
         }
         return resultado;
     }
+    
+    private String getTime(){
+        LocalDateTime auxtime = LocalDateTime.now();
+        DateTimeFormatter formatter= DateTimeFormatter.ofPattern("dd-MM-yy HH:mm:ss");
+        String returntime=auxtime.format(formatter);
+        return returntime;
+    }
+    
     private String getHash256(String nuevodato){
         String resultado="";
         try {

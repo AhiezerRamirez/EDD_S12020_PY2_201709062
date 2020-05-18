@@ -53,7 +53,7 @@ public class ArbolB {
             
         }
     }
-    public void imprimir(String categoria){
+    public boolean imprimir(String categoria){
         StringBuilder cod=new StringBuilder();
         List<Integer> recorridos=new LinkedList<>();
         if(this.root!=null){
@@ -62,9 +62,13 @@ public class ArbolB {
             this.root.recorrerhojas(cod,recorridos);
             cod.append("\n}");
             comandoDot(categoria+"_arbolB",cod.toString());
+            return true;
         }
-        else
+        else{
             JOptionPane.showMessageDialog(null,"El árbol está vacío");
+            return false;
+        }
+            
     }
     public Libro buscar(int isn){
         if(root==null)

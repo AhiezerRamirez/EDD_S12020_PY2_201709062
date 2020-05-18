@@ -25,7 +25,7 @@ public class CrearLibro extends Data{
     public String graficar() {
         String cadena=tipo;
         cadena+="\"ISBN\": "+isbn+",\n\t\t\t\t\t";
-        cadena+="\"Año\": "+year+",\n\t\t\t\t\t";
+        cadena+="\"Anio\": "+year+",\n\t\t\t\t\t";
         cadena+="\"Idioma\": \""+idioma+"\",\n\t\t\t\t\t";
         cadena+="\"Titulo\": \""+titulo+"\",\n\t\t\t\t\t";
         cadena+="\"Editorial\": \""+editorial+"\",\n\t\t\t\t\t";
@@ -42,7 +42,7 @@ public class CrearLibro extends Data{
     public String strintParaHash() {
         String cadena="{\"CREAR_LIBRO\":[{";;
         cadena+="\"ISBN\": "+isbn+",";
-        cadena+="\"Año\": "+year+",";
+        cadena+="\"Anio\": "+year+",";
         cadena+="\"Idioma\": "+idioma+",";
         cadena+="\"Titulo\": "+titulo+",";
         cadena+="\"Editorial\": "+editorial+",";
@@ -58,7 +58,7 @@ public class CrearLibro extends Data{
     public String StringParaGraphviz() {
         String cadena="{CREAR_LIBRO:\\n";;
         cadena+="ISBN: "+isbn+"\\n";
-        cadena+="Año: "+year+"\\n";
+        cadena+="Anio: "+year+"\\n";
         cadena+="Idioma: "+idioma+"\\n";
         cadena+="Titulo: "+titulo+"\\n";
         cadena+="Editorial: "+editorial+"\\n";
